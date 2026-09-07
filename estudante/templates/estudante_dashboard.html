@@ -392,18 +392,15 @@ Dashboard | START.SE
                             Já pode avançar para a submissão
                             do projecto.
 
-
                         {% elif estado_validacao == 'REJEITADO' %}
 
                             O seu perfil académico foi rejeitado.
                             Consulte a observação da validação.
 
-
                         {% elif estado_validacao == 'PENDENTE' %}
 
                             O seu perfil académico está a aguardar
                             análise da equipa administrativa.
-
 
                         {% else %}
 
@@ -440,6 +437,7 @@ Dashboard | START.SE
                         {% endif %}
 
                     </a>
+
 
                 </div>
 
@@ -481,30 +479,100 @@ Dashboard | START.SE
 
 
 
+                    <!-- ESTADO DO PROJECTO -->
+
                     <span
                         class="
                             card-status
 
-                            {% if projeto_disponivel %}
+                            {% if projeto %}
+
+                                {% if projeto.estado == 'APROVADO' %}
+                                    status-validado
+
+                                {% elif projeto.estado == 'REJEITADO' %}
+                                    status-rejeitado
+
+                                {% elif projeto.estado == 'PENDENTE' %}
+                                    status-pending
+
+                                {% elif projeto.estado == 'EM_INCUBACAO' %}
+                                    status-disponivel
+
+                                {% elif projeto.estado == 'PUBLICADO' %}
+                                    status-validado
+                                {% endif %}
+
+                            {% elif projeto_disponivel %}
+
                                 status-disponivel
+
                             {% else %}
+
                                 status-blocked
+
                             {% endif %}
                         "
                     >
 
-                        {{ projeto_estado }}
+
+                        {% if projeto %}
+
+                            {{ projeto.get_estado_display }}
+
+                        {% else %}
+
+                            {{ projeto_estado }}
+
+                        {% endif %}
+
 
                     </span>
 
 
 
+                    <!-- TEXTO -->
+
                     <p>
 
-                        {% if projeto_disponivel %}
+
+                        {% if projeto %}
+
+
+                            {% if projeto.estado == 'PENDENTE' %}
+
+                                O seu projecto foi submetido
+                                e está a aguardar avaliação.
+
+                            {% elif projeto.estado == 'APROVADO' %}
+
+                                O seu projecto foi aprovado.
+                                A próxima etapa é a incubação
+                                e mentoria.
+
+                            {% elif projeto.estado == 'REJEITADO' %}
+
+                                O seu projecto foi rejeitado.
+                                Consulte o parecer da avaliação.
+
+                            {% elif projeto.estado == 'EM_INCUBACAO' %}
+
+                                O seu projecto encontra-se
+                                em processo de incubação.
+
+                            {% elif projeto.estado == 'PUBLICADO' %}
+
+                                O seu projecto foi publicado
+                                no Marketplace da START.SE.
+
+                            {% endif %}
+
+
+                        {% elif projeto_disponivel %}
 
                             O seu perfil académico foi validado.
                             Já pode criar e submeter o seu projecto.
+
 
                         {% else %}
 
@@ -514,17 +582,24 @@ Dashboard | START.SE
 
                         {% endif %}
 
+
                     </p>
 
 
 
-                    {% if projeto_disponivel %}
+                    {% if projeto or projeto_disponivel %}
 
                         <a
                             href="{% url 'estudante_projeto' %}"
                             class="card-button button-blue"
                         >
-                            Ir para projecto
+
+                            {% if projeto %}
+                                Ver projecto
+                            {% else %}
+                                Ir para projecto
+                            {% endif %}
+
                         </a>
 
                     {% else %}
@@ -601,8 +676,29 @@ Dashboard | START.SE
 
                     <p>
 
-                        O acompanhamento começa depois
-                        da aprovação do seu projecto.
+
+                        {% if projeto and projeto.estado == 'APROVADO' %}
+
+                            O seu projecto foi aprovado.
+                            Aguarde a atribuição de um mentor.
+
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
+
+                            O seu projecto encontra-se
+                            em processo de incubação e mentoria.
+
+                        {% elif projeto and projeto.estado == 'PUBLICADO' %}
+
+                            A etapa de incubação do seu projecto
+                            foi concluída.
+
+                        {% else %}
+
+                            O acompanhamento começa depois
+                            da aprovação do seu projecto.
+
+                        {% endif %}
+
 
                     </p>
 
@@ -694,6 +790,7 @@ Dashboard | START.SE
                     "
                 >
 
+
                     <div class="step-circle">
 
                         {% if estado_validacao == 'VALIDADO' %}
@@ -709,10 +806,12 @@ Dashboard | START.SE
                     </div>
 
 
+
                     <strong>
                         Validação<br>
                         académica
                     </strong>
+
 
 
                     <span>
@@ -737,6 +836,7 @@ Dashboard | START.SE
 
                     </span>
 
+
                 </div>
 
 
@@ -749,15 +849,30 @@ Dashboard | START.SE
                     class="
                         journey-step
 
-                        {% if projeto_disponivel %}
+                        {% if projeto %}
+                            completed
+
+                        {% elif projeto_disponivel %}
                             current
                         {% endif %}
                     "
                 >
 
+
                     <div class="step-circle">
-                        3
+
+                        {% if projeto %}
+
+                            ✓
+
+                        {% else %}
+
+                            3
+
+                        {% endif %}
+
                     </div>
+
 
 
                     <strong>
@@ -766,9 +881,14 @@ Dashboard | START.SE
                     </strong>
 
 
+
                     <span>
 
-                        {% if projeto_disponivel %}
+                        {% if projeto %}
+
+                            Concluído
+
+                        {% elif projeto_disponivel %}
 
                             Disponível
 
@@ -780,6 +900,7 @@ Dashboard | START.SE
 
                     </span>
 
+
                 </div>
 
 
@@ -788,42 +909,149 @@ Dashboard | START.SE
                      4 - AVALIAÇÃO
                 ================================================== -->
 
-                <div class="journey-step">
+                <div
+                    class="
+                        journey-step
+
+                        {% if projeto.estado == 'APROVADO' or projeto.estado == 'EM_INCUBACAO' or projeto.estado == 'PUBLICADO' %}
+
+                            completed
+
+                        {% elif projeto and projeto.estado == 'PENDENTE' %}
+
+                            current
+
+                        {% elif projeto and projeto.estado == 'REJEITADO' %}
+
+                            current
+
+                        {% endif %}
+                    "
+                >
+
 
                     <div class="step-circle">
-                        4
+
+
+                        {% if projeto.estado == 'APROVADO' or projeto.estado == 'EM_INCUBACAO' or projeto.estado == 'PUBLICADO' %}
+
+                            ✓
+
+                        {% else %}
+
+                            4
+
+                        {% endif %}
+
+
                     </div>
+
+
 
                     <strong>
                         Avaliação
                     </strong>
 
+
+
                     <span>
-                        Pendente
+
+
+                        {% if projeto.estado == 'APROVADO' or projeto.estado == 'EM_INCUBACAO' or projeto.estado == 'PUBLICADO' %}
+
+                            Concluído
+
+
+                        {% elif projeto.estado == 'REJEITADO' %}
+
+                            Rejeitado
+
+
+                        {% elif projeto.estado == 'PENDENTE' %}
+
+                            Em análise
+
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
+
                     </span>
+
 
                 </div>
 
 
 
                 <!-- =================================================
-                     5 - INCUBAÇÃO
+                     5 - INCUBAÇÃO E MENTORIA
                 ================================================== -->
 
-                <div class="journey-step">
+                <div
+                    class="
+                        journey-step
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+
+                            completed
+
+                        {% elif projeto.estado == 'APROVADO' or projeto.estado == 'EM_INCUBACAO' %}
+
+                            current
+
+                        {% endif %}
+                    "
+                >
+
 
                     <div class="step-circle">
-                        5
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+
+                            ✓
+
+                        {% else %}
+
+                            5
+
+                        {% endif %}
+
                     </div>
+
+
 
                     <strong>
                         Incubação e<br>
                         mentoria
                     </strong>
 
+
+
                     <span>
-                        Pendente
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+
+                            Concluído
+
+                        {% elif projeto.estado == 'EM_INCUBACAO' %}
+
+                            Em curso
+
+                        {% elif projeto.estado == 'APROVADO' %}
+
+                            Próxima etapa
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
                     </span>
+
 
                 </div>
 
@@ -833,19 +1061,53 @@ Dashboard | START.SE
                      6 - DIVULGAÇÃO
                 ================================================== -->
 
-                <div class="journey-step">
+                <div
+                    class="
+                        journey-step
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+                            completed
+                        {% endif %}
+                    "
+                >
+
 
                     <div class="step-circle">
-                        6
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+
+                            ✓
+
+                        {% else %}
+
+                            6
+
+                        {% endif %}
+
                     </div>
+
+
 
                     <strong>
                         Divulgação
                     </strong>
 
+
+
                     <span>
-                        Pendente
+
+                        {% if projeto.estado == 'PUBLICADO' %}
+
+                            Concluído
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
                     </span>
+
 
                 </div>
 
@@ -906,6 +1168,8 @@ Dashboard | START.SE
 
     </main>
 
+
 </div>
+
 
 {% endblock 'body' %}

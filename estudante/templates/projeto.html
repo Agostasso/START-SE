@@ -187,7 +187,10 @@
 
         <div class="sidebar-logout">
 
-            <a href="{% url 'estudante_sair' %}" class="sidebar-link">
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
 
                 <span class="sidebar-icon">
 
@@ -216,7 +219,7 @@
 
 
     <!-- =====================================================
-         CONTEÚDO PRINCIPAL
+         CONTEÚDO
     ====================================================== -->
 
     <main class="student-content">
@@ -236,7 +239,8 @@
                 </h2>
 
                 <p>
-                    Submeta e acompanhe o seu projecto na plataforma START.SE.
+                    Submeta e acompanhe o seu projecto
+                    na plataforma START.SE.
                 </p>
 
             </div>
@@ -250,30 +254,31 @@
 
                 <div class="user-avatar">
 
-                    {% if request.user.first_name %}
+                    {% if perfil and perfil.nome_completo %}
 
-                        {{ request.user.first_name|slice:":1"|upper }}
+                        {{ perfil.nome_completo|slice:":1"|upper }}
 
                     {% else %}
 
-                        E
+                        {{ request.user.username|slice:":1"|upper }}
 
                     {% endif %}
 
                 </div>
 
 
+
                 <div class="user-info">
 
                     <strong>
 
-                        {% if request.user.first_name %}
+                        {% if perfil and perfil.nome_completo %}
 
-                            {{ request.user.first_name }}
+                            {{ perfil.nome_completo }}
 
                         {% else %}
 
-                            Estudante
+                            {{ request.user.username }}
 
                         {% endif %}
 
@@ -282,13 +287,13 @@
 
                     <span>
 
-                        {% if request.user.email %}
+                        {% if perfil and perfil.email_institucional %}
+
+                            {{ perfil.email_institucional }}
+
+                        {% elif request.user.email %}
 
                             {{ request.user.email }}
-
-                        {% else %}
-
-                            estudante@uniluanda.ao
 
                         {% endif %}
 
@@ -308,6 +313,28 @@
 
 
         <!-- =================================================
+             MENSAGENS
+        ================================================== -->
+
+        {% if messages %}
+
+            <div class="messages-container">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- =================================================
              ABAS
         ================================================== -->
 
@@ -318,14 +345,6 @@
                 class="project-tab active"
             >
                 O meu projecto
-            </a>
-
-
-            <a
-                href="#"
-                class="project-tab"
-            >
-                Histórico de submissões
             </a>
 
         </nav>
@@ -350,52 +369,406 @@
                 </h3>
 
 
-                <div class="submission-empty">
+
+                <!-- =============================================
+                     PROJECTO JÁ EXISTE
+                ============================================== -->
+
+                {% if projecto %}
 
 
-                    <!-- ÍCONE DOCUMENTO -->
+                    <div class="project-submitted">
 
-                    <div class="document-icon">
 
-                        <svg viewBox="0 0 24 24">
+                        <div class="document-icon">
 
-                            <path d="M6 3h8l4 4v14H6z"></path>
+                            <svg viewBox="0 0 24 24">
 
-                            <path d="M14 3v5h5"></path>
+                                <path d="M6 3h8l4 4v14H6z"></path>
 
-                            <path d="M9 12h6"></path>
+                                <path d="M14 3v5h5"></path>
 
-                            <path d="M9 16h6"></path>
+                                <path d="M9 12h6"></path>
 
-                        </svg>
+                                <path d="M9 16h6"></path>
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <p class="empty-title">
+                            {{ projecto.titulo }}
+                        </p>
+
+
+
+                        <!-- ESTADO -->
+
+                        <span
+                            class="
+                                project-status
+
+                                {% if projecto.estado == 'PENDENTE' %}
+                                    status-pendente
+
+                                {% elif projecto.estado == 'APROVADO' %}
+                                    status-aprovado
+
+                                {% elif projecto.estado == 'REJEITADO' %}
+                                    status-rejeitado
+
+                                {% elif projecto.estado == 'EM_INCUBACAO' %}
+                                    status-incubacao
+
+                                {% elif projecto.estado == 'PUBLICADO' %}
+                                    status-publicado
+                                {% endif %}
+                            "
+                        >
+
+                            {{ projecto.get_estado_display }}
+
+                        </span>
+
+
+
+                        <p class="empty-description">
+
+                            Submetido em:
+
+                            {{ projecto.submetido_em|date:"d/m/Y H:i" }}
+
+                        </p>
+
+
+
+                        <!-- PENDENTE -->
+
+                        {% if projecto.estado == 'PENDENTE' %}
+
+                            <p class="empty-description">
+
+                                O seu projecto foi submetido
+                                e encontra-se a aguardar avaliação
+                                da equipa administrativa.
+
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- APROVADO -->
+
+                        {% if projecto.estado == 'APROVADO' %}
+
+                            <p class="empty-description">
+
+                                O seu projecto foi aprovado.
+                                Aguarde os próximos passos para
+                                o processo de incubação e mentoria.
+
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- REJEITADO -->
+
+                        {% if projecto.estado == 'REJEITADO' %}
+
+                            <p class="empty-description">
+
+                                O seu projecto foi rejeitado.
+
+                            </p>
+
+
+                            {% if projecto.parecer_avaliacao %}
+
+                                <div class="evaluation-observation">
+
+                                    <strong>
+                                        Parecer da avaliação
+                                    </strong>
+
+                                    <p>
+                                        {{ projecto.parecer_avaliacao }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endif %}
+
+
+
+                        <!-- EM INCUBAÇÃO -->
+
+                        {% if projecto.estado == 'EM_INCUBACAO' %}
+
+                            <p class="empty-description">
+
+                                O seu projecto encontra-se
+                                actualmente em incubação.
+
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- PUBLICADO -->
+
+                        {% if projecto.estado == 'PUBLICADO' %}
+
+                            <p class="empty-description">
+
+                                O seu projecto foi publicado
+                                no Marketplace da START.SE.
+
+                            </p>
+
+                        {% endif %}
+
+
+
+                        <!-- ANEXO -->
+
+                        {% if projecto.anexo %}
+
+                            <a
+                                href="{{ projecto.anexo.url }}"
+                                target="_blank"
+                                class="submit-project-button"
+                            >
+                                Abrir anexo
+                            </a>
+
+                        {% endif %}
+
 
                     </div>
 
 
 
-                    <p class="empty-title">
-                        Ainda não submeteu nenhum projecto.
-                    </p>
+                <!-- =============================================
+                     PERFIL VALIDADO E SEM PROJECTO
+                ============================================== -->
+
+                {% elif perfil and perfil.estado_validacao == 'VALIDADO' %}
 
 
-                    <p class="empty-description">
-
-                        Após a validação académica, poderá
-                        submeter o seu projecto e começar
-                        o processo de avaliação.
-
-                    </p>
+                    <div class="submission-empty">
 
 
+                        <div class="document-icon">
 
-                    <a
-                        href="#"
-                        class="submit-project-button"
-                    >
-                        Submeter projecto
-                    </a>
+                            <svg viewBox="0 0 24 24">
 
-                </div>
+                                <path d="M6 3h8l4 4v14H6z"></path>
+
+                                <path d="M14 3v5h5"></path>
+
+                                <path d="M9 12h6"></path>
+
+                                <path d="M9 16h6"></path>
+
+                            </svg>
+
+                        </div>
+
+
+
+                        <p class="empty-title">
+
+                            Ainda não submeteu nenhum projecto.
+
+                        </p>
+
+
+
+                        <p class="empty-description">
+
+                            O seu perfil académico já foi validado.
+                            Pode agora preencher e submeter
+                            o seu projecto para avaliação.
+
+                        </p>
+
+
+
+                        <a
+                            href="{% url 'submeter_projecto' %}"
+                            class="submit-project-button"
+                        >
+                            Submeter projecto
+                        </a>
+
+
+                    </div>
+
+
+
+                <!-- =============================================
+                     PERFIL PENDENTE
+                ============================================== -->
+
+                {% elif perfil and perfil.estado_validacao == 'PENDENTE' %}
+
+
+                    <div class="submission-empty">
+
+
+                        <div class="document-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M6 3h8l4 4v14H6z"></path>
+
+                                <path d="M14 3v5h5"></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <p class="empty-title">
+                            Submissão indisponível
+                        </p>
+
+
+                        <p class="empty-description">
+
+                            O seu perfil académico ainda
+                            está em processo de validação.
+
+                            Aguarde a aprovação antes de
+                            submeter o projecto.
+
+                        </p>
+
+
+                        <span
+                            class="
+                                submit-project-button
+                                submit-disabled
+                            "
+                        >
+                            Aguardando validação
+                        </span>
+
+
+                    </div>
+
+
+
+                <!-- =============================================
+                     PERFIL REJEITADO
+                ============================================== -->
+
+                {% elif perfil and perfil.estado_validacao == 'REJEITADO' %}
+
+
+                    <div class="submission-empty">
+
+
+                        <div class="document-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M6 3h8l4 4v14H6z"></path>
+
+                                <path d="M14 3v5h5"></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <p class="empty-title">
+
+                            Perfil académico rejeitado
+
+                        </p>
+
+
+                        <p class="empty-description">
+
+                            O seu perfil académico precisa
+                            ser regularizado antes de poder
+                            submeter um projecto.
+
+                        </p>
+
+
+                        <a
+                            href="{% url 'perfil_academico' %}"
+                            class="submit-project-button"
+                        >
+                            Ver perfil académico
+                        </a>
+
+
+                    </div>
+
+
+
+                <!-- =============================================
+                     SEM PERFIL
+                ============================================== -->
+
+                {% else %}
+
+
+                    <div class="submission-empty">
+
+
+                        <div class="document-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M6 3h8l4 4v14H6z"></path>
+
+                                <path d="M14 3v5h5"></path>
+
+                            </svg>
+
+                        </div>
+
+
+                        <p class="empty-title">
+
+                            Complete primeiro o seu perfil académico.
+
+                        </p>
+
+
+                        <p class="empty-description">
+
+                            A validação académica é obrigatória
+                            antes da submissão de um projecto.
+
+                        </p>
+
+
+                        <a
+                            href="{% url 'perfil_academico' %}"
+                            class="submit-project-button"
+                        >
+                            Completar perfil
+                        </a>
+
+
+                    </div>
+
+
+                {% endif %}
+
 
             </section>
 
@@ -416,8 +789,6 @@
 
                 <div class="requirements-content">
 
-
-                    <!-- LISTA -->
 
                     <div class="requirements-list">
 
@@ -518,7 +889,7 @@
 
 
 
-                        <!-- MODELO DE NEGÓCIO -->
+                        <!-- MODELO -->
 
                         <div class="requirement">
 
@@ -566,7 +937,7 @@
 
 
 
-                        <!-- ANEXOS -->
+                        <!-- ANEXO -->
 
                         <div class="requirement">
 
@@ -588,16 +959,15 @@
 
                         </div>
 
+
                     </div>
 
 
 
-                    <!-- ILUSTRAÇÃO + DICA -->
+                    <!-- ILUSTRAÇÃO -->
 
                     <div class="requirements-side">
 
-
-                        <!-- ILUSTRAÇÃO -->
 
                         <div class="checklist-illustration">
 
@@ -647,9 +1017,8 @@
 
 
 
-                        <!-- DICA -->
-
                         <div class="tip-card">
+
 
                             <div class="tip-header">
 
@@ -665,19 +1034,26 @@
 
 
                             <p>
+
                                 Projectos completos e bem estruturados
                                 têm maiores chances de aprovação.
+
                             </p>
 
                         </div>
 
+
                     </div>
+
 
                 </div>
 
+
             </section>
 
+
         </div>
+
 
     </main>
 

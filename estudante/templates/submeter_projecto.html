@@ -1,0 +1,587 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Submeter Projecto | START.SE</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudante/css/projeto.css' %}"
+    >
+
+    <link
+    rel="stylesheet"
+    href="{% static 'estudante/css/submeter_projecto.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="student-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="student-sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Estudante
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <a
+                href="{% url 'estudante_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="{% url 'perfil_academico' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="7"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Perfil Académico
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projecto
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="{% url 'estudante_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-logout">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="student-content">
+
+
+        <!-- CABEÇALHO -->
+
+        <header class="page-header">
+
+
+            <div class="header-text">
+
+                <h2>
+                    Submeter projecto
+                </h2>
+
+                <p>
+                    Preencha as informações abaixo para
+                    submeter o seu projecto para avaliação.
+                </p>
+
+            </div>
+
+
+
+            <div class="student-user">
+
+
+                <div class="user-avatar">
+
+                    {% if perfil and perfil.nome_completo %}
+
+                        {{ perfil.nome_completo|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ request.user.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <div class="user-info">
+
+                    <strong>
+
+                        {% if perfil and perfil.nome_completo %}
+
+                            {{ perfil.nome_completo }}
+
+                        {% else %}
+
+                            {{ request.user.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if perfil and perfil.email_institucional %}
+
+                            {{ perfil.email_institucional }}
+
+                        {% elif request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- MENSAGENS -->
+
+        {% if messages %}
+
+            <div class="messages-container">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- VOLTAR -->
+
+        <div class="project-form-back">
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="project-back-link"
+            >
+                ← Voltar para Projecto
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             FORMULÁRIO
+        ====================================================== -->
+
+        <section class="project-form-card">
+
+
+            <div class="project-form-header">
+
+                <h3>
+                    Informações do projecto
+                </h3>
+
+                <p>
+                    Os campos marcados como obrigatórios devem
+                    ser preenchidos antes da submissão.
+                </p>
+
+            </div>
+
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="project-submission-form"
+            >
+
+                {% csrf_token %}
+
+
+
+                <!-- TÍTULO -->
+
+                <div class="project-form-group">
+
+                    <label for="titulo">
+                        Título do projecto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="titulo"
+                        name="titulo"
+                        maxlength="200"
+                        placeholder="Digite o título do projecto"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- RESUMO EXECUTIVO -->
+
+                <div class="project-form-group">
+
+                    <label for="resumo_executivo">
+                        Resumo executivo
+                    </label>
+
+                    <textarea
+                        id="resumo_executivo"
+                        name="resumo_executivo"
+                        placeholder="Apresente uma visão geral do projecto, os seus objectivos e proposta de valor."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- PROBLEMA -->
+
+                <div class="project-form-group">
+
+                    <label for="problema">
+                        Descrição do problema
+                    </label>
+
+                    <textarea
+                        id="problema"
+                        name="problema"
+                        placeholder="Explique o problema ou necessidade que o projecto pretende resolver."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- SOLUÇÃO -->
+
+                <div class="project-form-group">
+
+                    <label for="solucao">
+                        Solução proposta
+                    </label>
+
+                    <textarea
+                        id="solucao"
+                        name="solucao"
+                        placeholder="Descreva a solução proposta e explique como ela funciona."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- MODELO DE NEGÓCIO -->
+
+                <div class="project-form-group">
+
+                    <label for="modelo_negocio">
+                        Modelo de negócio
+                    </label>
+
+                    <textarea
+                        id="modelo_negocio"
+                        name="modelo_negocio"
+                        placeholder="Explique como o projecto pretende gerar, entregar e capturar valor."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- EQUIPA -->
+
+                <div class="project-form-group">
+
+                    <label for="equipa">
+                        Equipa
+                    </label>
+
+                    <textarea
+                        id="equipa"
+                        name="equipa"
+                        placeholder="Indique os membros da equipa e, se desejar, as suas funções."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- ANEXO -->
+
+                <div class="project-form-group">
+
+                    <label for="anexo">
+
+                        Anexo do projecto
+
+                        <span>
+                            (opcional)
+                        </span>
+
+                    </label>
+
+
+                    <div class="project-file-area">
+
+                        <input
+                            type="file"
+                            id="anexo"
+                            name="anexo"
+                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        >
+
+                    </div>
+
+
+                    <small>
+
+                        Pode anexar documentos complementares,
+                        apresentações, imagens ou outros materiais
+                        de apoio.
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- AVISO -->
+
+                <div class="project-submit-warning">
+
+                    <strong>
+                        Antes de submeter
+                    </strong>
+
+                    <p>
+                        Reveja cuidadosamente todas as informações.
+                        Após a submissão, o projecto será encaminhado
+                        para avaliação administrativa.
+                    </p>
+
+                </div>
+
+
+
+                <!-- BOTÕES -->
+
+                <div class="project-form-actions">
+
+
+                    <a
+                        href="{% url 'estudante_projeto' %}"
+                        class="project-cancel-button"
+                    >
+                        Cancelar
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="submit-project-button"
+                    >
+                        Submeter projecto
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+</body>
+
+</html>

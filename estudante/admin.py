@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ( Faculdade, Curso, PerfilAcademico,)
+from .models import ( Faculdade, Curso, PerfilAcademico, Projecto)
 
 # Register your models here.
 @admin.register(Faculdade)
@@ -12,7 +12,6 @@ class FaculdadeAdmin(admin.ModelAdmin):
     search_fields = (
         'nome',
     )
-
 
 @admin.register(Curso)
 class CursoAdmin(admin.ModelAdmin):
@@ -56,5 +55,33 @@ class PerfilAcademicoAdmin(admin.ModelAdmin):
 
     readonly_fields = (
         'criado_em',
+        'atualizado_em',
+    )
+
+
+@admin.register(Projecto)
+class ProjectoAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'titulo',
+        'estudante',
+        'estado',
+        'submetido_em',
+        'avaliado_em',
+    )
+
+    list_filter = (
+        'estado',
+        'submetido_em',
+    )
+
+    search_fields = (
+        'titulo',
+        'estudante__nome_completo',
+        'estudante__numero_estudante',
+    )
+
+    readonly_fields = (
+        'submetido_em',
         'atualizado_em',
     )

@@ -3,7 +3,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import render, redirect , get_object_or_404
 from django.http import HttpResponse
-from .models import Faculdade, PerfilAcademico, Curso
+from .models import Faculdade, PerfilAcademico, Curso, Projecto
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
@@ -12,6 +12,10 @@ from django.utils import timezone
 # Create your views here.
 @login_required
 def dashboard(request):
+
+    # =====================================================
+    # PERFIL DO ESTUDANTE LOGADO
+    # =====================================================
 
     perfil = (
         PerfilAcademico.objects
@@ -31,6 +35,7 @@ def dashboard(request):
     estado_validacao = 'INCOMPLETO'
     estado_validacao_texto = 'Incompleto'
 
+    projeto = None
     projeto_disponivel = False
     projeto_estado = 'Bloqueado'
 
@@ -40,7 +45,7 @@ def dashboard(request):
 
 
     # =====================================================
-    # SE O ESTUDANTE JÁ POSSUI PERFIL
+    # PERFIL ACADÉMICO
     # =====================================================
 
     if perfil:
@@ -52,42 +57,113 @@ def dashboard(request):
         )
 
 
-        # Perfil validado
+        # =================================================
+        # PERFIL VALIDADO
+        # =================================================
+
         if (
             perfil.estado_validacao
             ==
             PerfilAcademico.EstadoValidacao.VALIDADO
         ):
+
             projeto_disponivel = True
+
             projeto_estado = 'Disponível'
 
+            # Conta criada + validação
             progresso = 28
 
 
-        # Perfil pendente
-        elif (
-            perfil.estado_validacao
-            ==
-            PerfilAcademico.EstadoValidacao.PENDENTE
-        ):
+            # =============================================
+            # PROJECTO DO ESTUDANTE
+            # =============================================
 
-            projeto_disponivel = False
-            projeto_estado = 'Bloqueado'
+            projeto = (
+                Projecto.objects
+                .filter(estudante=perfil)
+                .order_by('-submetido_em')
+                .first()
+            )
 
-            progresso = 14
+
+            # =============================================
+            # PROJECTO SUBMETIDO
+            # =============================================
+
+            if projeto:
+
+                projeto_estado = (
+                    projeto.get_estado_display()
+                )
+
+                # Conta
+                # + validação
+                # + submissão
+                progresso = 42
 
 
-        # Perfil rejeitado
-        elif (
-            perfil.estado_validacao
-            ==
-            PerfilAcademico.EstadoValidacao.REJEITADO
-        ):
+                # =========================================
+                # PROJECTO APROVADO
+                # =========================================
 
-            projeto_disponivel = False
-            projeto_estado = 'Bloqueado'
+                if (
+                    projeto.estado
+                    ==
+                    Projecto.EstadoProjecto.APROVADO
+                ):
 
-            progresso = 14
+                    progresso = 57
+
+
+                # =========================================
+                # EM INCUBAÇÃO
+                # =========================================
+
+                elif (
+                    projeto.estado
+                    ==
+                    Projecto.EstadoProjecto.EM_INCUBACAO
+                ):
+
+                    progresso = 71
+
+                    mentoria_estado = (
+                        'Em incubação'
+                    )
+
+
+                # =========================================
+                # PUBLICADO
+                # =========================================
+
+                elif (
+                    projeto.estado
+                    ==
+                    Projecto.EstadoProjecto.PUBLICADO
+                ):
+
+                    progresso = 85
+
+                    mentoria_estado = (
+                        'Concluída'
+                    )
+
+
+                # =========================================
+                # REJEITADO
+                # =========================================
+
+                elif (
+                    projeto.estado
+                    ==
+                    Projecto.EstadoProjecto.REJEITADO
+                ):
+
+                    # A submissão aconteceu,
+                    # mas a avaliação não foi concluída
+                    # com aprovação.
+                    progresso = 42
 
 
     # =====================================================
@@ -98,29 +174,37 @@ def dashboard(request):
 
         'perfil': perfil,
 
-        'estado_validacao': estado_validacao,
+        'estado_validacao': (
+            estado_validacao
+        ),
 
-        'estado_validacao_texto':
-            estado_validacao_texto,
+        'estado_validacao_texto': (
+            estado_validacao_texto
+        ),
 
-        'projeto_disponivel':
-            projeto_disponivel,
+        'projeto': projeto,
 
-        'projeto_estado':
-            projeto_estado,
+        'projeto_disponivel': (
+            projeto_disponivel
+        ),
 
-        'mentoria_estado':
-            mentoria_estado,
+        'projeto_estado': (
+            projeto_estado
+        ),
 
-        'progresso':
-            progresso,
+        'mentoria_estado': (
+            mentoria_estado
+        ),
+
+        'progresso': progresso,
     }
+
+
     return render(
         request,
         'estudante_dashboard.html',
         contexto
     )
-
 
 
 
@@ -449,8 +533,45 @@ def perfil_academico(request):
     )
 
 
+@login_required
 def projeto(request):
-    return render(request,'projeto.html')
+
+    # Perfil académico do estudante logado
+    perfil = (
+        PerfilAcademico.objects
+        .filter(usuario=request.user)
+        .select_related(
+            'curso',
+            'curso__faculdade'
+        )
+        .first()
+    )
+
+
+    # Projecto mais recente do estudante
+    projecto = None
+
+    if perfil:
+
+        projecto = (
+            Projecto.objects
+            .filter(estudante=perfil)
+            .order_by('-submetido_em')
+            .first()
+        )
+
+
+    contexto = {
+        'perfil': perfil,
+        'projecto': projecto,
+    }
+
+
+    return render(
+        request,
+        'projeto.html',
+        contexto
+    )
 
 
 def acompanhamento(request):
@@ -463,3 +584,203 @@ def sair(request):
     logout(request)
 
     return redirect('/visitante/home/')
+
+@login_required
+def submeter_projecto(request):
+
+    # =====================================================
+    # PERFIL DO ESTUDANTE LOGADO
+    # =====================================================
+
+    perfil = (
+        PerfilAcademico.objects
+        .filter(usuario=request.user)
+        .select_related(
+            'curso',
+            'curso__faculdade'
+        )
+        .first()
+    )
+
+
+    # =====================================================
+    # VERIFICAR SE EXISTE PERFIL
+    # =====================================================
+
+    if perfil is None:
+
+        messages.error(
+            request,
+            'Complete primeiro o seu perfil académico.'
+        )
+
+        return redirect(
+            'perfil_academico'
+        )
+
+
+    # =====================================================
+    # VERIFICAR VALIDAÇÃO ACADÉMICA
+    # =====================================================
+
+    if (
+        perfil.estado_validacao
+        !=
+        PerfilAcademico.EstadoValidacao.VALIDADO
+    ):
+
+        messages.error(
+            request,
+            'O seu perfil académico precisa estar validado '
+            'antes de submeter um projecto.'
+        )
+
+        return redirect(
+            'estudante_projeto'
+        )
+
+
+    # =====================================================
+    # VERIFICAR SE JÁ EXISTE PROJECTO ATIVO
+    # =====================================================
+
+    projecto_existente = (
+        Projecto.objects
+        .filter(estudante=perfil)
+        .exclude(
+            estado=Projecto.EstadoProjecto.REJEITADO
+        )
+        .exists()
+    )
+
+
+    if projecto_existente:
+
+        messages.warning(
+            request,
+            'Já possui um projecto submetido.'
+        )
+
+        return redirect(
+            'estudante_projeto'
+        )
+
+
+    # =====================================================
+    # SUBMISSÃO
+    # =====================================================
+
+    if request.method == 'POST':
+
+        titulo = request.POST.get(
+            'titulo',
+            ''
+        ).strip()
+
+        resumo_executivo = request.POST.get(
+            'resumo_executivo',
+            ''
+        ).strip()
+
+        problema = request.POST.get(
+            'problema',
+            ''
+        ).strip()
+
+        solucao = request.POST.get(
+            'solucao',
+            ''
+        ).strip()
+
+        modelo_negocio = request.POST.get(
+            'modelo_negocio',
+            ''
+        ).strip()
+
+        equipa = request.POST.get(
+            'equipa',
+            ''
+        ).strip()
+
+        anexo = request.FILES.get(
+            'anexo'
+        )
+
+
+        # =================================================
+        # CAMPOS OBRIGATÓRIOS
+        # =================================================
+
+        if not all([
+            titulo,
+            resumo_executivo,
+            problema,
+            solucao,
+            modelo_negocio,
+            equipa,
+        ]):
+
+            messages.error(
+                request,
+                'Preencha todos os campos obrigatórios.'
+            )
+
+            return render(
+                request,
+                'submeter_projecto.html',
+                {
+                    'perfil': perfil
+                }
+            )
+
+
+        # =================================================
+        # CRIAR PROJECTO
+        # =================================================
+
+        Projecto.objects.create(
+
+            estudante=perfil,
+
+            titulo=titulo,
+
+            resumo_executivo=resumo_executivo,
+
+            problema=problema,
+
+            solucao=solucao,
+
+            modelo_negocio=modelo_negocio,
+
+            equipa=equipa,
+
+            anexo=anexo,
+
+            estado=(
+                Projecto
+                .EstadoProjecto
+                .PENDENTE
+            ),
+        )
+
+
+        messages.success(
+            request,
+            'Projecto submetido com sucesso. '
+            'Aguarde a avaliação administrativa.'
+        )
+
+
+        return redirect(
+            'estudante_projeto'
+        )
+
+
+    contexto = {
+        'perfil': perfil,
+    }
+    return render(
+        request,
+        'submeter_projecto.html',
+        contexto
+    )

@@ -1,0 +1,166 @@
+/* =========================================================
+   SUBMETER PROJECTO
+========================================================= */
+
+.project-form-back {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.project-back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #d6aa18;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.project-form-card {
+    width: 100%;
+    max-width: 1050px;
+    padding: 30px;
+    background: #101e38;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+}
+
+.project-form-header {
+    margin-bottom: 28px;
+}
+
+.project-form-header h3 {
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.project-form-header p {
+    margin: 0;
+    color: #98a4b7;
+    font-size: 13px;
+}
+
+.project-submission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.project-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.project-form-group label {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.project-form-group label span {
+    color: #98a4b7;
+    font-weight: 400;
+}
+
+.project-form-group input[type="text"],
+.project-form-group textarea {
+    width: 100%;
+    background: #0c1d38;
+    border: 1px solid #31415c;
+    border-radius: 7px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.project-form-group input[type="text"] {
+    height: 45px;
+    padding: 0 14px;
+}
+
+.project-form-group textarea {
+    min-height: 120px;
+    padding: 13px 14px;
+    resize: vertical;
+}
+
+.project-form-group input[type="text"]:focus,
+.project-form-group textarea:focus {
+    border-color: #e7ad00;
+}
+
+.project-form-group input::placeholder,
+.project-form-group textarea::placeholder {
+    color: #657187;
+}
+
+.project-file-area {
+    width: 100%;
+    padding: 20px;
+    background: rgba(255,255,255,.02);
+    border: 1px dashed #40506a;
+    border-radius: 8px;
+}
+
+.project-file-area input[type="file"] {
+    width: 100%;
+    color: #ffffff;
+}
+
+.project-form-group small {
+    color: #98a4b7;
+    font-size: 12px;
+}
+
+.project-submit-warning {
+    padding: 17px 18px;
+    background: rgba(231,173,0,.08);
+    border: 1px solid rgba(231,173,0,.25);
+    border-radius: 8px;
+}
+
+.project-submit-warning strong {
+    color: #e7ad00;
+}
+
+.project-submit-warning p {
+    margin: 7px 0 0;
+    color: #aab4c3;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.project-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-cancel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 22px;
+    border: 1px solid #394860;
+    border-radius: 7px;
+    color: #b7c0cf;
+    text-decoration: none;
+}
+
+.project-form-actions .submit-project-button {
+    min-width: 180px;
+    min-height: 42px;
+    margin-top: 0;
+    padding: 0 24px;
+    border: none;
+    border-radius: 7px;
+    background: #e7ad00;
+    color: #06142d;
+    font-weight: 700;
+    cursor: pointer;
+}
