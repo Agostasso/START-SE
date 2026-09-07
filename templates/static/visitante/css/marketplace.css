@@ -1,0 +1,719 @@
+/* =========================================
+   MARKETPLACE
+========================================= */
+
+.marketplace-hero {
+
+    background:
+        linear-gradient(
+            110deg,
+            #071128 0%,
+            #0b1739 70%,
+            #121a35 100%
+        );
+
+    color:
+        white;
+
+    padding:
+        55px 0;
+
+}
+
+
+.marketplace-hero h1 {
+
+    font-size:
+        2.6rem;
+
+    font-weight:
+        800;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.marketplace-hero h1 span {
+
+    color:
+        var(--startse-gold);
+
+}
+
+
+.marketplace-hero p {
+
+    color:
+        #d4d9e3;
+
+    max-width:
+        600px;
+
+    margin-bottom:
+        0;
+
+    font-size:
+        1rem;
+
+    line-height:
+        1.7;
+
+}
+
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.marketplace-content {
+
+    background-color:
+        #ffffff;
+
+    padding:
+        38px 0 70px;
+
+}
+
+
+
+/* =========================================
+   FILTROS
+========================================= */
+
+.marketplace-filtros {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        2fr 0.9fr;
+
+    gap:
+        16px;
+
+    align-items:
+        end;
+
+    margin-bottom:
+        42px;
+
+}
+
+
+.pesquisa-box {
+
+    position:
+        relative;
+
+}
+
+
+.pesquisa-box input {
+
+    width:
+        100%;
+
+    height:
+        54px;
+
+    border:
+        1px solid var(--startse-border);
+
+    border-radius:
+        8px;
+
+    padding:
+        0 18px 0 48px;
+
+    outline:
+        none;
+
+    color:
+        var(--startse-text);
+
+}
+
+
+.pesquisa-box input:focus {
+
+    border-color:
+        var(--startse-gold);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214, 170, 24, 0.12);
+
+}
+
+
+.pesquisa-icon {
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    left:
+        18px;
+
+    transform:
+        translateY(-50%);
+
+    font-size:
+        1.05rem;
+
+    z-index:
+        2;
+
+}
+
+
+.area-box {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+}
+
+
+.area-box label {
+
+    font-size:
+        0.82rem;
+
+    margin-bottom:
+        4px;
+
+    color:
+        var(--startse-text);
+
+}
+
+
+.area-box select {
+
+    height:
+        54px;
+
+    border:
+        1px solid var(--startse-border);
+
+    border-radius:
+        8px;
+
+    padding:
+        0 14px;
+
+    background-color:
+        white;
+
+    color:
+        var(--startse-text);
+
+    outline:
+        none;
+
+}
+
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.marketplace-card {
+
+    height:
+        100%;
+
+    background:
+        white;
+
+    border:
+        1px solid var(--startse-border);
+
+    border-radius:
+        10px;
+
+    overflow:
+        hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.marketplace-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 26px
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+.card-conteudo {
+
+    display:
+        flex;
+
+    gap:
+        18px;
+
+    padding:
+        20px 18px 14px;
+
+}
+
+
+
+/* =========================================
+   LOGO DA STARTUP
+========================================= */
+
+.startup-img {
+
+    flex-shrink:
+        0;
+
+    width:
+        88px;
+
+    height:
+        102px;
+
+    border-radius:
+        6px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    color:
+        white;
+
+    text-align:
+        center;
+
+    font-size:
+        0.78rem;
+
+    padding:
+        7px;
+
+}
+
+
+.startup-img span {
+
+    font-size:
+        2rem;
+
+    margin-bottom:
+        4px;
+
+}
+
+
+.agroluanda-logo {
+
+    background:
+        #073d28;
+
+}
+
+
+.edukamba-logo {
+
+    background:
+        #24125d;
+
+}
+
+
+.saude-logo {
+
+    background:
+        #08748b;
+
+}
+
+
+.kixipay-logo {
+
+    background:
+        #07112c;
+
+    font-size:
+        1.15rem;
+
+}
+
+
+.kixipay-logo span {
+
+    color:
+        #f1b900;
+
+    font-size:
+        inherit;
+
+}
+
+
+.eco-logo {
+
+    background:
+        #588f16;
+
+}
+
+
+.solar-logo {
+
+    background:
+        #f2a000;
+
+}
+
+
+
+/* =========================================
+   INFORMAÇÕES
+========================================= */
+
+.startup-info {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+}
+
+
+.startup-top {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        8px;
+
+}
+
+
+.startup-top h4 {
+
+    color:
+        var(--startse-navy);
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        700;
+
+    margin:
+        0;
+
+}
+
+
+.badge-publicado {
+
+    background:
+        #dff4e5;
+
+    color:
+        #167439;
+
+    padding:
+        4px 8px;
+
+    border-radius:
+        5px;
+
+    font-size:
+        0.68rem;
+
+    font-weight:
+        600;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.startup-categoria {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        var(--startse-gold-hover);
+
+    font-size:
+        0.78rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.startup-info p {
+
+    margin:
+        11px 0;
+
+    color:
+        #3c4658;
+
+    font-size:
+        0.79rem;
+
+    line-height:
+        1.55;
+
+}
+
+
+.startup-tags {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        5px;
+
+}
+
+
+.startup-tags span {
+
+    display:
+        inline-block;
+
+    padding:
+        4px 8px;
+
+    background:
+        #f4f6f8;
+
+    color:
+        #4c5667;
+
+    border-radius:
+        5px;
+
+    font-size:
+        0.65rem;
+
+}
+
+
+
+/* =========================================
+   FOOTER DO CARD
+========================================= */
+
+.card-footer-startup {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    border-top:
+        1px solid var(--startse-border);
+
+    padding:
+        10px 16px;
+
+}
+
+
+.btn-ver-detalhes {
+
+    padding:
+        6px 12px;
+
+    border:
+        1px solid #cad0da;
+
+    border-radius:
+        5px;
+
+    color:
+        var(--startse-navy);
+
+    font-size:
+        0.76rem;
+
+    font-weight:
+        600;
+
+    transition:
+        0.2s;
+
+}
+
+
+.btn-ver-detalhes:hover {
+
+    background:
+        var(--startse-navy);
+
+    border-color:
+        var(--startse-navy);
+
+    color:
+        white;
+
+}
+
+
+.seta {
+
+    color:
+        var(--startse-navy);
+
+    font-size:
+        1.5rem;
+
+    line-height:
+        1;
+
+}
+
+
+
+/* =========================================
+   SEM RESULTADOS
+========================================= */
+
+.sem-resultados {
+
+    text-align:
+        center;
+
+    padding:
+        45px;
+
+    margin-top:
+        25px;
+
+    border:
+        1px dashed var(--startse-border);
+
+    border-radius:
+        8px;
+
+    color:
+        var(--startse-muted);
+
+}
+
+
+
+/* =========================================
+   RESPONSIVO
+========================================= */
+
+@media (max-width: 991px) {
+
+    .marketplace-filtros {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .marketplace-hero {
+
+        padding:
+            40px 0;
+
+    }
+
+
+    .marketplace-hero h1 {
+
+        font-size:
+            2rem;
+
+    }
+
+
+    .card-conteudo {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .startup-img {
+
+        width:
+            100%;
+
+        height:
+            130px;
+
+    }
+
+
+    .startup-top {
+
+        align-items:
+            center;
+
+    }
+
+}

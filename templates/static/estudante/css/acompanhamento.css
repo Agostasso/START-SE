@@ -1,0 +1,1010 @@
+/* ==========================================================
+   START.SE
+   ACOMPANHAMENTO E MENTORIA
+========================================================== */
+
+:root {
+
+    --student-bg: #06142d;
+    --student-bg-dark: #031027;
+
+    --student-card: #101e38;
+
+    --student-gold: #e7ad00;
+
+    --student-blue: #3974d7;
+
+    --student-green: #27934f;
+
+    --student-purple: #8244d8;
+
+    --student-white: #ffffff;
+
+    --student-muted: #a4aec0;
+
+    --student-border:
+        rgba(255,255,255,.10);
+
+}
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+
+    box-sizing:
+        border-box;
+
+}
+
+
+html,
+body {
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+    min-height:
+        100%;
+
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #06142d;
+
+    color:
+        #ffffff;
+
+}
+
+
+/* ==========================================================
+   PÁGINA
+========================================================== */
+
+.student-page {
+
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+    background:
+        radial-gradient(
+            circle at 58% 18%,
+            #10213f 0%,
+            #071630 43%,
+            #031229 100%
+        );
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.student-sidebar {
+
+    position:
+        fixed;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        225px;
+
+    height:
+        100vh;
+
+    padding:
+        28px 13px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #031126 0%,
+            #021027 100%
+        );
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.025);
+
+}
+
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.sidebar-header {
+
+    padding:
+        0 11px;
+
+    margin-bottom:
+        38px;
+
+}
+
+
+.sidebar-header h1 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        1.6rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.sidebar-header p {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.sidebar-menu {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.sidebar-link {
+
+    min-height:
+        53px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        8px;
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .9rem;
+
+    transition:
+        background-color .2s ease;
+
+}
+
+
+.sidebar-link:hover {
+
+    background:
+        rgba(255,255,255,.05);
+
+}
+
+
+.sidebar-link.active {
+
+    color:
+        var(--student-gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(207,154,0,.24),
+            rgba(207,154,0,.14)
+        );
+
+}
+
+
+/* ==========================================================
+   SIDEBAR ICONS
+========================================================== */
+
+.sidebar-icon {
+
+    width:
+        27px;
+
+    height:
+        27px;
+
+    min-width:
+        27px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.sidebar-icon svg {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.8;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+/* ==========================================================
+   LOGOUT
+========================================================== */
+
+.sidebar-logout {
+
+    margin-top:
+        69px;
+
+    padding-top:
+        14px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+}
+
+
+/* ==========================================================
+   CONTEÚDO PRINCIPAL
+========================================================== */
+
+.student-content {
+
+    width:
+        calc(100% - 225px);
+
+    min-height:
+        100vh;
+
+    margin-left:
+        225px;
+
+    padding:
+        22px 31px 60px;
+
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+
+    min-height:
+        165px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    padding:
+        15px 6px;
+
+}
+
+
+.header-text h2 {
+
+    margin:
+        25px 0 10px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        2rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.header-text p {
+
+    margin:
+        0;
+
+    color:
+        #d2d8e2;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/* ==========================================================
+   UTILIZADOR
+========================================================== */
+
+.student-user {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+}
+
+
+.user-avatar {
+
+    width:
+        55px;
+
+    height:
+        55px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        var(--student-gold);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        1.2rem;
+
+}
+
+
+.user-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+}
+
+
+.user-info strong {
+
+    font-size:
+        .87rem;
+
+}
+
+
+.user-info span {
+
+    color:
+        #c7ced9;
+
+    font-size:
+        .75rem;
+
+}
+
+
+.user-arrow {
+
+    font-size:
+        1rem;
+
+}
+
+
+/* ==========================================================
+   GRID DOS CARDS
+========================================================== */
+
+.mentoring-cards {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap:
+        16px;
+
+}
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.mentoring-card {
+
+    min-height:
+        220px;
+
+    display:
+        flex;
+
+    gap:
+        15px;
+
+    padding:
+        20px 18px;
+
+    border:
+        1px solid
+        var(--student-border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,34,61,.98),
+            rgba(12,28,52,.98)
+        );
+
+}
+
+
+/* ==========================================================
+   ÍCONE CARD
+========================================================== */
+
+.card-icon {
+
+    width:
+        59px;
+
+    height:
+        59px;
+
+    min-width:
+        59px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+}
+
+
+.card-icon svg {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    fill:
+        none;
+
+    stroke:
+        #ffffff;
+
+    stroke-width:
+        1.8;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+/* CORES */
+
+.icon-mentor {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0bb15,
+            #d79e00
+        );
+
+}
+
+
+.icon-session {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4c88eb,
+            #2e62ba
+        );
+
+}
+
+
+.icon-completed {
+
+    background:
+        linear-gradient(
+            135deg,
+            #45b963,
+            #268945
+        );
+
+}
+
+
+.icon-record {
+
+    background:
+        linear-gradient(
+            135deg,
+            #9659e9,
+            #6c32c8
+        );
+
+}
+
+
+/* ==========================================================
+   CARD CONTENT
+========================================================== */
+
+.card-content {
+
+    flex:
+        1;
+
+}
+
+
+.card-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .82rem;
+
+    font-weight:
+        600;
+
+    line-height:
+        1.3;
+
+}
+
+
+.card-content h3 {
+
+    margin:
+        0 0 12px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.card-small {
+
+    margin:
+        0 0 4px;
+
+    color:
+        #bac2d0;
+
+    font-size:
+        .72rem;
+
+}
+
+
+.card-description {
+
+    margin:
+        0 0 17px;
+
+    color:
+        #d0d6e0;
+
+    font-size:
+        .75rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* ==========================================================
+   DATA
+========================================================== */
+
+.session-date {
+
+    margin-bottom:
+        2px !important;
+
+    font-size:
+        1.15rem !important;
+
+}
+
+
+.session-time {
+
+    display:
+        block;
+
+    margin-bottom:
+        9px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1.35rem;
+
+}
+
+
+/* ==========================================================
+   NÚMEROS
+========================================================== */
+
+.number-value {
+
+    margin:
+        0 0 5px !important;
+
+    font-size:
+        1.45rem !important;
+
+}
+
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+.card-button {
+
+    display:
+        inline-block;
+
+    min-width:
+        128px;
+
+    padding:
+        10px 13px;
+
+    border-radius:
+        5px;
+
+    background:
+        transparent;
+
+    text-align:
+        center;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .74rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.button-gold {
+
+    border:
+        1px solid
+        var(--student-gold);
+
+    color:
+        var(--student-gold);
+
+}
+
+
+.button-blue {
+
+    border:
+        1px solid
+        #3471cb;
+
+    color:
+        #5791e8;
+
+}
+
+
+.button-green {
+
+    border:
+        1px solid
+        #299356;
+
+    color:
+        #43ba70;
+
+}
+
+
+.button-purple {
+
+    border:
+        1px solid
+        #8853ce;
+
+    color:
+        #aa75ee;
+
+}
+
+
+/* ==========================================================
+   HOVERS
+========================================================== */
+
+.button-gold:hover {
+
+    background:
+        rgba(231,173,0,.08);
+
+}
+
+
+.button-blue:hover {
+
+    background:
+        rgba(52,113,203,.10);
+
+}
+
+
+.button-green:hover {
+
+    background:
+        rgba(41,147,86,.10);
+
+}
+
+
+.button-purple:hover {
+
+    background:
+        rgba(136,83,206,.10);
+
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE
+========================================================== */
+
+@media (max-width: 1250px) {
+
+    .mentoring-cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .student-sidebar {
+
+        width:
+            200px;
+
+    }
+
+
+    .student-content {
+
+        width:
+            calc(100% - 200px);
+
+        margin-left:
+            200px;
+
+        padding:
+            20px;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .student-sidebar {
+
+        display:
+            none;
+
+    }
+
+
+    .student-content {
+
+        width:
+            100%;
+
+        margin-left:
+            0;
+
+        padding:
+            20px 16px;
+
+    }
+
+
+    .page-header {
+
+        min-height:
+            auto;
+
+        flex-direction:
+            column;
+
+        gap:
+            25px;
+
+        padding-bottom:
+            35px;
+
+    }
+
+
+    .student-user {
+
+        align-self:
+            flex-end;
+
+    }
+
+
+    .mentoring-cards {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}

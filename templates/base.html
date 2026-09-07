@@ -1,0 +1,294 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {% block 'title' %}
+        START.SE
+        {% endblock 'title' %}
+    </title>
+
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- CSS GLOBAL -->
+    <link
+        rel="stylesheet"
+        href="{% static 'geral/css/base.css' %}"
+    >
+
+
+    <!-- CSS específico de cada página -->
+    {% block 'head' %}
+    {% endblock 'head' %}
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         NAVBAR
+    ====================================== -->
+
+    <nav class="navbar navbar-expand-lg navbar-startse">
+
+        <div class="container">
+
+            <!-- LOGO -->
+            <a
+                class="navbar-brand startse-logo"
+                href="/visitante/home/"
+            >
+                START.SE
+            </a>
+
+
+            <!-- MENU MOBILE -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarStartse"
+                aria-controls="navbarStartse"
+                aria-expanded="false"
+                aria-label="Abrir menu"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarStartse"
+            >
+
+                <!-- MENU CENTRAL -->
+                <ul class="navbar-nav mx-auto">
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="/visitante/home/"
+                        >
+                            Início
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{% url 'marketplace'%}"
+                        >
+                            Marketplace
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#como-funciona"
+                        >
+                            Como funciona
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="#sobre"
+                        >
+                            Sobre nós
+                        </a>
+                    </li>
+
+                </ul>
+
+
+                <!-- AUTENTICAÇÃO -->
+                <div class="d-flex gap-2">
+
+                    <a
+                        href="{% url 'login'%}"
+                        class="btn btn-login"
+                    >
+                        Entrar
+                    </a>
+
+                    <a
+                        href="{%url 'cadastro'%}"
+                        class="btn btn-startse"
+                    >
+                        Criar conta
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================
+         MENSAGENS DJANGO
+    ====================================== -->
+
+    {% if messages %}
+
+        <div class="container mt-3">
+
+            {% for message in messages %}
+
+                <div
+                    class="alert alert-info alert-dismissible fade show"
+                    role="alert"
+                >
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    >
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================
+         CONTEÚDO
+    ====================================== -->
+
+    <main>
+
+        {% block 'body' %}
+        {% endblock 'body' %}
+
+    </main>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer-startse">
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-md-5">
+
+                    <h4 class="footer-logo">
+                        START.SE
+                    </h4>
+
+                    <p>
+                        Plataforma de empreendedorismo académico
+                        da Universidade de Luanda.
+                    </p>
+
+                    <small>
+                        Transformamos ideias em impacto.
+                    </small>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <h6>Links</h6>
+
+                    <div class="footer-links">
+
+                        <a href="/visitante/home/">
+                            Início
+                        </a>
+
+                        <a href="#marketplace">
+                            Marketplace
+                        </a>
+
+                        <a href="#como-funciona">
+                            Como funciona
+                        </a>
+
+                        <a href="#sobre">
+                            Sobre nós
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <h6>Universidade de Luanda</h6>
+
+                    <p>
+                        Luanda, Angola
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="footer-bottom">
+
+                <small>
+                    &copy; {% now "Y" %} START.SE.
+                    Todos os direitos reservados.
+                </small>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+
+</body>
+
+</html>

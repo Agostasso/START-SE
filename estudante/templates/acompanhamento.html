@@ -1,0 +1,599 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Acompanhamento | START.SE</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudante/css/acompanhamento.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="student-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="student-sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Estudante
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'estudante_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PERFIL ACADÉMICO -->
+
+            <a
+                href="{% url 'perfil_academico' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="7"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Perfil Académico
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTO -->
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projecto
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'estudante_acompanhamento' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-logout">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="student-content">
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="page-header">
+
+
+            <div class="header-text">
+
+                <h2>
+                    Acompanhamento e Mentoria
+                </h2>
+
+                <p>
+                    Acompanhe as sessões de mentoria e o progresso do seu projecto.
+                </p>
+
+            </div>
+
+
+
+            <!-- UTILIZADOR -->
+
+            <div class="student-user">
+
+
+                <div class="user-avatar">
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name|slice:":1"|upper }}
+
+                    {% else %}
+
+                        E
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="user-info">
+
+                    <strong>
+
+                        {% if request.user.first_name %}
+
+                            {{ request.user.first_name }}
+
+                        {% else %}
+
+                            Estudante
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% else %}
+
+                            estudante@uniluanda.ao
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CARDS DE ACOMPANHAMENTO
+        ================================================== -->
+
+        <section class="mentoring-cards">
+
+
+            <!-- =================================================
+                 MENTOR ATRIBUÍDO
+            ================================================== -->
+
+            <article class="mentoring-card">
+
+
+                <div class="card-icon icon-mentor">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="8" cy="8" r="3"></circle>
+
+                        <circle cx="16" cy="8" r="3"></circle>
+
+                        <circle cx="12" cy="6" r="3"></circle>
+
+                        <path d="M3 19c.3-4 2-6 5-6"></path>
+
+                        <path d="M21 19c-.3-4-2-6-5-6"></path>
+
+                        <path d="M6 19c.4-4 2.5-6 6-6s5.6 2 6 6"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <span class="card-label">
+                        Mentor atribuído
+                    </span>
+
+
+                    <h3>
+                        {% if mentor %}
+                            {{ mentor.nome }}
+                        {% else %}
+                            Eng. Carlos Manuel
+                        {% endif %}
+                    </h3>
+
+
+                    <p class="card-small">
+                        Especialidade
+                    </p>
+
+
+                    <p class="card-description">
+
+                        {% if mentor %}
+                            {{ mentor.especialidade }}
+                        {% else %}
+                            Inovação e Negócios
+                        {% endif %}
+
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button button-gold"
+                    >
+                        Ver perfil do mentor
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 PRÓXIMA SESSÃO
+            ================================================== -->
+
+            <article class="mentoring-card">
+
+
+                <div class="card-icon icon-session">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                        <path d="M8 17h2"></path>
+
+                        <path d="M14 17h2"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <span class="card-label">
+                        Próxima sessão
+                    </span>
+
+
+                    <h3 class="session-date">
+
+                        {% if proxima_sessao %}
+                            {{ proxima_sessao.data|date:"d M Y" }}
+                        {% else %}
+                            24 Mai 2025
+                        {% endif %}
+
+                    </h3>
+
+
+                    <strong class="session-time">
+
+                        {% if proxima_sessao %}
+                            {{ proxima_sessao.hora }}
+                        {% else %}
+                            10:00
+                        {% endif %}
+
+                    </strong>
+
+
+                    <p class="card-description">
+                        Sessão de acompanhamento
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button button-blue"
+                    >
+                        Ver detalhes
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 SESSÕES REALIZADAS
+            ================================================== -->
+
+            <article class="mentoring-card">
+
+
+                <div class="card-icon icon-completed">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M8 12l3 3 5-6"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <span class="card-label">
+                        Sessões realizadas
+                    </span>
+
+
+                    <h3 class="number-value">
+                        {{ sessoes_realizadas|default:"2" }}
+                    </h3>
+
+
+                    <p class="card-description">
+                        de {{ total_sessoes|default:"10" }} agendadas
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button button-green"
+                    >
+                        Ver histórico
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 REGISTOS
+            ================================================== -->
+
+            <article class="mentoring-card">
+
+
+                <div class="card-icon icon-record">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 4h13v16H6z"></path>
+
+                        <path d="M3 7h3"></path>
+
+                        <path d="M3 11h3"></path>
+
+                        <path d="M3 15h3"></path>
+
+                        <path d="M10 9h5"></path>
+
+                        <path d="M10 13h5"></path>
+
+                        <path d="M10 17h4"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <span class="card-label">
+                        Registos de<br>
+                        acompanhamento
+                    </span>
+
+
+                    <h3 class="number-value">
+                        {{ total_registos|default:"2" }}
+                    </h3>
+
+
+                    <p class="card-description">
+                        registos efectuados
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button button-purple"
+                    >
+                        Ver registos
+                    </a>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

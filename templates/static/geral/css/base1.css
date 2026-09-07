@@ -1,0 +1,72 @@
+:root{
+    --main-color: #1a1a2e;      /* Azul-escuro INSTIC */
+    --dark-color: #12121f;      /* Variante mais escura, para navbar/rodapé */
+    --contrast-color: #c8a000;  /* Dourado INSTIC (destaques, botões) */
+    --contrast-color-hover: #a98600;
+}
+
+html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body{
+    color: white !important;
+    background-color: var(--main-color) !important;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+img, svg{
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 576px){
+    .container, .container-fluid{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.bg-color-dark{
+    background-color: var(--main-color);
+}
+
+.p-bold{
+    font-weight: bold;
+}
+
+.color-dark{
+    color: var(--dark-color);
+}
+
+.dark-color{
+    background-color: var(--dark-color);
+    color: white !important;
+}
+
+.centralizar{
+    text-align: center;
+}
+
+/* Placeholders */
+::-webkit-input-placeholder {
+    color: rgb(196, 196, 196) !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: rgb(196, 196, 196) !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: rgb(196, 196, 196) !important;
+}
+:-ms-input-placeholder {
+    color: rgb(196, 196, 196) !important;
+}
+
+/* Links e botões no tom dourado do INSTIC */
+a{
+    color: var(--contrast-color);
+}
+a:hover{
+    color: var(--contrast-color-hover);
+}

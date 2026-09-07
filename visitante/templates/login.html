@@ -1,0 +1,43 @@
+{% extends "base1.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+{% endblock 'head' %}
+
+{% block 'body' %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 d-none d-md-flex justify-content-center bg-img">
+        </div>
+        <div class="col-12 col-md-10 d-flex justify-content-center bg-color-dark form-auth">
+            <div class="container-form">
+                <h1 class="text-logo">START.SE</h1>
+                <h1>Logar</h1>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <section class="alert {{ message.tags }}">
+                            {{ message }}
+                        </section>
+                    {% endfor %}
+                {% endif %}
+
+                <br>
+                <form action="{% url 'login' %}" method="POST">{% csrf_token %}
+                    <label>Username</label>
+                    <input type="text" class="form-control input-pers" name="username" placeholder="Digite seu username">
+                    <br>
+                    <label>Senha</label>
+                    <input type="password" class="form-control input-pers" name="senha" placeholder="Digite sua senha">
+                    <div class="centralizar">
+                        <input type="submit" class="btn btn-indigo" value="Logar">
+                        <br>
+                        <a href="{% url 'cadastro' %}" class="texto">Não possuo uma conta</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock 'body' %}

@@ -1,0 +1,1262 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Perfil Académico | START.SE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudante/css/perfil_academico.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="student-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="student-sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Estudante
+            </p>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'estudante_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- PERFIL ACADÉMICO -->
+
+            <a
+                href="{% url 'perfil_academico' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="7"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Perfil Académico
+                </span>
+
+            </a>
+
+
+            <!-- PROJECTO -->
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projecto
+                </span>
+
+            </a>
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'estudante_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-logout">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="student-content">
+
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
+        <header class="page-header">
+
+
+            <div class="header-text">
+
+                <h2>
+
+                    {% if perfil %}
+
+                        Perfil académico
+
+                    {% else %}
+
+                        Complete o seu perfil académico
+
+                    {% endif %}
+
+                </h2>
+
+
+                <p>
+
+                    {% if perfil %}
+
+                        Consulte o estado da validação
+                        do seu perfil académico.
+
+                    {% else %}
+
+                        Forneça os seus dados académicos e anexe
+                        o comprovativo de matrícula para que
+                        possamos validar o seu perfil.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+
+            <!-- UTILIZADOR LOGADO -->
+
+            <div class="student-user">
+
+
+                <div class="user-avatar">
+
+                    {% if perfil and perfil.nome_completo %}
+
+                        {{ perfil.nome_completo|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ request.user.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="user-info">
+
+
+                    <strong>
+
+                        {% if perfil and perfil.nome_completo %}
+
+                            {{ perfil.nome_completo }}
+
+                        {% else %}
+
+                            {{ request.user.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if perfil and perfil.email_institucional %}
+
+                            {{ perfil.email_institucional }}
+
+                        {% elif request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% endif %}
+
+                    </span>
+
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             MENSAGENS
+        ================================================== -->
+
+        {% if messages %}
+
+            <div class="messages-container">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================================
+             SE O PERFIL JÁ EXISTE
+        ====================================================== -->
+
+        {% if perfil %}
+
+
+            <div class="profile-grid">
+
+
+                <!-- =============================================
+                     DADOS DO ESTUDANTE
+                ============================================== -->
+
+                <section class="academic-card">
+
+
+                    <h3>
+                        Informações do estudante
+                    </h3>
+
+
+                    <div class="profile-summary">
+
+
+                        <!-- NOME -->
+
+                        <div class="summary-item">
+
+                            <span class="summary-label">
+                                Nome completo
+                            </span>
+
+                            <strong class="summary-value">
+                                {{ perfil.nome_completo }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="summary-item">
+
+                            <span class="summary-label">
+                                E-mail institucional
+                            </span>
+
+                            <strong class="summary-value">
+                                {{ perfil.email_institucional }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =============================================
+                     COLUNA DIREITA
+                ============================================== -->
+
+                <div class="right-column">
+
+
+                    <!-- =========================================
+                         ESTADO DA VALIDAÇÃO
+                    ========================================== -->
+
+                    <section class="validation-card">
+
+
+                        <h3>
+                            Estado da validação
+                        </h3>
+
+
+                        <div
+                            class="
+                                validation-status
+
+                                {% if perfil.estado_validacao == 'VALIDADO' %}
+                                    status-validado
+
+                                {% elif perfil.estado_validacao == 'REJEITADO' %}
+                                    status-rejeitado
+
+                                {% elif perfil.estado_validacao == 'PENDENTE' %}
+                                    status-pendente
+
+                                {% else %}
+                                    status-incompleto
+                                {% endif %}
+                            "
+                        >
+
+
+                            <span class="clock-icon">
+
+
+                                {% if perfil.estado_validacao == 'VALIDADO' %}
+
+                                    ✓
+
+                                {% elif perfil.estado_validacao == 'REJEITADO' %}
+
+                                    ✕
+
+                                {% else %}
+
+                                    <svg viewBox="0 0 24 24">
+
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="9"
+                                        ></circle>
+
+                                        <path
+                                            d="M12 7v6l4 2"
+                                        ></path>
+
+                                    </svg>
+
+                                {% endif %}
+
+
+                            </span>
+
+
+                            <span>
+
+                                {{ perfil.get_estado_validacao_display }}
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <!-- TEXTO DO ESTADO -->
+
+                        <p>
+
+
+                            {% if perfil.estado_validacao == 'VALIDADO' %}
+
+                                O seu perfil académico foi validado
+                                com sucesso.
+
+                                Já pode avançar para a submissão
+                                do projecto.
+
+
+                            {% elif perfil.estado_validacao == 'REJEITADO' %}
+
+                                O seu perfil académico foi rejeitado.
+
+                                Consulte a observação da validação.
+
+
+                            {% elif perfil.estado_validacao == 'PENDENTE' %}
+
+                                O seu perfil académico está
+                                a aguardar análise da equipa
+                                administrativa.
+
+
+                            {% else %}
+
+                                O seu perfil académico ainda
+                                não foi submetido para validação.
+
+                            {% endif %}
+
+
+                        </p>
+
+
+
+                        <!-- OBSERVAÇÃO DO ADMIN -->
+
+                        {% if perfil.estado_validacao == 'REJEITADO' and perfil.observacao_validacao %}
+
+                            <div class="validation-observation">
+
+                                <strong>
+                                    Observação:
+                                </strong>
+
+                                <p>
+                                    {{ perfil.observacao_validacao }}
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </section>
+
+
+
+                    <!-- =========================================
+                         COMPROVATIVO JÁ ENVIADO
+                    ========================================== -->
+
+                    <section class="document-card">
+
+
+                        <h3>
+                            Comprovativo académico
+                        </h3>
+
+
+                        {% if perfil.comprovativo_academico %}
+
+
+                            <p>
+                                O comprovativo académico foi
+                                submetido com sucesso.
+                            </p>
+
+
+                            <a
+                                href="{{ perfil.comprovativo_academico.url }}"
+                                target="_blank"
+                                class="choose-file-button"
+                            >
+
+                                Abrir comprovativo
+
+                            </a>
+
+
+                        {% else %}
+
+
+                            <p>
+                                Nenhum comprovativo académico
+                                foi submetido.
+                            </p>
+
+
+                        {% endif %}
+
+
+                    </section>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 AVISO DINÂMICO
+            ============================================== -->
+
+            <section class="academic-warning">
+
+
+                <div class="warning-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path
+                            d="M12 11v6"
+                        ></path>
+
+                        <circle
+                            cx="12"
+                            cy="7.5"
+                            r=".6"
+                            fill="currentColor"
+                        ></circle>
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+
+                    {% if perfil.estado_validacao == 'VALIDADO' %}
+
+
+                        <strong>
+                            O seu perfil académico está validado.
+                        </strong>
+
+                        <p>
+                            Já pode avançar para a criação e
+                            submissão do seu projecto na
+                            plataforma START.SE.
+                        </p>
+
+
+                    {% elif perfil.estado_validacao == 'REJEITADO' %}
+
+
+                        <strong>
+                            O seu perfil académico necessita de correcção.
+                        </strong>
+
+                        <p>
+                            Consulte a observação da equipa administrativa
+                            antes de efectuar uma nova submissão.
+                        </p>
+
+
+                    {% else %}
+
+
+                        <strong>
+                            A sua validação académica está em análise.
+                        </strong>
+
+                        <p>
+                            Depois da aprovação poderá avançar para
+                            a criação e submissão do projecto.
+                        </p>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </section>
+
+
+
+        <!-- =====================================================
+             SE AINDA NÃO EXISTE PERFIL
+        ====================================================== -->
+
+        {% else %}
+
+
+            <div class="profile-grid">
+
+
+                <!-- =============================================
+                     FORMULÁRIO
+                ============================================== -->
+
+                <section class="academic-card">
+
+
+                    <h3>
+                        Informações académicas
+                    </h3>
+
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                        class="academic-form"
+                    >
+
+
+                        {% csrf_token %}
+
+
+
+                        <!-- NOME -->
+
+                        <div class="form-row">
+
+                            <label for="nome_completo">
+                                Nome completo
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="nome_completo"
+                                name="nome_completo"
+                                placeholder="Digite o seu nome completo"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- NÚMERO ESTUDANTE -->
+
+                        <div class="form-row">
+
+                            <label for="numero_estudante">
+                                Número de estudante
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="numero_estudante"
+                                name="numero_estudante"
+                                placeholder="Ex.: 20231234"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- CURSO -->
+
+                        <div class="form-row">
+
+                            <label for="curso">
+                                Curso
+                            </label>
+
+
+                            <select
+                                id="curso"
+                                name="curso"
+                                required
+                            >
+
+                                <option value="">
+                                    Selecione o seu curso
+                                </option>
+
+
+                                {% for curso in cursos %}
+
+                                    <option value="{{ curso.id }}">
+
+                                        {{ curso.nome }}
+
+                                    </option>
+
+                                {% endfor %}
+
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- FACULDADE -->
+
+                        <div class="form-row">
+
+                            <label for="faculdade">
+                                Faculdade
+                            </label>
+
+
+                            <select
+                                id="faculdade"
+                                name="faculdade"
+                                required
+                            >
+
+                                <option value="">
+                                    Selecione a sua faculdade
+                                </option>
+
+
+                                {% for faculdade in faculdades %}
+
+                                    <option value="{{ faculdade.id }}">
+
+                                        {{ faculdade.nome }}
+
+                                    </option>
+
+                                {% endfor %}
+
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- ANO ACADÉMICO -->
+
+                        <div class="form-row">
+
+                            <label for="ano_academico">
+                                Ano académico
+                            </label>
+
+
+                            <select
+                                id="ano_academico"
+                                name="ano_academico"
+                                required
+                            >
+
+                                <option value="">
+                                    Selecione o ano académico
+                                </option>
+
+                                <option value="1">
+                                    1.º Ano
+                                </option>
+
+                                <option value="2">
+                                    2.º Ano
+                                </option>
+
+                                <option value="3">
+                                    3.º Ano
+                                </option>
+
+                                <option value="4">
+                                    4.º Ano
+                                </option>
+
+                                <option value="5">
+                                    5.º Ano
+                                </option>
+
+                                <option value="LICENCIADO">
+                                    Recém-licenciado
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- TELEFONE -->
+
+                        <div class="form-row">
+
+                            <label for="telefone">
+                                Telefone
+                            </label>
+
+
+                            <input
+                                type="tel"
+                                id="telefone"
+                                name="telefone"
+                                placeholder="Ex.: +244 9XX XXX XXX"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-row">
+
+                            <label for="email_institucional">
+                                E-mail institucional
+                            </label>
+
+
+                            <input
+                                type="email"
+                                id="email_institucional"
+                                name="email_institucional"
+                                placeholder="Ex.: 20231234@aluno.uniluanda.ao"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- DESCRIÇÃO -->
+
+                        <div class="form-group-full">
+
+                            <label for="descricao">
+
+                                Breve descrição do projecto
+                                ou interesse empreendedor
+
+                                <span>
+                                    (opcional)
+                                </span>
+
+                            </label>
+
+
+                            <textarea
+                                id="descricao"
+                                name="descricao"
+                                placeholder="Conte-nos brevemente sobre a sua ideia ou interesse empreendedor..."
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- COMPROVATIVO -->
+
+                        <input
+                            type="file"
+                            id="comprovativo"
+                            name="comprovativo"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            class="file-input-hidden"
+                            required
+                        >
+
+
+
+                        <!-- GUARDAR -->
+
+                        <button
+                            type="submit"
+                            class="save-button"
+                        >
+
+
+                            <span class="save-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M5 3h12l2 2v16H5z"
+                                    ></path>
+
+                                    <path
+                                        d="M8 3v6h8V3"
+                                    ></path>
+
+                                    <rect
+                                        x="8"
+                                        y="14"
+                                        width="8"
+                                        height="7"
+                                    ></rect>
+
+                                </svg>
+
+                            </span>
+
+
+                            Guardar informações
+
+
+                        </button>
+
+
+                    </form>
+
+
+                </section>
+
+
+
+                <!-- =============================================
+                     COLUNA DIREITA
+                ============================================== -->
+
+                <div class="right-column">
+
+
+                    <!-- ESTADO -->
+
+                    <section class="validation-card">
+
+
+                        <h3>
+                            Estado da validação
+                        </h3>
+
+
+                        <div
+                            class="
+                                validation-status
+                                status-incompleto
+                            "
+                        >
+
+
+                            <span class="clock-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                    ></circle>
+
+                                    <path
+                                        d="M12 7v6l4 2"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span>
+                                Incompleto
+                            </span>
+
+
+                        </div>
+
+
+                        <p>
+
+                            Complete e submeta o seu perfil
+                            académico para validação.
+
+                        </p>
+
+
+                    </section>
+
+
+
+                    <!-- COMPROVATIVO -->
+
+                    <section class="document-card">
+
+
+                        <h3>
+                            Comprovativo académico
+                        </h3>
+
+
+                        <p>
+                            Anexe declaração, cartão ou
+                            comprovativo de matrícula.
+                        </p>
+
+
+                        <label
+                            for="comprovativo"
+                            class="upload-area"
+                        >
+
+
+                            <span class="upload-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path
+                                        d="M6 2h8l4 4v16H6z"
+                                    ></path>
+
+                                    <path
+                                        d="M14 2v5h5"
+                                    ></path>
+
+                                    <path
+                                        d="M12 17V10"
+                                    ></path>
+
+                                    <path
+                                        d="M9 13l3-3 3 3"
+                                    ></path>
+
+                                </svg>
+
+                            </span>
+
+
+                            <span class="upload-title">
+
+                                Arraste e solte o ficheiro aqui
+
+                            </span>
+
+
+                            <span class="upload-or">
+                                ou
+                            </span>
+
+
+                            <span class="choose-file-button">
+                                Escolher ficheiro
+                            </span>
+
+
+                        </label>
+
+
+                        <span class="file-formats">
+
+                            Formatos aceites:
+                            PDF, JPG, PNG (Máx. 5MB)
+
+                        </span>
+
+
+                    </section>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 AVISO
+            ============================================== -->
+
+            <section class="academic-warning">
+
+
+                <div class="warning-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path
+                            d="M12 11v6"
+                        ></path>
+
+                        <circle
+                            cx="12"
+                            cy="7.5"
+                            r=".6"
+                            fill="currentColor"
+                        ></circle>
+
+                    </svg>
+
+                </div>
+
+
+                <div>
+
+
+                    <strong>
+
+                        A validação académica é obrigatória
+                        para submeter o seu projecto.
+
+                    </strong>
+
+
+                    <p>
+
+                        Só após a aprovação do seu perfil
+                        poderá avançar para a criação e
+                        submissão do projecto na plataforma
+                        START.SE.
+
+                    </p>
+
+
+                </div>
+
+
+            </section>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

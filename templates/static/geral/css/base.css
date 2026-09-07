@@ -1,0 +1,335 @@
+/* ==========================================
+   START.SE
+   CSS GLOBAL
+========================================== */
+
+:root {
+
+    --startse-navy: #0b1739;
+
+    --startse-navy-dark: #071128;
+
+    --startse-gold: #d6aa18;
+
+    --startse-gold-hover: #bd9412;
+
+    --startse-white: #ffffff;
+
+    --startse-light: #f7f8fa;
+
+    --startse-text: #182033;
+
+    --startse-muted: #6b7280;
+
+    --startse-border: #e4e7ec;
+
+}
+
+
+/* ==========================================
+   RESET / GLOBAL
+========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+
+    margin: 0;
+
+    padding: 0;
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    background-color: var(--startse-white);
+
+    color: var(--startse-text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+
+main {
+
+    width: 100%;
+
+    min-height: 70vh;
+
+}
+
+
+a {
+
+    text-decoration: none;
+
+}
+
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar-startse {
+
+    min-height: 72px;
+
+    background-color: var(--startse-white);
+
+    border-bottom: 1px solid var(--startse-border);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+}
+
+
+.startse-logo {
+
+    color: var(--startse-gold) !important;
+
+    font-size: 1.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.navbar-startse .nav-link {
+
+    color: var(--startse-text);
+
+    font-size: 0.95rem;
+
+    font-weight: 500;
+
+    margin:
+
+        0 8px;
+
+}
+
+
+.navbar-startse .nav-link:hover {
+
+    color: var(--startse-gold-hover);
+
+}
+
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.btn-startse {
+
+    background-color:
+        var(--startse-gold);
+
+    border:
+        1px solid var(--startse-gold);
+
+    color:
+        #171717;
+
+    font-weight: 600;
+
+    padding:
+        9px 20px;
+
+}
+
+
+.btn-startse:hover {
+
+    background-color:
+        var(--startse-gold-hover);
+
+    border-color:
+        var(--startse-gold-hover);
+
+    color:
+        #171717;
+
+}
+
+
+.btn-login {
+
+    background-color:
+        transparent;
+
+    border:
+        1px solid var(--startse-navy);
+
+    color:
+        var(--startse-navy);
+
+    font-weight: 600;
+
+    padding:
+        9px 20px;
+
+}
+
+
+.btn-login:hover {
+
+    background-color:
+        var(--startse-navy);
+
+    color:
+        var(--startse-white);
+
+}
+
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer-startse {
+
+    background-color:
+        var(--startse-navy-dark);
+
+    color:
+        var(--startse-white);
+
+    padding:
+        45px 0 25px;
+
+}
+
+
+.footer-logo {
+
+    color:
+        var(--startse-gold);
+
+    font-weight:
+        800;
+
+}
+
+
+.footer-startse p {
+
+    color:
+        #cfd4df;
+
+}
+
+
+.footer-startse small {
+
+    color:
+        #aeb5c2;
+
+}
+
+
+.footer-startse h6 {
+
+    color:
+        var(--startse-white);
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.footer-links {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.footer-links a {
+
+    color:
+        #d6dbe5;
+
+}
+
+
+.footer-links a:hover {
+
+    color:
+        var(--startse-gold);
+
+}
+
+
+.footer-startse hr {
+
+    margin-top:
+        30px;
+
+    border-color:
+        rgba(255, 255, 255, 0.15);
+
+}
+
+
+.footer-bottom {
+
+    text-align:
+        center;
+
+}
+
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 991px) {
+
+    .navbar-startse .navbar-collapse {
+
+        padding:
+            20px 0;
+
+    }
+
+
+    .navbar-startse .nav-link {
+
+        margin:
+            4px 0;
+
+    }
+
+}

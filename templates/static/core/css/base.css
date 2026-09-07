@@ -1,0 +1,202 @@
+/* ===============================
+   START.SE - IDENTIDADE VISUAL
+================================ */
+
+:root {
+    --startse-navy: #0b1739;
+    --startse-navy-dark: #071128;
+    --startse-gold: #d8a900;
+    --startse-gold-hover: #bd9300;
+    --startse-white: #ffffff;
+    --startse-light: #f7f8fa;
+    --startse-text: #10172a;
+    --startse-muted: #6b7280;
+    --startse-border: #e5e7eb;
+}
+
+
+/* ===============================
+   GLOBAL
+================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--startse-white);
+    color: var(--startse-text);
+    font-family:
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+main {
+    min-height: 70vh;
+}
+
+
+/* ===============================
+   NAVBAR
+================================ */
+
+.navbar-startse {
+    min-height: 72px;
+    background-color: var(--startse-white);
+    border-bottom: 1px solid var(--startse-border);
+}
+
+.startse-logo {
+    color: var(--startse-gold);
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.startse-logo:hover {
+    color: var(--startse-gold-hover);
+}
+
+.navbar-startse .nav-link {
+    color: var(--startse-text);
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+}
+
+.navbar-startse .nav-link:hover {
+    color: var(--startse-gold-hover);
+}
+
+.navbar-startse .nav-link.active {
+    color: var(--startse-gold-hover);
+}
+
+.navbar-startse .nav-link.active::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    bottom: -12px;
+    background-color: var(--startse-gold);
+}
+
+
+/* ===============================
+   BOTÕES
+================================ */
+
+.btn-startse {
+    background-color: var(--startse-gold);
+    border: 1px solid var(--startse-gold);
+    color: #111111;
+    font-weight: 600;
+    padding: 9px 22px;
+}
+
+.btn-startse:hover {
+    background-color: var(--startse-gold-hover);
+    border-color: var(--startse-gold-hover);
+    color: #111111;
+}
+
+.btn-outline-startse {
+    background-color: transparent;
+    border: 1px solid var(--startse-navy);
+    color: var(--startse-navy);
+    font-weight: 600;
+    padding: 9px 22px;
+}
+
+.btn-outline-startse:hover {
+    background-color: var(--startse-navy);
+    color: var(--startse-white);
+}
+
+
+/* ===============================
+   FOOTER
+================================ */
+
+.footer-startse {
+    background-color: var(--startse-navy-dark);
+    color: var(--startse-white);
+    padding: 38px 0;
+}
+
+.footer-logo {
+    color: var(--startse-gold);
+    font-weight: 800;
+}
+
+.footer-startse p {
+    color: #d7dbe5;
+    margin-bottom: 5px;
+}
+
+.footer-slogan {
+    font-size: 0.9rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.footer-links a {
+    color: #e9ecf2;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: var(--startse-gold);
+}
+
+.social-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+.social-links a {
+    color: var(--startse-white);
+    font-size: 1.35rem;
+}
+
+.social-links a:hover {
+    color: var(--startse-gold);
+}
+
+
+/* ===============================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 991px) {
+
+    .navbar-startse .navbar-collapse {
+        padding: 20px 0;
+    }
+
+    .navbar-startse .nav-link {
+        margin: 5px 0;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .social-links {
+        justify-content: flex-start;
+    }
+}

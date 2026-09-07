@@ -1,0 +1,911 @@
+{% load static %}
+
+{% block 'title' %}
+Dashboard | START.SE
+{% endblock 'title' %}
+
+
+{% block 'head' %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'estudante/css/dashboard.css' %}"
+>
+
+{% endblock 'head' %}
+
+
+
+{% block 'body' %}
+
+
+<div class="student-dashboard-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="student-sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Estudante
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'estudante_dashboard' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PERFIL -->
+
+            <a
+                href="{% url 'perfil_academico' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="7"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Perfil Académico
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTO -->
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projecto
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'estudante_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-logout">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="dashboard-content">
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="dashboard-header">
+
+
+            <div class="dashboard-heading">
+
+                <h2>
+
+                    Olá,
+
+                    {% if perfil and perfil.nome_completo %}
+
+                        {{ perfil.nome_completo }}!
+
+                    {% else %}
+
+                        {{ request.user.username }}!
+
+                    {% endif %}
+
+                </h2>
+
+
+                <p>
+                    Acompanhe aqui a evolução do seu percurso
+                    na plataforma START.SE.
+                </p>
+
+            </div>
+
+
+
+            <!-- UTILIZADOR -->
+
+            <div class="student-user">
+
+
+                <div class="user-avatar">
+
+                    {% if perfil and perfil.nome_completo %}
+
+                        {{ perfil.nome_completo|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ request.user.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <div class="user-info">
+
+                    <strong>
+
+                        {% if perfil and perfil.nome_completo %}
+
+                            {{ perfil.nome_completo }}
+
+                        {% else %}
+
+                            {{ request.user.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if perfil and perfil.email_institucional %}
+
+                            {{ perfil.email_institucional }}
+
+                        {% elif request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CARDS
+        ================================================== -->
+
+        <section class="status-cards">
+
+
+            <!-- =================================================
+                 VALIDAÇÃO ACADÉMICA
+            ================================================== -->
+
+            <article class="dashboard-card">
+
+
+                <div class="card-icon card-icon-gold">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M2 9l10-5 10 5-10 5z"></path>
+
+                        <path
+                            d="M6 11.5V16c3 2.2 9 2.2 12 0v-4.5"
+                        ></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+
+                    <h3>
+                        Validação académica
+                    </h3>
+
+
+
+                    <span
+                        class="
+                            card-status
+
+                            {% if estado_validacao == 'VALIDADO' %}
+                                status-validado
+
+                            {% elif estado_validacao == 'REJEITADO' %}
+                                status-rejeitado
+
+                            {% elif estado_validacao == 'PENDENTE' %}
+                                status-pending
+
+                            {% else %}
+                                status-incompleto
+                            {% endif %}
+                        "
+                    >
+
+                        {{ estado_validacao_texto }}
+
+                    </span>
+
+
+
+                    <p>
+
+                        {% if estado_validacao == 'VALIDADO' %}
+
+                            O seu perfil académico foi validado.
+                            Já pode avançar para a submissão
+                            do projecto.
+
+
+                        {% elif estado_validacao == 'REJEITADO' %}
+
+                            O seu perfil académico foi rejeitado.
+                            Consulte a observação da validação.
+
+
+                        {% elif estado_validacao == 'PENDENTE' %}
+
+                            O seu perfil académico está a aguardar
+                            análise da equipa administrativa.
+
+
+                        {% else %}
+
+                            Complete o seu perfil académico
+                            para iniciar o processo de validação.
+
+                        {% endif %}
+
+                    </p>
+
+
+
+                    <a
+                        href="{% url 'perfil_academico' %}"
+                        class="card-button button-gold"
+                    >
+
+                        {% if estado_validacao == 'VALIDADO' %}
+
+                            Ver perfil
+
+                        {% elif estado_validacao == 'PENDENTE' %}
+
+                            Acompanhar validação
+
+                        {% elif estado_validacao == 'REJEITADO' %}
+
+                            Ver observação
+
+                        {% else %}
+
+                            Completar perfil
+
+                        {% endif %}
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 PROJECTO
+            ================================================== -->
+
+            <article class="dashboard-card">
+
+
+                <div class="card-icon card-icon-blue">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h5"></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+
+                    <h3>
+                        Projecto
+                    </h3>
+
+
+
+                    <span
+                        class="
+                            card-status
+
+                            {% if projeto_disponivel %}
+                                status-disponivel
+                            {% else %}
+                                status-blocked
+                            {% endif %}
+                        "
+                    >
+
+                        {{ projeto_estado }}
+
+                    </span>
+
+
+
+                    <p>
+
+                        {% if projeto_disponivel %}
+
+                            O seu perfil académico foi validado.
+                            Já pode criar e submeter o seu projecto.
+
+                        {% else %}
+
+                            A submissão do projecto será
+                            disponibilizada após a validação
+                            académica.
+
+                        {% endif %}
+
+                    </p>
+
+
+
+                    {% if projeto_disponivel %}
+
+                        <a
+                            href="{% url 'estudante_projeto' %}"
+                            class="card-button button-blue"
+                        >
+                            Ir para projecto
+                        </a>
+
+                    {% else %}
+
+                        <span
+                            class="
+                                card-button
+                                button-disabled
+                            "
+                        >
+                            Aguardando validação
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 INCUBAÇÃO E MENTORIA
+            ================================================== -->
+
+            <article class="dashboard-card">
+
+
+                <div class="card-icon card-icon-green">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="8" cy="8" r="3"></circle>
+
+                        <circle cx="16" cy="8" r="3"></circle>
+
+                        <circle cx="12" cy="6" r="3"></circle>
+
+                        <path
+                            d="M2.5 19c.3-4 2.3-6 5.5-6"
+                        ></path>
+
+                        <path
+                            d="M21.5 19c-.3-4-2.3-6-5.5-6"
+                        ></path>
+
+                        <path
+                            d="M6 19c.4-4.5 2.4-6.5 6-6.5s5.6 2 6 6.5"
+                        ></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+
+                    <h3>
+                        Incubação e mentoria
+                    </h3>
+
+
+
+                    <span class="card-status status-mentor">
+
+                        {{ mentoria_estado }}
+
+                    </span>
+
+
+
+                    <p>
+
+                        O acompanhamento começa depois
+                        da aprovação do seu projecto.
+
+                    </p>
+
+
+
+                    <span
+                        class="
+                            card-button
+                            button-disabled
+                        "
+                    >
+                        Ver mentor
+                    </span>
+
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             PERCURSO
+        ================================================== -->
+
+        <section class="journey-card">
+
+
+            <div class="journey-header">
+
+                <h3>
+                    Percurso na START.SE
+                </h3>
+
+                <p>
+                    Acompanhe as etapas necessárias até
+                    à publicação da sua startup.
+                </p>
+
+            </div>
+
+
+
+            <div class="journey-steps">
+
+
+                <div class="journey-line"></div>
+
+
+
+                <!-- =================================================
+                     1 - CONTA CRIADA
+                ================================================== -->
+
+                <div class="journey-step completed">
+
+                    <div class="step-circle">
+                        ✓
+                    </div>
+
+                    <strong>
+                        Conta criada
+                    </strong>
+
+                    <span>
+                        Concluído
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     2 - VALIDAÇÃO ACADÉMICA
+                ================================================== -->
+
+                <div
+                    class="
+                        journey-step
+
+                        {% if estado_validacao == 'VALIDADO' %}
+                            completed
+                        {% else %}
+                            current
+                        {% endif %}
+                    "
+                >
+
+                    <div class="step-circle">
+
+                        {% if estado_validacao == 'VALIDADO' %}
+
+                            ✓
+
+                        {% else %}
+
+                            2
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <strong>
+                        Validação<br>
+                        académica
+                    </strong>
+
+
+                    <span>
+
+                        {% if estado_validacao == 'VALIDADO' %}
+
+                            Concluído
+
+                        {% elif estado_validacao == 'REJEITADO' %}
+
+                            Rejeitado
+
+                        {% elif estado_validacao == 'PENDENTE' %}
+
+                            Em análise
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     3 - SUBMISSÃO DO PROJECTO
+                ================================================== -->
+
+                <div
+                    class="
+                        journey-step
+
+                        {% if projeto_disponivel %}
+                            current
+                        {% endif %}
+                    "
+                >
+
+                    <div class="step-circle">
+                        3
+                    </div>
+
+
+                    <strong>
+                        Submissão do<br>
+                        projecto
+                    </strong>
+
+
+                    <span>
+
+                        {% if projeto_disponivel %}
+
+                            Disponível
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     4 - AVALIAÇÃO
+                ================================================== -->
+
+                <div class="journey-step">
+
+                    <div class="step-circle">
+                        4
+                    </div>
+
+                    <strong>
+                        Avaliação
+                    </strong>
+
+                    <span>
+                        Pendente
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     5 - INCUBAÇÃO
+                ================================================== -->
+
+                <div class="journey-step">
+
+                    <div class="step-circle">
+                        5
+                    </div>
+
+                    <strong>
+                        Incubação e<br>
+                        mentoria
+                    </strong>
+
+                    <span>
+                        Pendente
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     6 - DIVULGAÇÃO
+                ================================================== -->
+
+                <div class="journey-step">
+
+                    <div class="step-circle">
+                        6
+                    </div>
+
+                    <strong>
+                        Divulgação
+                    </strong>
+
+                    <span>
+                        Pendente
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     7 - INVESTIMENTO
+                ================================================== -->
+
+                <div class="journey-step">
+
+                    <div class="step-circle">
+                        7
+                    </div>
+
+                    <strong>
+                        Investimento
+                    </strong>
+
+                    <span>
+                        Pendente
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PROGRESSO
+            ================================================== -->
+
+            <div class="journey-progress">
+
+
+                <div class="progress-track">
+
+                    <div
+                        class="progress-value"
+                        style="width: {{ progresso }}%;"
+                    ></div>
+
+                </div>
+
+
+                <span>
+                    {{ progresso }}% concluído
+                </span>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+{% endblock 'body' %}

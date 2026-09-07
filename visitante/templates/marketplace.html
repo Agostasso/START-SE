@@ -1,0 +1,701 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}
+Marketplace | START.SE
+{% endblock 'title' %}
+
+{% block 'head' %}
+<link
+    rel="stylesheet"
+    href="{% static 'visitante/css/marketplace.css' %}"
+>
+{% endblock 'head' %}
+
+{% block 'body' %}
+
+<!-- ==============================
+     CABEÇALHO DO MARKETPLACE
+================================ -->
+<section class="marketplace-hero">
+
+    <div class="container">
+
+        <h1>
+            Marketplace de
+            <span>Startups</span>
+        </h1>
+
+        <p>
+            Explore startups publicadas por estudantes
+            e recém-graduados da Universidade de Luanda.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     FILTROS
+================================ -->
+<section class="marketplace-content">
+
+    <div class="container">
+
+
+        <div class="marketplace-filtros">
+
+            <!-- Pesquisa -->
+            <div class="pesquisa-box">
+
+                <span class="pesquisa-icon">
+                    &#128269;
+                </span>
+
+                <input
+                    type="text"
+                    id="pesquisaStartup"
+                    placeholder="Pesquisar startups por nome, área ou palavra-chave..."
+                >
+
+            </div>
+
+
+            <!-- Área -->
+            <div class="area-box">
+
+                <label for="filtroArea">
+                    Área
+                </label>
+
+                <select id="filtroArea">
+
+                    <option value="">
+                        Todas as áreas
+                    </option>
+
+                    <option value="agronegocio">
+                        Agronegócio
+                    </option>
+
+                    <option value="educacao">
+                        Educação
+                    </option>
+
+                    <option value="saude">
+                        Saúde
+                    </option>
+
+                    <option value="financas">
+                        Finanças
+                    </option>
+
+                    <option value="ambiente">
+                        Meio Ambiente
+                    </option>
+
+                    <option value="energia">
+                        Energia
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==============================
+             STARTUPS
+        =============================== -->
+
+        <div class="row g-4" id="listaStartups">
+
+
+            <!-- STARTUP 1 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="agroluanda"
+                 data-area="agronegocio">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img agroluanda-logo">
+                            <span>🌱</span>
+                            <strong>AGROLUANDA</strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    AgroLuanda
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Agronegócio
+                            </span>
+
+
+                            <p>
+                                Plataforma que liga pequenos agricultores
+                                a mercados urbanos, facilitando a compra
+                                e venda de produtos agrícolas.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Agronegócio
+                                </span>
+
+                                <span>
+                                    Sustentabilidade
+                                </span>
+
+                                <span>
+                                    Tecnologia
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 1 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTUP 2 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="edukamba"
+                 data-area="educacao">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img edukamba-logo">
+                            <span>📖</span>
+                            <strong>EDUKAMBA</strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    EduKamba
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Educação
+                            </span>
+
+
+                            <p>
+                                Plataforma de apoio ao estudo com recursos
+                                digitais, videoaulas e ferramentas
+                                colaborativas para estudantes.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Educação
+                                </span>
+
+                                <span>
+                                    EdTech
+                                </span>
+
+                                <span>
+                                    Aprendizagem
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 2 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTUP 3 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="saudeja"
+                 data-area="saude">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img saude-logo">
+                            <span>✚</span>
+                            <strong>SAÚDEJÁ</strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    SaúdeJá
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Saúde
+                            </span>
+
+
+                            <p>
+                                Solução de agendamento de consultas
+                                e telemedicina para aproximar pacientes
+                                e profissionais de saúde.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Saúde
+                                </span>
+
+                                <span>
+                                    Telemedicina
+                                </span>
+
+                                <span>
+                                    Bem-estar
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 3 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTUP 4 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="kixipay"
+                 data-area="financas">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img kixipay-logo">
+                            <strong>KIXI<span>PAY</span></strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    KixiPay
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Finanças
+                            </span>
+
+
+                            <p>
+                                Carteira digital que facilita pagamentos,
+                                transferências e gestão financeira para
+                                jovens e pequenos negócios.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Finanças
+                                </span>
+
+                                <span>
+                                    Pagamentos
+                                </span>
+
+                                <span>
+                                    FinTech
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 4 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTUP 5 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="ecocampus"
+                 data-area="ambiente">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img eco-logo">
+                            <span>♻</span>
+                            <strong>ECOCAMPUS</strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    EcoCampus
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Meio Ambiente
+                            </span>
+
+
+                            <p>
+                                Plataforma que promove a reciclagem
+                                e educação ambiental em universidades
+                                e comunidades.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Sustentabilidade
+                                </span>
+
+                                <span>
+                                    Educação
+                                </span>
+
+                                <span>
+                                    Impacto Social
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 5 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STARTUP 6 -->
+            <div class="col-lg-4 col-md-6 startup-item"
+                 data-nome="solarhub"
+                 data-area="energia">
+
+                <div class="marketplace-card">
+
+                    <div class="card-conteudo">
+
+                        <div class="startup-img solar-logo">
+                            <span>☀</span>
+                            <strong>SOLARHUB</strong>
+                        </div>
+
+
+                        <div class="startup-info">
+
+                            <div class="startup-top">
+
+                                <h4>
+                                    SolarHub
+                                </h4>
+
+                                <span class="badge-publicado">
+                                    Publicado
+                                </span>
+
+                            </div>
+
+
+                            <span class="startup-categoria">
+                                Energia
+                            </span>
+
+
+                            <p>
+                                Solução de energia solar acessível
+                                para residências e pequenos negócios
+                                em Angola.
+                            </p>
+
+
+                            <div class="startup-tags">
+
+                                <span>
+                                    Energia
+                                </span>
+
+                                <span>
+                                    Solar
+                                </span>
+
+                                <span>
+                                    Inovação
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer-startup">
+
+                        <a href="{% url 'startup_detalhe' 6 %}" class="btn-ver-detalhes">
+                            Ver detalhes
+                        </a>
+
+                        <span class="seta">
+                            ›
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Mensagem se não houver resultado -->
+        <div
+            id="semResultados"
+            class="sem-resultados"
+            style="display: none;"
+        >
+            Nenhuma startup encontrada.
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     PESQUISA/FILTRO SIMPLES
+================================ -->
+<script>
+
+    const pesquisa = document.getElementById("pesquisaStartup");
+    const filtroArea = document.getElementById("filtroArea");
+    const startups = document.querySelectorAll(".startup-item");
+    const semResultados = document.getElementById("semResultados");
+
+
+    function filtrarStartups() {
+
+        const texto = pesquisa.value.toLowerCase();
+        const area = filtroArea.value.toLowerCase();
+
+        let encontrados = 0;
+
+
+        startups.forEach(function(startup) {
+
+            const nome = startup.dataset.nome.toLowerCase();
+            const startupArea = startup.dataset.area.toLowerCase();
+
+            const textoCard = startup
+                .innerText
+                .toLowerCase();
+
+
+            const correspondePesquisa =
+                textoCard.includes(texto) ||
+                nome.includes(texto);
+
+
+            const correspondeArea =
+                area === "" ||
+                startupArea === area;
+
+
+            if (correspondePesquisa && correspondeArea) {
+
+                startup.style.display = "";
+                encontrados++;
+
+            } else {
+
+                startup.style.display = "none";
+
+            }
+
+        });
+
+
+        if (encontrados === 0) {
+
+            semResultados.style.display = "block";
+
+        } else {
+
+            semResultados.style.display = "none";
+
+        }
+
+    }
+
+
+    pesquisa.addEventListener(
+        "input",
+        filtrarStartups
+    );
+
+
+    filtroArea.addEventListener(
+        "change",
+        filtrarStartups
+    );
+
+</script>
+
+
+{% endblock 'body' %}

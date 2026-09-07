@@ -1,0 +1,625 @@
+/* =========================================================
+   HOME - START.SE
+========================================================= */
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.home-hero {
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   LATERAL ESQUERDA - BG.SVG ORIGINAL
+
+   A circunferência não é criada por CSS.
+   Ela vem diretamente do mesmo bg.svg usado no cadastro.
+========================================================= */
+
+.hero-lateral {
+    height: 430px;
+    min-height: 430px;
+
+    background-color: var(--dark-color, #071128);
+
+    /*
+       O background-image é colocado diretamente
+       no home.html usando {% static %}
+    */
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   ÁREA DIREITA DO HERO
+========================================================= */
+
+.hero-stage {
+    position: relative;
+
+    height: 430px;
+    min-height: 430px;
+
+    overflow: hidden;
+
+    background-color: #071128;
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   CAMADAS DAS IMAGENS DO CARROSSEL
+========================================================= */
+
+.hero-photo {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0;
+
+    transition: opacity 1.2s ease-in-out;
+}
+
+
+.hero-photo.active {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   SOMBREAMENTO SOBRE AS FOTOGRAFIAS
+========================================================= */
+
+.hero-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+
+    background: linear-gradient(
+        90deg,
+
+        rgba(7, 17, 40, 0.98) 0%,
+
+        rgba(7, 17, 40, 0.94) 18%,
+
+        rgba(7, 17, 40, 0.82) 36%,
+
+        rgba(7, 17, 40, 0.55) 52%,
+
+        rgba(7, 17, 40, 0.25) 70%,
+
+        rgba(7, 17, 40, 0.08) 100%
+    );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTEÚDO DO HERO
+========================================================= */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    height: 430px;
+
+    max-width: 610px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin-left: 70px;
+
+    padding-right: 30px;
+}
+
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.hero-content h1 {
+    margin: 0 0 24px 0;
+
+    color: #ffffff;
+
+    font-size: 3rem;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+
+.hero-content h1 span {
+    color: var(--startse-gold, #d6aa18);
+}
+
+
+/* =========================================================
+   TEXTO
+========================================================= */
+
+.hero-content p {
+    max-width: 510px;
+
+    margin: 0 0 30px 0;
+
+    color: #e5e7eb;
+
+    font-size: 1rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.hero-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    flex-wrap: wrap;
+}
+
+
+/* botão amarelo */
+
+.hero-btn-primary {
+    padding: 12px 23px;
+
+    background-color: var(--startse-gold, #d6aa18);
+
+    border: 1px solid var(--startse-gold, #d6aa18);
+
+    border-radius: 5px;
+
+    color: #071128;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.hero-btn-primary:hover {
+    background-color: var(--startse-gold-hover, #bd9412);
+
+    border-color: var(--startse-gold-hover, #bd9412);
+
+    color: #071128;
+
+    transform: translateY(-1px);
+}
+
+
+/* botão transparente */
+
+.hero-btn-secondary {
+    padding: 12px 23px;
+
+    background-color: rgba(7, 17, 40, 0.30);
+
+    border: 1px solid var(--startse-gold, #d6aa18);
+
+    border-radius: 5px;
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.hero-btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   COMO FUNCIONA
+========================================================= */
+
+.como-funciona {
+    width: 100%;
+
+    background-color: #ffffff;
+
+    padding: 35px 0 45px;
+}
+
+
+.como-funciona h2 {
+    margin: 0 0 28px 0;
+
+    color: var(--startse-navy, #0b1739);
+
+    font-size: 1.7rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CONTAINER DOS 5 PASSOS
+========================================================= */
+
+.passos-container {
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   PASSO
+========================================================= */
+
+.passo {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding: 8px 18px;
+
+    border-right: 1px solid #e5e7eb;
+}
+
+
+.passo:first-child {
+    padding-left: 0;
+}
+
+
+.passo:last-child {
+    border-right: none;
+
+    padding-right: 0;
+}
+
+
+/* =========================================================
+   ÍCONE DO PASSO
+========================================================= */
+
+.passo-icon {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #f2f4f7;
+
+    color: #0b1739;
+
+    font-size: 1.4rem;
+}
+
+
+/* =========================================================
+   CONTEÚDO DOS PASSOS
+========================================================= */
+
+.passo-conteudo {
+    flex: 1;
+}
+
+
+/* número + título */
+
+.passo-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+}
+
+
+/* número */
+
+.passo-numero {
+    width: 20px;
+    height: 20px;
+
+    min-width: 20px;
+
+    border-radius: 50%;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--startse-gold, #d6aa18);
+
+    color: #ffffff;
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+}
+
+
+/* título do passo */
+
+.passo-header h3 {
+    margin: 0;
+
+    color: var(--startse-navy, #0b1739);
+
+    font-size: 0.88rem;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* descrição */
+
+.passo-conteudo p {
+    margin: 0;
+
+    color: #4b5563;
+
+    font-size: 0.8rem;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE - NOTEBOOKS
+========================================================= */
+
+@media (max-width: 1199px) {
+
+    .hero-content {
+        margin-left: 45px;
+
+        max-width: 560px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+
+    .passos-container {
+        grid-template-columns: repeat(2, 1fr);
+
+        row-gap: 20px;
+    }
+
+
+    .passo {
+        border-right: none;
+
+        padding: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .hero-lateral,
+    .hero-stage {
+        height: 410px;
+        min-height: 410px;
+    }
+
+
+    .hero-content {
+        height: 410px;
+
+        margin-left: 35px;
+
+        max-width: 500px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 2.25rem;
+    }
+
+
+    .hero-content p {
+        font-size: 0.95rem;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    /*
+       A lateral já desaparece no HTML por causa de:
+       d-none d-md-block
+    */
+
+
+    .hero-stage {
+        height: 450px;
+        min-height: 450px;
+    }
+
+
+    .hero-content {
+        height: 450px;
+
+        max-width: none;
+
+        margin-left: 0;
+
+        padding: 40px 25px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+
+    .hero-content p {
+        max-width: 100%;
+
+        font-size: 0.95rem;
+    }
+
+
+    .hero-overlay {
+        background: linear-gradient(
+            90deg,
+
+            rgba(7, 17, 40, 0.96),
+
+            rgba(7, 17, 40, 0.72)
+        );
+    }
+
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .hero-btn-primary,
+    .hero-btn-secondary {
+        width: 100%;
+
+        text-align: center;
+    }
+
+
+    .como-funciona {
+        padding: 30px 0;
+    }
+
+
+    .como-funciona h2 {
+        font-size: 1.5rem;
+    }
+
+
+    .passos-container {
+        grid-template-columns: 1fr;
+    }
+
+
+    .passo {
+        padding: 16px 0;
+
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+
+    .passo:last-child {
+        border-bottom: none;
+    }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hero-content {
+        padding: 35px 20px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+
+    .hero-btn-primary,
+    .hero-btn-secondary {
+        padding: 11px 16px;
+    }
+
+
+    .passo-icon {
+        width: 48px;
+        height: 48px;
+
+        min-width: 48px;
+    }
+
+}

@@ -1,0 +1,1461 @@
+/* ==========================================================
+   START.SE
+   PROJECTO DO ESTUDANTE
+========================================================== */
+
+:root {
+
+    --student-bg: #06142d;
+    --student-bg-dark: #031027;
+
+    --student-card: #101e38;
+    --student-card-dark: #0d1c35;
+
+    --student-gold: #e7ad00;
+    --student-gold-light: #f5bd12;
+
+    --student-green: #1e8951;
+
+    --student-white: #ffffff;
+
+    --student-text: #d5dce7;
+
+    --student-muted: #98a4b7;
+
+    --student-border:
+        rgba(255, 255, 255, 0.10);
+
+}
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+
+    box-sizing:
+        border-box;
+
+}
+
+
+html,
+body {
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+    min-height:
+        100%;
+
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #06142d;
+
+    color:
+        #ffffff;
+
+}
+
+
+/* ==========================================================
+   PÁGINA
+========================================================== */
+
+.student-page {
+
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+    background:
+        radial-gradient(
+            circle at 60% 18%,
+            #10213f 0%,
+            #071630 43%,
+            #031229 100%
+        );
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.student-sidebar {
+
+    position:
+        fixed;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        225px;
+
+    height:
+        100vh;
+
+    padding:
+        28px 13px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #031126 0%,
+            #021027 100%
+        );
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.025);
+
+}
+
+
+/* ==========================================================
+   MARCA
+========================================================== */
+
+.sidebar-header {
+
+    padding:
+        0 11px;
+
+    margin-bottom:
+        38px;
+
+}
+
+
+.sidebar-header h1 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        1.6rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.sidebar-header p {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.sidebar-menu {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.sidebar-link {
+
+    min-height:
+        53px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        8px;
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .9rem;
+
+    transition:
+        background-color .2s ease;
+
+}
+
+
+.sidebar-link:hover {
+
+    background:
+        rgba(255,255,255,.05);
+
+}
+
+
+.sidebar-link.active {
+
+    color:
+        var(--student-gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(207,154,0,.24),
+            rgba(207,154,0,.14)
+        );
+
+}
+
+
+/* ==========================================================
+   ÍCONES
+========================================================== */
+
+.sidebar-icon {
+
+    width:
+        27px;
+
+    height:
+        27px;
+
+    min-width:
+        27px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.sidebar-icon svg {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.8;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+/* ==========================================================
+   LOGOUT
+========================================================== */
+
+.sidebar-logout {
+
+    margin-top:
+        69px;
+
+    padding-top:
+        14px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+}
+
+
+/* ==========================================================
+   CONTEÚDO
+========================================================== */
+
+.student-content {
+
+    width:
+        calc(100% - 225px);
+
+    min-height:
+        100vh;
+
+    margin-left:
+        225px;
+
+    padding:
+        22px 31px 60px;
+
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+
+    min-height:
+        175px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    padding:
+        15px 6px;
+
+}
+
+
+.header-text h2 {
+
+    margin:
+        25px 0 10px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        2rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.header-text p {
+
+    margin:
+        0;
+
+    color:
+        #d2d8e2;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/* ==========================================================
+   UTILIZADOR
+========================================================== */
+
+.student-user {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+}
+
+
+.user-avatar {
+
+    width:
+        55px;
+
+    height:
+        55px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        var(--student-gold);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        1.2rem;
+
+}
+
+
+.user-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+}
+
+
+.user-info strong {
+
+    font-size:
+        .87rem;
+
+}
+
+
+.user-info span {
+
+    color:
+        #c7ced9;
+
+    font-size:
+        .75rem;
+
+}
+
+
+.user-arrow {
+
+    font-size:
+        1rem;
+
+}
+
+
+/* ==========================================================
+   TABS
+========================================================== */
+
+.project-tabs {
+
+    height:
+        57px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    gap:
+        25px;
+
+    padding-left:
+        14px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.10);
+
+}
+
+
+.project-tab {
+
+    height:
+        57px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    padding:
+        0 14px;
+
+    border-bottom:
+        3px solid transparent;
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .95rem;
+
+    font-weight:
+        500;
+
+}
+
+
+.project-tab.active {
+
+    border-bottom-color:
+        var(--student-gold);
+
+    color:
+        var(--student-gold);
+
+}
+
+
+/* ==========================================================
+   GRID PRINCIPAL
+========================================================== */
+
+.project-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(350px, .92fr)
+        minmax(550px, 1.42fr);
+
+    gap:
+        18px;
+
+    margin-top:
+        24px;
+
+}
+
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.submission-card,
+.requirements-card {
+
+    min-height:
+        600px;
+
+    border:
+        1px solid
+        var(--student-border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,34,61,.98),
+            rgba(12,28,52,.98)
+        );
+
+}
+
+
+.submission-card {
+
+    padding:
+        28px 22px;
+
+}
+
+
+.requirements-card {
+
+    padding:
+        28px 22px;
+
+}
+
+
+.submission-card > h3,
+.requirements-card > h3 {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1.12rem;
+
+    font-weight:
+        700;
+
+}
+
+
+/* ==========================================================
+   SEM PROJECTO
+========================================================== */
+
+.submission-empty {
+
+    height:
+        490px;
+
+    margin-top:
+        25px;
+
+    padding:
+        35px 25px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px dashed
+        rgba(185,197,215,.24);
+
+    border-radius:
+        6px;
+
+    text-align:
+        center;
+
+}
+
+
+/* ==========================================================
+   DOCUMENT ICON
+========================================================== */
+
+.document-icon {
+
+    width:
+        58px;
+
+    height:
+        58px;
+
+    margin-bottom:
+        30px;
+
+    color:
+        #8795aa;
+
+}
+
+
+.document-icon svg {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.5;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+/* ==========================================================
+   TEXTO
+========================================================== */
+
+.empty-title {
+
+    margin:
+        0 0 25px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .95rem;
+
+}
+
+
+.empty-description {
+
+    max-width:
+        310px;
+
+    margin:
+        0;
+
+    color:
+        #d1d7e1;
+
+    font-size:
+        .88rem;
+
+    line-height:
+        1.75;
+
+}
+
+
+/* ==========================================================
+   BOTÃO SUBMETER
+========================================================== */
+
+.submit-project-button {
+
+    min-width:
+        220px;
+
+    margin-top:
+        70px;
+
+    padding:
+        15px 22px;
+
+    border-radius:
+        5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #dfa800,
+            #f6c11b
+        );
+
+    color:
+        #06142d;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .95rem;
+
+    font-weight:
+        700;
+
+    text-align:
+        center;
+
+}
+
+
+/* ==========================================================
+   REQUISITOS
+========================================================== */
+
+.requirements-content {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(340px, 1fr)
+        280px;
+
+    gap:
+        30px;
+
+    margin-top:
+        29px;
+
+}
+
+
+.requirements-list {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        19px;
+
+}
+
+
+/* ==========================================================
+   REQUISITO
+========================================================== */
+
+.requirement {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        12px;
+
+}
+
+
+.check-icon {
+
+    width:
+        21px;
+
+    height:
+        21px;
+
+    min-width:
+        21px;
+
+    margin-top:
+        1px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--student-green);
+
+    color:
+        #ffffff;
+
+    font-size:
+        .7rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.requirement strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .9rem;
+
+}
+
+
+.requirement p {
+
+    margin:
+        0;
+
+    color:
+        #d0d6e0;
+
+    font-size:
+        .77rem;
+
+    line-height:
+        1.4;
+
+}
+
+
+/* ==========================================================
+   COLUNA ILUSTRAÇÃO
+========================================================== */
+
+.requirements-side {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        space-between;
+
+}
+
+
+/* ==========================================================
+   ILUSTRAÇÃO
+========================================================== */
+
+.checklist-illustration {
+
+    position:
+        relative;
+
+    width:
+        225px;
+
+    height:
+        270px;
+
+    margin:
+        25px auto 0;
+
+}
+
+
+.clipboard {
+
+    position:
+        absolute;
+
+    top:
+        20px;
+
+    left:
+        20px;
+
+    width:
+        155px;
+
+    height:
+        205px;
+
+    padding:
+        54px 22px 20px;
+
+    border:
+        9px solid
+        #31415a;
+
+    border-radius:
+        12px;
+
+}
+
+
+.clipboard-top {
+
+    position:
+        absolute;
+
+    top:
+        -26px;
+
+    left:
+        40px;
+
+    width:
+        58px;
+
+    height:
+        28px;
+
+    border-radius:
+        8px 8px 0 0;
+
+    background:
+        var(--student-gold);
+
+}
+
+
+.clipboard-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    margin-bottom:
+        23px;
+
+}
+
+
+.box {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    border:
+        3px solid
+        #53637a;
+
+    border-radius:
+        3px;
+
+    color:
+        var(--student-gold);
+
+    font-weight:
+        700;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.box.checked {
+
+    border-color:
+        #59697f;
+
+    color:
+        var(--student-gold);
+
+}
+
+
+.fake-line {
+
+    display:
+        block;
+
+    height:
+        4px;
+
+    border-radius:
+        4px;
+
+    background:
+        #58677c;
+
+}
+
+
+.fake-line.long {
+
+    width:
+        75px;
+
+}
+
+
+.fake-line.medium {
+
+    width:
+        60px;
+
+}
+
+
+.fake-line.short {
+
+    width:
+        50px;
+
+}
+
+
+/* ==========================================================
+   UPLOAD
+========================================================== */
+
+.upload-circle {
+
+    position:
+        absolute;
+
+    right:
+        0;
+
+    bottom:
+        28px;
+
+    width:
+        61px;
+
+    height:
+        61px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f3bd10,
+            #dfa600
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        2.7rem;
+
+    font-weight:
+        300;
+
+}
+
+
+/* ==========================================================
+   DICA
+========================================================== */
+
+.tip-card {
+
+    min-height:
+        113px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        rgba(231,173,0,.70);
+
+    border-radius:
+        6px;
+
+    background:
+        rgba(7,20,43,.25);
+
+}
+
+
+.tip-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.star-icon {
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        1.5rem;
+
+}
+
+
+.tip-header strong {
+
+    color:
+        #ffffff;
+
+    font-size:
+        .9rem;
+
+}
+
+
+.tip-card p {
+
+    margin:
+        0;
+
+    color:
+        #d2d8e2;
+
+    font-size:
+        .75rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE
+========================================================== */
+
+@media (max-width: 1200px) {
+
+    .project-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .submission-card,
+    .requirements-card {
+
+        min-height:
+            auto;
+
+    }
+
+
+    .requirements-content {
+
+        grid-template-columns:
+            1fr 260px;
+
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .student-sidebar {
+
+        width:
+            200px;
+
+    }
+
+
+    .student-content {
+
+        width:
+            calc(100% - 200px);
+
+        margin-left:
+            200px;
+
+        padding:
+            20px;
+
+    }
+
+
+    .requirements-content {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .requirements-side {
+
+        flex-direction:
+            row;
+
+        align-items:
+            center;
+
+        gap:
+            25px;
+
+    }
+
+
+    .checklist-illustration {
+
+        flex-shrink:
+            0;
+
+    }
+
+
+    .tip-card {
+
+        flex:
+            1;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .student-sidebar {
+
+        display:
+            none;
+
+    }
+
+
+    .student-content {
+
+        width:
+            100%;
+
+        margin-left:
+            0;
+
+        padding:
+            20px 16px;
+
+    }
+
+
+    .page-header {
+
+        min-height:
+            auto;
+
+        flex-direction:
+            column;
+
+        gap:
+            25px;
+
+        padding-bottom:
+            30px;
+
+    }
+
+
+    .student-user {
+
+        align-self:
+            flex-end;
+
+    }
+
+
+    .project-tabs {
+
+        overflow-x:
+            auto;
+
+    }
+
+
+    .project-tab {
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .requirements-side {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .submit-project-button {
+
+        width:
+            100%;
+
+    }
+
+}

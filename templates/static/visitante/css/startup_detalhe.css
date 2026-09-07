@@ -1,0 +1,358 @@
+.startup-detalhe {
+    background-color: #f8f9fb;
+    padding: 28px 0 50px;
+}
+
+
+.breadcrumb-startse {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-startse a {
+    color: #2563eb;
+}
+
+.breadcrumb-startse span {
+    color: #4b5563;
+}
+
+
+/* TOPO */
+
+.startup-banner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 30px;
+
+    background: linear-gradient(
+        120deg,
+        #071128 0%,
+        #0b1739 100%
+    );
+
+    border-radius: 12px;
+    padding: 24px;
+    color: white;
+}
+
+
+.startup-identidade {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+
+.startup-logo-grande {
+    width: 150px;
+    height: 150px;
+
+    background: white;
+    border-radius: 8px;
+
+    color: #238b43;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+.startup-logo-grande span {
+    font-size: 2.8rem;
+}
+
+
+.startup-logo-grande strong {
+    font-size: 1.05rem;
+}
+
+
+.startup-titulo h1 {
+    font-size: 2rem;
+    margin-bottom: 2px;
+}
+
+
+.startup-area {
+    color: var(--startse-gold);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+.badge-publicado {
+    display: inline-block;
+
+    background: #147a32;
+    color: white;
+
+    padding: 6px 12px;
+    border-radius: 6px;
+
+    margin: 10px 0;
+
+    font-size: 0.82rem;
+}
+
+
+.startup-titulo p {
+    color: #e3e7ef;
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+
+.startup-capa img {
+    width: 100%;
+    height: 190px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+/* CONTEÚDO */
+
+.startup-conteudo-card,
+.info-card,
+.investidor-card {
+
+    background: white;
+
+    border: 1px solid var(--startse-border);
+
+    border-radius: 10px;
+}
+
+
+.startup-conteudo-card {
+    padding: 10px 24px;
+}
+
+
+.startup-secao {
+    display: flex;
+    gap: 18px;
+
+    padding: 28px 0;
+
+    border-bottom:
+        1px solid var(--startse-border);
+}
+
+
+.startup-secao:last-child {
+    border-bottom: none;
+}
+
+
+.startup-secao-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        var(--startse-navy);
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+.startup-secao h3 {
+    color:
+        var(--startse-navy);
+
+    font-size:
+        1.1rem;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        9px;
+}
+
+
+.startup-secao p {
+    color:
+        #465065;
+
+    line-height:
+        1.65;
+
+    margin-bottom:
+        0;
+}
+
+
+/* INFO */
+
+.info-card {
+    padding: 24px;
+    margin-bottom: 18px;
+}
+
+
+.info-card h3,
+.investidor-card h3 {
+
+    color:
+        var(--startse-navy);
+
+    font-size:
+        1.15rem;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        18px;
+}
+
+
+.info-linha {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        120px 1fr;
+
+    gap:
+        15px;
+
+    padding:
+        11px 0;
+
+    border-bottom:
+        1px solid var(--startse-border);
+}
+
+
+.info-linha:last-child {
+    border-bottom: none;
+}
+
+
+.info-linha span {
+
+    color:
+        #344054;
+
+    font-weight:
+        600;
+
+    font-size:
+        0.88rem;
+}
+
+
+.info-linha strong,
+.info-linha a {
+
+    color:
+        #344054;
+
+    font-size:
+        0.88rem;
+
+    font-weight:
+        500;
+}
+
+
+.info-linha a {
+    color: #2563eb;
+}
+
+
+/* INVESTIDOR */
+
+.investidor-card {
+    padding: 24px;
+}
+
+
+.investidor-card p {
+
+    color:
+        #475467;
+
+    line-height:
+        1.6;
+
+    font-size:
+        0.9rem;
+}
+
+
+.investidor-login {
+
+    text-align:
+        center;
+
+    margin-top:
+        14px;
+
+    color:
+        #475467;
+
+    font-size:
+        0.88rem;
+}
+
+
+.investidor-login a {
+    color: #2563eb;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 991px) {
+
+    .startup-banner {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .startup-identidade {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+
+    .startup-logo-grande {
+        width: 120px;
+        height: 120px;
+    }
+
+
+    .info-linha {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+}

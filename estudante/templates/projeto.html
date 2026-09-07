@@ -1,0 +1,688 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Projecto | START.SE</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'estudante/css/projeto.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="student-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="student-sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Estudante
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'estudante_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PERFIL ACADÉMICO -->
+
+            <a
+                href="{% url 'perfil_academico' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="7"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Perfil Académico
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTO -->
+
+            <a
+                href="{% url 'estudante_projeto' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h8l4 4v14H6z"></path>
+
+                        <path d="M14 3v5h5"></path>
+
+                        <path d="M9 12h6"></path>
+
+                        <path d="M9 16h6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projecto
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'estudante_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="4"
+                            y="5"
+                            width="16"
+                            height="15"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M8 3v4"></path>
+
+                        <path d="M16 3v4"></path>
+
+                        <path d="M4 10h16"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+        </nav>
+
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-logout">
+
+            <a href="{% url 'estudante_sair' %}" class="sidebar-link">
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="student-content">
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="page-header">
+
+
+            <div class="header-text">
+
+                <h2>
+                    Projecto
+                </h2>
+
+                <p>
+                    Submeta e acompanhe o seu projecto na plataforma START.SE.
+                </p>
+
+            </div>
+
+
+
+            <!-- UTILIZADOR -->
+
+            <div class="student-user">
+
+
+                <div class="user-avatar">
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name|slice:":1"|upper }}
+
+                    {% else %}
+
+                        E
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="user-info">
+
+                    <strong>
+
+                        {% if request.user.first_name %}
+
+                            {{ request.user.first_name }}
+
+                        {% else %}
+
+                            Estudante
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% else %}
+
+                            estudante@uniluanda.ao
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             ABAS
+        ================================================== -->
+
+        <nav class="project-tabs">
+
+            <a
+                href="#"
+                class="project-tab active"
+            >
+                O meu projecto
+            </a>
+
+
+            <a
+                href="#"
+                class="project-tab"
+            >
+                Histórico de submissões
+            </a>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             GRID PRINCIPAL
+        ================================================== -->
+
+        <div class="project-grid">
+
+
+            <!-- =================================================
+                 SOBRE A SUBMISSÃO
+            ================================================== -->
+
+            <section class="submission-card">
+
+                <h3>
+                    Sobre a submissão
+                </h3>
+
+
+                <div class="submission-empty">
+
+
+                    <!-- ÍCONE DOCUMENTO -->
+
+                    <div class="document-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M6 3h8l4 4v14H6z"></path>
+
+                            <path d="M14 3v5h5"></path>
+
+                            <path d="M9 12h6"></path>
+
+                            <path d="M9 16h6"></path>
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <p class="empty-title">
+                        Ainda não submeteu nenhum projecto.
+                    </p>
+
+
+                    <p class="empty-description">
+
+                        Após a validação académica, poderá
+                        submeter o seu projecto e começar
+                        o processo de avaliação.
+
+                    </p>
+
+
+
+                    <a
+                        href="#"
+                        class="submit-project-button"
+                    >
+                        Submeter projecto
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 REQUISITOS
+            ================================================== -->
+
+            <section class="requirements-card">
+
+
+                <h3>
+                    Requisitos do projecto
+                </h3>
+
+
+
+                <div class="requirements-content">
+
+
+                    <!-- LISTA -->
+
+                    <div class="requirements-list">
+
+
+                        <!-- TÍTULO -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Título do projecto
+                                </strong>
+
+                                <p>
+                                    Descreva o nome do seu projecto.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- RESUMO -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Resumo executivo
+                                </strong>
+
+                                <p>
+                                    Apresente uma visão geral da ideia.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- PROBLEMA -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Descrição do problema
+                                </strong>
+
+                                <p>
+                                    Explique o problema que o projecto resolve.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- SOLUÇÃO -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Solução proposta
+                                </strong>
+
+                                <p>
+                                    Descreva a solução e como funciona.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- MODELO DE NEGÓCIO -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Modelo de negócio
+                                </strong>
+
+                                <p>
+                                    Explique como o projecto gera valor.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- EQUIPA -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Equipa
+                                </strong>
+
+                                <p>
+                                    Apresente os membros da equipa.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ANEXOS -->
+
+                        <div class="requirement">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Anexos (opcional)
+                                </strong>
+
+                                <p>
+                                    Pode anexar documentos de apoio.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ILUSTRAÇÃO + DICA -->
+
+                    <div class="requirements-side">
+
+
+                        <!-- ILUSTRAÇÃO -->
+
+                        <div class="checklist-illustration">
+
+                            <div class="clipboard">
+
+                                <span class="clipboard-top"></span>
+
+
+                                <div class="clipboard-row">
+
+                                    <span class="box checked">
+                                        ✓
+                                    </span>
+
+                                    <span class="fake-line long"></span>
+
+                                </div>
+
+
+                                <div class="clipboard-row">
+
+                                    <span class="box checked">
+                                        ✓
+                                    </span>
+
+                                    <span class="fake-line medium"></span>
+
+                                </div>
+
+
+                                <div class="clipboard-row">
+
+                                    <span class="box"></span>
+
+                                    <span class="fake-line short"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="upload-circle">
+                                ↑
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DICA -->
+
+                        <div class="tip-card">
+
+                            <div class="tip-header">
+
+                                <span class="star-icon">
+                                    ☆
+                                </span>
+
+                                <strong>
+                                    Dica
+                                </strong>
+
+                            </div>
+
+
+                            <p>
+                                Projectos completos e bem estruturados
+                                têm maiores chances de aprovação.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

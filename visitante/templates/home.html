@@ -1,0 +1,592 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}
+Início | START.SE
+{% endblock 'title' %}
+
+
+{% block 'head' %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'visitante/css/home.css' %}"
+>
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="home-hero">
+
+    <div class="container-fluid p-0">
+
+        <div class="row g-0">
+
+
+            <!-- =================================================
+                 LATERAL START.SE
+
+                 O desenho é carregado directamente do bg.svg
+                 original, garantindo que a circunferência,
+                 linhas e pontos mantenham o desenho original.
+            ================================================== -->
+
+            <div
+                class="col-md-2 d-none d-md-block hero-lateral"
+                style="background-image: url('{% static 'user/img/bg.svg' %}');"
+            >
+            </div>
+
+
+            <!-- =================================================
+                 ÁREA PRINCIPAL DO HERO
+            ================================================== -->
+
+            <div
+                class="col-12 col-md-10 hero-stage"
+                id="heroStage"
+            >
+
+
+                <!--
+                    CAMADA 1 DA IMAGEM
+
+                    Duas camadas são utilizadas para permitir
+                    a transição suave entre as fotografias.
+                -->
+
+                <div
+                    class="hero-photo hero-photo-a active"
+                >
+                </div>
+
+
+                <!-- CAMADA 2 -->
+
+                <div
+                    class="hero-photo hero-photo-b"
+                >
+                </div>
+
+
+                <!-- SOMBREAMENTO -->
+
+                <div class="hero-overlay">
+                </div>
+
+
+                <!-- =================================================
+                     CONTEÚDO DO HERO
+                ================================================== -->
+
+                <div class="hero-content">
+
+
+                    <h1>
+
+                        Transforme o seu projecto
+
+                        <br>
+
+                        numa
+
+                        <span>
+                            startup.
+                        </span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Apoiamos estudantes e recém-licenciados
+                        da Universidade de Luanda, desde a
+                        validação académica até à incubação
+                        e ligação a investidores.
+
+                    </p>
+
+
+                    <!-- BOTÕES -->
+
+                    <div class="hero-buttons">
+
+
+                        <a
+                            href="{% url 'cadastro' %}"
+                            class="btn hero-btn-primary"
+                        >
+
+                            Submeter meu projecto
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'marketplace' %}"
+                            class="btn hero-btn-secondary"
+                        >
+
+                            Explorar startups
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     COMO FUNCIONA
+===================================================== -->
+
+<section
+    class="como-funciona"
+    id="como-funciona"
+>
+
+
+    <div class="container">
+
+
+        <h2>
+            Como funciona?
+        </h2>
+
+
+
+        <div class="passos-container">
+
+
+            <!-- =================================================
+                 PASSO 1
+            ================================================== -->
+
+            <div class="passo">
+
+
+                
+
+                <div class="passo-conteudo">
+
+
+                    <div class="passo-header">
+
+
+                        <span class="passo-numero">
+                            1
+                        </span>
+
+
+                        <h3>
+                            Validação académica
+                        </h3>
+
+
+                    </div>
+
+
+                    <p>
+
+                        O estudante fornece os seus dados
+                        académicos e comprovativo para
+                        validação.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PASSO 2
+            ================================================== -->
+
+            <div class="passo">
+
+
+
+                <div class="passo-conteudo">
+
+
+                    <div class="passo-header">
+
+
+                        <span class="passo-numero">
+                            2
+                        </span>
+
+
+                        <h3>
+                            Submissão do projecto
+                        </h3>
+
+
+                    </div>
+
+
+                    <p>
+
+                        Após a validação, o estudante submete
+                        o projecto e fornece as informações
+                        necessárias para avaliação.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PASSO 3
+            ================================================== -->
+
+            <div class="passo">
+
+                <div class="passo-conteudo">
+
+
+                    <div class="passo-header">
+
+
+                        <span class="passo-numero">
+                            3
+                        </span>
+
+
+                        <h3>
+                            Avaliação
+                        </h3>
+
+
+                    </div>
+
+
+                    <p>
+
+                        O projecto é analisado com base nos
+                        critérios definidos para determinar
+                        a sua aprovação.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PASSO 4
+            ================================================== -->
+
+            <div class="passo">
+                <div class="passo-conteudo">
+
+
+                    <div class="passo-header">
+
+
+                        <span class="passo-numero">
+                            4
+                        </span>
+
+
+                        <h3>
+                            Incubação e mentoria
+                        </h3>
+
+
+                    </div>
+
+
+                    <p>
+
+                        Os projectos aprovados recebem
+                        acompanhamento, orientação e mentoria
+                        durante o processo de incubação.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PASSO 5
+            ================================================== -->
+
+            <div class="passo">
+
+                <div class="passo-conteudo">
+
+
+                    <div class="passo-header">
+
+
+                        <span class="passo-numero">
+                            5
+                        </span>
+
+
+                        <h3>
+                            Publicação e investimento
+                        </h3>
+
+
+                    </div>
+
+
+                    <p>
+
+                        As startups preparadas são publicadas
+                        no Marketplace e aproximadas de
+                        potenciais investidores.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CARROSSEL AUTOMÁTICO DO FUNDO DO HERO
+===================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /*
+        ==================================================
+        IMAGENS DO HERO
+
+        Adiciona ou remove imagens aqui.
+        ==================================================
+        */
+
+        const imagensHero = [
+
+            "{% static 'visitante/img/home/hero-1.jpeg' %}",
+
+            "{% static 'visitante/img/home/hero-2.jpeg' %}",
+
+            "{% static 'visitante/img/home/hero-3.jpeg' %}",
+
+            "{% static 'visitante/img/home/hero-4.jpeg' %}"
+
+        ];
+
+
+
+        /*
+        ==================================================
+        CAMADAS DAS IMAGENS
+        ==================================================
+        */
+
+        const camadaA =
+            document.querySelector(
+                ".hero-photo-a"
+            );
+
+
+        const camadaB =
+            document.querySelector(
+                ".hero-photo-b"
+            );
+
+
+
+        /*
+        ==================================================
+        PRÉ-CARREGAMENTO
+
+        Evita que a fotografia pisque quando ocorre
+        a primeira troca.
+        ==================================================
+        */
+
+        imagensHero.forEach(
+            function (src) {
+
+                const imagem =
+                    new Image();
+
+                imagem.src =
+                    src;
+
+            }
+        );
+
+
+
+        /*
+        ==================================================
+        PRIMEIRA IMAGEM
+        ==================================================
+        */
+
+        camadaA.style.backgroundImage =
+            `url("${imagensHero[0]}")`;
+
+
+
+        let indiceAtual = 0;
+
+
+        let camadaVisivel =
+            camadaA;
+
+
+        let camadaOculta =
+            camadaB;
+
+
+
+        /*
+        ==================================================
+        FUNÇÃO RESPONSÁVEL PELA TROCA
+        ==================================================
+        */
+
+        function trocarImagemHero() {
+
+
+            /*
+            Próxima imagem
+            */
+
+            indiceAtual =
+                (indiceAtual + 1)
+                %
+                imagensHero.length;
+
+
+
+            /*
+            Coloca a próxima fotografia
+            na camada que está invisível
+            */
+
+            camadaOculta.style.backgroundImage =
+                `url("${imagensHero[indiceAtual]}")`;
+
+
+
+            /*
+            Mostra a próxima fotografia
+            */
+
+            camadaOculta.classList.add(
+                "active"
+            );
+
+
+
+            /*
+            Esconde a fotografia anterior
+            */
+
+            camadaVisivel.classList.remove(
+                "active"
+            );
+
+
+
+            /*
+            Inverte as camadas
+            */
+
+            const temporaria =
+                camadaVisivel;
+
+
+            camadaVisivel =
+                camadaOculta;
+
+
+            camadaOculta =
+                temporaria;
+
+
+        }
+
+
+
+        /*
+        ==================================================
+        TROCA AUTOMÁTICA
+
+        5000 = 5 segundos
+        ==================================================
+        */
+
+        setInterval(
+            trocarImagemHero,
+            5000
+        );
+
+
+    }
+);
+
+</script>
+
+
+{% endblock 'body' %}

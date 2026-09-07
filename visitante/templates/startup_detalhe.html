@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}
+Detalhe da Startup | START.SE
+{% endblock 'title' %}
+
+{% block 'head' %}
+<link
+    rel="stylesheet"
+    href="{% static 'visitante/css/startup_detalhe.css' %}"
+>
+{% endblock 'head' %}
+
+{% block 'body' %}
+
+<section class="startup-detalhe">
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-startse">
+
+            <a href="{% url 'marketplace' %}">
+                Marketplace
+            </a>
+
+            <span>/</span>
+
+            <span>
+                AgroLuanda
+            </span>
+
+        </div>
+
+
+        <!-- TOPO -->
+        <div class="startup-banner">
+
+            <div class="startup-identidade">
+
+                <div class="startup-logo-grande">
+                    <span>🌱</span>
+                    <strong>AgroLuanda</strong>
+                </div>
+
+
+                <div class="startup-titulo">
+
+                    <h1>
+                        AgroLuanda
+                    </h1>
+
+                    <span class="startup-area">
+                        Agrotech
+                    </span>
+
+                    <div>
+                        <span class="badge-publicado">
+                            ✓ Publicado
+                        </span>
+                    </div>
+
+                    <p>
+                        Plataforma que conecta pequenos agricultores
+                        a mercados e serviços de apoio, promovendo
+                        produtividade e inclusão.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="startup-capa">
+
+                <img
+                    src="{% static 'visitante/img/startups/agroluanda-capa.jpeg' %}"
+                    alt="AgroLuanda"
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CONTEÚDO -->
+        <div class="row g-4 mt-1">
+
+            <!-- COLUNA PRINCIPAL -->
+            <div class="col-lg-8">
+
+                <div class="startup-conteudo-card">
+
+                    <!-- SOBRE -->
+                    <div class="startup-secao">
+
+                        <div class="startup-secao-icon">
+                            i
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Sobre a Startup
+                            </h3>
+
+                            <p>
+                                A AgroLuanda é uma plataforma digital
+                                que liga pequenos agricultores a compradores,
+                                insumos, serviços financeiros e conhecimento
+                                técnico. Utiliza tecnologia para apoiar
+                                o aumento da produtividade e melhorar
+                                o rendimento das famílias rurais.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROBLEMA -->
+                    <div class="startup-secao">
+
+                        <div class="startup-secao-icon">
+                            ?
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Problema
+                            </h3>
+
+                            <p>
+                                Os pequenos agricultores enfrentam
+                                dificuldades de acesso a mercados,
+                                insumos de qualidade, informação técnica
+                                e financiamento, limitando a produtividade
+                                e os seus rendimentos.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SOLUÇÃO -->
+                    <div class="startup-secao">
+
+                        <div class="startup-secao-icon">
+                            💡
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Solução
+                            </h3>
+
+                            <p>
+                                A plataforma conecta agricultores a mercados,
+                                fornecedores e serviços de apoio, oferecendo
+                                recomendações personalizadas, logística
+                                e ferramentas digitais para facilitar
+                                as actividades do negócio.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- COLUNA LATERAL -->
+            <div class="col-lg-4">
+
+                <!-- INFORMAÇÕES -->
+                <div class="info-card">
+
+                    <h3>
+                        Informações Rápidas
+                    </h3>
+
+                    <div class="info-linha">
+                        <span>Estágio</span>
+                        <strong>Série A</strong>
+                    </div>
+
+                    <div class="info-linha">
+                        <span>Área</span>
+                        <strong>Agrotech</strong>
+                    </div>
+
+                    <div class="info-linha">
+                        <span>Mercado-alvo</span>
+                        <strong>
+                            Pequenos agricultores em Angola
+                        </strong>
+                    </div>
+
+                    <div class="info-linha">
+                        <span>Localização</span>
+                        <strong>
+                            Luanda, Angola
+                        </strong>
+                    </div>
+
+                    <div class="info-linha">
+                        <span>Ano de fundação</span>
+                        <strong>
+                            2021
+                        </strong>
+                    </div>
+
+                    <div class="info-linha">
+                        <span>Website</span>
+
+                        <a href="#">
+                            www.agroluanda.ao
+                        </a>
+                    </div>
+
+                </div>
+
+
+
+                <!-- INVESTIDOR -->
+                <div class="investidor-card">
+
+                    <h3>
+                        Interesse do Investidor
+                    </h3>
+
+                    <p>
+                        Crie uma conta ou inicie sessão para
+                        manifestar interesse, contactar a startup
+                        e aceder às funcionalidades destinadas
+                        aos investidores.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-startse w-100"
+                    >
+                        Criar conta para contactar
+                    </a>
+
+                    <div class="investidor-login">
+
+                        Já tem conta?
+
+                        <a href="#">
+                            Entrar
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock 'body' %}
+
