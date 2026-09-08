@@ -1,0 +1,1224 @@
+/* ==========================================================
+   START.SE
+   DASHBOARD DO MENTOR
+========================================================== */
+
+:root {
+    --navy-dark: #031027;
+    --navy: #06172f;
+    --navy-light: #0a2445;
+
+    --gold: #e5ad00;
+    --gold-light: #ffc514;
+
+    --white: #ffffff;
+    --text: #d6deea;
+    --muted: #9eabba;
+
+    --border: rgba(255, 255, 255, .10);
+
+    --green: #18c76f;
+    --green-dark: rgba(18, 139, 81, .25);
+
+    --blue: #2693ff;
+    --blue-dark: rgba(19, 103, 187, .25);
+
+    --purple: #a85cff;
+    --purple-dark: rgba(117, 62, 178, .25);
+
+    --yellow-dark: rgba(181, 140, 0, .30);
+}
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            #09284a 0%,
+            #041a35 35%,
+            #03142b 65%,
+            #021024 100%
+        );
+
+    color: var(--white);
+}
+
+
+/* ==========================================================
+   ESTRUTURA PRINCIPAL
+========================================================== */
+
+.mentor-page {
+    min-height: 100vh;
+
+    display: flex;
+
+    background:
+        radial-gradient(
+            circle at 70% 10%,
+            rgba(14, 58, 100, .35),
+            transparent 40%
+        );
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    z-index: 20;
+
+    width: 230px;
+    height: 100vh;
+
+    padding: 25px 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #04162f 0%,
+            #031127 100%
+        );
+
+    border-right:
+        1px solid rgba(255, 255, 255, .04);
+}
+
+
+/* ==========================================================
+   CABEÇALHO DA SIDEBAR
+========================================================== */
+
+.sidebar-header {
+    padding: 0 14px;
+
+    margin-bottom: 34px;
+}
+
+
+.sidebar-header h1 {
+    margin: 0 0 12px;
+
+    color: var(--gold);
+
+    font-size: 1.6rem;
+
+    font-weight: 800;
+
+    letter-spacing: .3px;
+}
+
+
+.sidebar-header p {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: .88rem;
+}
+
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.sidebar-link {
+    min-height: 47px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: .88rem;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+
+.sidebar-link:hover {
+    background:
+        rgba(255, 255, 255, .04);
+}
+
+
+.sidebar-link.active {
+    color: var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(211, 163, 0, .30),
+            rgba(151, 116, 0, .20)
+        );
+}
+
+
+/* ==========================================================
+   ÍCONES DA SIDEBAR
+========================================================== */
+
+.sidebar-icon {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sidebar-icon svg {
+    width: 22px;
+    height: 22px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.sidebar-link.active .sidebar-icon svg {
+    fill: currentColor;
+}
+
+
+/* ==========================================================
+   SAIR
+========================================================== */
+
+.sidebar-bottom {
+    margin-top: 42px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, .10);
+}
+
+
+.logout-link {
+    color: #ffffff;
+}
+
+
+/* ==========================================================
+   CONTEÚDO PRINCIPAL
+========================================================== */
+
+.main-content {
+    width:
+        calc(100% - 230px);
+
+    min-height: 100vh;
+
+    margin-left: 230px;
+
+    padding:
+        30px 32px 60px;
+}
+
+
+/* ==========================================================
+   HEADER PRINCIPAL
+========================================================== */
+
+.top-header {
+    min-height: 95px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+
+/* ==========================================================
+   TÍTULO DA PÁGINA
+========================================================== */
+
+.page-title {
+    max-width: 760px;
+}
+
+
+.page-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--gold);
+
+    font-size: .82rem;
+
+    font-weight: 600;
+}
+
+
+.page-title h2 {
+    margin: 0 0 9px;
+
+    color: #ffffff;
+
+    font-size: 2rem;
+
+    font-weight: 600;
+
+    line-height: 1.1;
+}
+
+
+.page-title p {
+    margin: 0;
+
+    color: #d3dbe6;
+
+    font-size: .88rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   UTILIZADOR
+========================================================== */
+
+.mentor-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+
+.mentor-avatar {
+    width: 49px;
+    height: 49px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        var(--gold);
+
+    border-radius: 50%;
+
+    color: var(--gold);
+
+    font-size: 1rem;
+
+    font-weight: 500;
+}
+
+
+.mentor-user-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.mentor-user-info strong {
+    color: #ffffff;
+
+    font-size: .88rem;
+}
+
+
+.mentor-user-info span {
+    color: #bdc7d5;
+
+    font-size: .75rem;
+}
+
+
+.mentor-arrow {
+    margin-left: 4px;
+
+    color: #ffffff;
+
+    font-size: .9rem;
+}
+
+
+/* ==========================================================
+   CARDS SUPERIORES
+========================================================== */
+
+.dashboard-cards {
+    margin-top: 13px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.dashboard-card {
+    min-height: 183px;
+
+    padding: 17px;
+
+    display: flex;
+
+    gap: 14px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .09);
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 37, 69, .90),
+            rgba(5, 27, 53, .90)
+        );
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, .10);
+}
+
+
+/* ==========================================================
+   ÍCONES DOS CARDS
+========================================================== */
+
+.card-icon {
+    width: 55px;
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+}
+
+
+.card-icon svg {
+    width: 29px;
+    height: 29px;
+
+    fill: none;
+
+    stroke: #ffffff;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.yellow-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #ffb300,
+            #f1a500
+        );
+}
+
+
+.blue-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #328eff,
+            #2069d6
+        );
+}
+
+
+.green-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #21c96d,
+            #149951
+        );
+}
+
+
+.purple-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #9f5bdf,
+            #7330bb
+        );
+}
+
+
+/* ==========================================================
+   CONTEÚDO DOS CARDS
+========================================================== */
+
+.card-content {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.card-content h3 {
+    margin: 2px 0 3px;
+
+    color: #ffffff;
+
+    font-size: .9rem;
+
+    font-weight: 600;
+}
+
+
+.card-number {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #ffffff;
+
+    font-size: 1.55rem;
+
+    font-weight: 500;
+}
+
+
+.card-date {
+    display: block;
+
+    margin:
+        6px 0 11px;
+
+    color: #ffffff;
+
+    font-size: 1.15rem;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+.card-content p {
+    margin:
+        0 0 13px;
+
+    color: #c8d1df;
+
+    font-size: .76rem;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================
+   BOTÕES DOS CARDS
+========================================================== */
+
+.card-button {
+    width: fit-content;
+
+    min-width: 125px;
+
+    min-height: 35px;
+
+    margin-top: auto;
+
+    padding: 0 16px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 5px;
+
+    background: transparent;
+
+    text-decoration: none;
+
+    font-size: .76rem;
+
+    font-weight: 600;
+
+    transition:
+        .2s ease;
+}
+
+
+.yellow-button {
+    border:
+        1px solid
+        var(--gold);
+
+    color: var(--gold);
+}
+
+
+.yellow-button:hover {
+    background:
+        rgba(229, 173, 0, .10);
+}
+
+
+.blue-button {
+    border:
+        1px solid
+        var(--blue);
+
+    color: var(--blue);
+}
+
+
+.blue-button:hover {
+    background:
+        rgba(38, 147, 255, .10);
+}
+
+
+.green-button {
+    border:
+        1px solid
+        var(--green);
+
+    color: var(--green);
+}
+
+
+.green-button:hover {
+    background:
+        rgba(24, 199, 111, .10);
+}
+
+
+.purple-button {
+    border:
+        1px solid
+        var(--purple);
+
+    color: #cd88ff;
+}
+
+
+.purple-button:hover {
+    background:
+        rgba(168, 92, 255, .10);
+}
+
+
+/* ==========================================================
+   SECÇÃO PROJECTOS
+========================================================== */
+
+.projects-section {
+    margin-top: 18px;
+
+    padding:
+        19px 12px 0;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .09);
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 34, 64, .92),
+            rgba(4, 25, 51, .92)
+        );
+}
+
+
+/* ==========================================================
+   CABEÇALHO DA SECÇÃO
+========================================================== */
+
+.projects-header {
+    padding:
+        0 8px 18px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+
+.projects-header h3 {
+    margin:
+        0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 1.35rem;
+
+    font-weight: 600;
+}
+
+
+.projects-header p {
+    margin: 0;
+
+    color: #c7d0dd;
+
+    font-size: .82rem;
+}
+
+
+.see-all-projects {
+    margin-top: 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    color: var(--gold);
+
+    text-decoration: none;
+
+    font-size: .78rem;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.see-all-projects span {
+    font-size: 1.2rem;
+}
+
+
+/* ==========================================================
+   TABELA
+========================================================== */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.projects-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+/* ==========================================================
+   CABEÇALHO DA TABELA
+========================================================== */
+
+.projects-table thead {
+    background:
+        rgba(12, 43, 76, .62);
+}
+
+
+.projects-table th {
+    padding:
+        17px 12px;
+
+    color: #bcc7d6;
+
+    font-size: .75rem;
+
+    font-weight: 400;
+
+    text-align: left;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+/* ==========================================================
+   TAMANHO DAS COLUNAS
+========================================================== */
+
+.projects-table th:nth-child(1),
+.projects-table td:nth-child(1) {
+    width: 15%;
+}
+
+
+.projects-table th:nth-child(2),
+.projects-table td:nth-child(2) {
+    width: 15%;
+}
+
+
+.projects-table th:nth-child(3),
+.projects-table td:nth-child(3) {
+    width: 14%;
+}
+
+
+.projects-table th:nth-child(4),
+.projects-table td:nth-child(4) {
+    width: 14%;
+}
+
+
+.projects-table th:nth-child(5),
+.projects-table td:nth-child(5) {
+    width: 14%;
+}
+
+
+.projects-table th:nth-child(6),
+.projects-table td:nth-child(6) {
+    width: 17%;
+}
+
+
+.projects-table th:nth-child(7),
+.projects-table td:nth-child(7) {
+    width: 11%;
+
+    text-align: center;
+}
+
+
+/* ==========================================================
+   LINHAS
+========================================================== */
+
+.projects-table td {
+    padding:
+        20px 12px;
+
+    color: #d8e0eb;
+
+    font-size: .78rem;
+
+    line-height: 1.45;
+
+    vertical-align: middle;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, .07);
+}
+
+
+.projects-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+.projects-table tbody tr {
+    transition:
+        background .2s ease;
+}
+
+
+.projects-table tbody tr:hover {
+    background:
+        rgba(255, 255, 255, .015);
+}
+
+
+/* ==========================================================
+   STARTUP
+========================================================== */
+
+.startup-cell {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.startup-cell strong {
+    color: #ffffff;
+
+    font-size: .82rem;
+
+    font-weight: 600;
+}
+
+
+.startup-icon {
+    width: 27px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 1.45rem;
+}
+
+
+/* ==========================================================
+   FASES
+========================================================== */
+
+.phase {
+    min-width: 78px;
+
+    padding:
+        8px 13px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    font-size: .75rem;
+
+    white-space: nowrap;
+}
+
+
+.phase-submission {
+    color: #ffc400;
+
+    background:
+        rgba(194, 145, 0, .30);
+}
+
+
+.phase-validation {
+    color: #18d26f;
+
+    background:
+        rgba(14, 136, 74, .23);
+}
+
+
+.phase-evaluation {
+    color: #339cff;
+
+    background:
+        rgba(16, 102, 186, .25);
+}
+
+
+.phase-incubation {
+    color: #ffffff;
+
+    background:
+        rgba(71, 94, 124, .38);
+}
+
+
+/* ==========================================================
+   ESTADOS
+========================================================== */
+
+.status {
+    min-width: 120px;
+
+    padding:
+        7px 12px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    border-radius: 8px;
+
+    font-size: .76rem;
+
+    white-space: nowrap;
+}
+
+
+.status-dot {
+    width: 11px;
+    height: 11px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+
+.status-active {
+    color: #21d477;
+
+    background:
+        rgba(11, 121, 72, .28);
+}
+
+
+.status-active .status-dot {
+    background:
+        #19d06f;
+}
+
+
+.status-paused {
+    color: #ffc400;
+
+    background:
+        rgba(164, 127, 0, .28);
+}
+
+
+.status-paused .status-dot {
+    background:
+        #ffc000;
+}
+
+
+/* ==========================================================
+   MENU DE ACÇÕES
+========================================================== */
+
+.action-menu {
+    padding: 7px 9px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 1.15rem;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+}
+
+
+.action-menu:hover {
+    background:
+        rgba(255, 255, 255, .06);
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE
+========================================================== */
+
+@media (max-width: 1250px) {
+
+    .dashboard-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .projects-table {
+        min-width: 950px;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+
+    .main-content {
+        width:
+            calc(100% - 190px);
+
+        margin-left:
+            190px;
+
+        padding:
+            25px 20px 50px;
+    }
+
+
+    .sidebar-header h1 {
+        font-size: 1.4rem;
+    }
+
+
+    .sidebar-link {
+        padding:
+            0 11px;
+
+        gap:
+            11px;
+
+        font-size:
+            .8rem;
+    }
+
+
+    .dashboard-cards {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .projects-header {
+        flex-direction:
+            column;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        display: none;
+    }
+
+
+    .main-content {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding:
+            22px 14px 40px;
+    }
+
+
+    .top-header {
+        flex-direction:
+            column-reverse;
+
+        gap:
+            18px;
+    }
+
+
+    .mentor-user {
+        align-self:
+            flex-end;
+    }
+
+
+    .page-title h2 {
+        font-size:
+            1.7rem;
+    }
+
+
+    .dashboard-card {
+        min-height:
+            170px;
+    }
+
+}

@@ -1,0 +1,455 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Escolha a sua área | START.SE
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{% static 'usuarios/css/escolher_area.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="area-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="area-sidebar">
+
+
+        <div class="sidebar-brand">
+
+            <h1>
+                START.SE
+            </h1>
+
+        </div>
+
+
+
+        <nav class="area-menu">
+
+
+            <a
+                href="#"
+                class="area-menu-link active"
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                        <path d="M9.5 20v-6h5v6"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Início
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="area-content">
+
+
+        <!-- =================================================
+             CARROSSEL DE FUNDO
+        ================================================== -->
+
+        <div class="background-carousel">
+
+
+            <!--
+                Usa aqui as mesmas imagens que já tens
+                no carrossel da página Home.
+            -->
+
+            <div
+                class="background-slide slide-1"
+            ></div>
+
+
+            <div
+                class="background-slide slide-2"
+            ></div>
+
+
+            <div
+                class="background-slide slide-3"
+            ></div>
+
+
+            <!-- camada escura -->
+
+            <div class="background-overlay"></div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             UTILIZADOR LOGADO
+        ================================================== -->
+
+        <div class="logged-user">
+
+
+            <div class="logged-user-avatar">
+
+                {% if request.user.first_name %}
+
+                    {{ request.user.first_name|slice:":1"|upper }}
+
+                {% else %}
+
+                    {{ request.user.username|slice:":1"|upper }}
+
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="logged-user-info">
+
+                <strong>
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name }}
+
+                    {% else %}
+
+                        {{ request.user.username }}
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            <span class="logged-user-arrow">
+                ⌄
+            </span>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONTEÚDO CENTRAL
+        ================================================== -->
+
+        <section class="area-selection">
+
+
+            <div class="selection-header">
+
+
+                <h2>
+
+                    Escolha a sua
+
+                    <span>
+                        área
+                    </span>
+
+                </h2>
+
+
+                <p>
+
+                    Selecione a área pretendida
+                    para continuar na plataforma.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CARDS
+            ================================================== -->
+
+            <div class="area-cards">
+
+
+
+                <!-- =================================================
+                     ESTUDANTE
+                ================================================== -->
+
+                <article class="area-card student-card">
+
+
+                    <div class="area-icon student-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M2 9l10-5 10 5-10 5z"></path>
+
+                            <path
+                                d="M6 11.5V16c3 2.2 9 2.2 12 0v-4.5"
+                            ></path>
+
+                            <path d="M20 10v5"></path>
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <h3>
+                        Estudante
+                    </h3>
+
+
+
+                    <p>
+
+                        Aceda a oportunidades, projectos,
+                        mentorias e recursos para impulsionar
+                        o seu futuro académico e profissional.
+
+                    </p>
+
+
+
+                    {% if tem_perfil_estudante %}
+
+                        <a
+                            href="{% url 'estudante_dashboard' %}"
+                            class="area-button student-button"
+                        >
+                            Entrar como Estudante
+                        </a>
+
+                    {% else %}
+
+                        <span
+                            class="
+                                area-button
+                                disabled-button
+                            "
+                        >
+                            Perfil não disponível
+                        </span>
+
+                    {% endif %}
+
+
+                </article>
+
+
+
+                <!-- =================================================
+                     MENTOR
+                ================================================== -->
+
+                <article class="area-card">
+
+
+                    <div class="area-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="9"
+                                cy="8"
+                                r="4"
+                            ></circle>
+
+                            <circle
+                                cx="17"
+                                cy="10"
+                                r="3"
+                            ></circle>
+
+                            <path
+                                d="M2.5 21c.5-5 3-7.5 6.5-7.5S15 16 15.5 21"
+                            ></path>
+
+                            <path
+                                d="M14 15c3.5 0 5.5 2 6 6"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <h3>
+                        Mentor
+                    </h3>
+
+
+
+                    <p>
+
+                        Partilhe o seu conhecimento,
+                        acompanhe talentos e contribua
+                        para o desenvolvimento de
+                        futuros profissionais.
+
+                    </p>
+
+
+
+                    {% if tem_perfil_mentor %}
+
+                        <a
+                            href="{% url 'mentor_dashboard' %}"
+                            class="area-button"
+                        >
+                            Entrar como Mentor
+                        </a>
+
+                    {% else %}
+
+                        <span
+                            class="
+                                area-button
+                                disabled-button
+                            "
+                        >
+                            Perfil não disponível
+                        </span>
+
+                    {% endif %}
+
+
+                </article>
+
+
+
+                <!-- =================================================
+                     PATROCINADOR
+                ================================================== -->
+
+                <article class="area-card">
+
+
+                    <div class="area-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 21V9h6v12"></path>
+
+                            <path d="M10 21V4h6v17"></path>
+
+                            <path d="M16 21v-9h4v9"></path>
+
+                            <path d="M2 21h20"></path>
+
+                        </svg>
+
+                    </div>
+
+
+
+                    <h3>
+                        Patrocinador
+                    </h3>
+
+
+
+                    <p>
+
+                        Apoie o talento, conecte-se
+                        com a próxima geração e faça
+                        parte de um impacto real
+                        na educação.
+
+                    </p>
+
+
+
+                    {% if tem_perfil_patrocinador %}
+
+                        <a
+                            href="#"
+                            class="area-button"
+                        >
+                            Entrar como Patrocinador
+                        </a>
+
+                    {% else %}
+
+                        <span
+                            class="
+                                area-button
+                                disabled-button
+                            "
+                        >
+                            Perfil não disponível
+                        </span>
+
+                    {% endif %}
+
+
+                </article>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>
