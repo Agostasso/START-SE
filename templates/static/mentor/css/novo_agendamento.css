@@ -1,0 +1,313 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 75% 10%,
+            #0a2b50 0%,
+            #051b36 38%,
+            #03142b 70%,
+            #021024 100%
+        );
+}
+
+
+.schedule-page {
+    min-height: 100vh;
+
+    padding: 45px 20px;
+}
+
+
+.schedule-container {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+}
+
+
+.back-link {
+    display: inline-block;
+
+    margin-bottom: 24px;
+
+    color: #aebac9;
+
+    font-size: .78rem;
+
+    text-decoration: none;
+}
+
+
+.back-link:hover {
+    color: #e5ad00;
+}
+
+
+.schedule-header {
+    margin-bottom: 24px;
+}
+
+
+.schedule-header span {
+    color: #e5ad00;
+
+    font-size: .8rem;
+
+    font-weight: 600;
+}
+
+
+.schedule-header h1 {
+    margin: 8px 0;
+
+    font-size: 2rem;
+}
+
+
+.schedule-header p {
+    margin: 0;
+
+    color: #c3cedb;
+
+    font-size: .84rem;
+
+    line-height: 1.5;
+}
+
+
+.schedule-form {
+    padding: 26px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,36,67,.95),
+            rgba(5,26,52,.95)
+        );
+}
+
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: .76rem;
+
+    font-weight: 600;
+}
+
+
+.form-group label span {
+    color: #ff6775;
+}
+
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px;
+
+    border:
+        1px solid
+        rgba(106,151,197,.40);
+
+    border-radius: 6px;
+
+    outline: none;
+
+    background: #061d38;
+
+    color: #ffffff;
+
+    font-family: inherit;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #e5ad00;
+}
+
+
+.form-group input::placeholder {
+    color: #8090a5;
+}
+
+
+.form-group small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #8998aa;
+
+    font-size: .66rem;
+}
+
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 13px;
+}
+
+
+.form-actions {
+    padding-top: 18px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+.cancel-button,
+.save-button {
+    min-height: 41px;
+
+    padding: 0 22px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 6px;
+
+    font-size: .74rem;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.cancel-button {
+    border:
+        1px solid
+        #8092a7;
+
+    color: #ffffff;
+
+    background: transparent;
+}
+
+
+.save-button {
+    border:
+        1px solid
+        #e5ad00;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e5ad00,
+            #ffc514
+        );
+
+    color: #07152c;
+
+    cursor: pointer;
+}
+
+
+.message {
+    margin-bottom: 15px;
+
+    padding: 12px 15px;
+
+    border-radius: 6px;
+
+    font-size: .75rem;
+}
+
+
+.message.error {
+    border:
+        1px solid
+        rgba(255,90,100,.5);
+
+    background:
+        rgba(155,35,45,.25);
+
+    color:
+        #ff8992;
+}
+
+
+.message.success {
+    border:
+        1px solid
+        rgba(30,205,115,.5);
+
+    background:
+        rgba(8,120,70,.25);
+
+    color:
+        #25d47b;
+}
+
+
+@media (max-width: 650px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+
+    .schedule-form {
+        padding: 18px;
+    }
+
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+    }
+
+}

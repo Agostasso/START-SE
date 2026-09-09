@@ -1137,3 +1137,59 @@ body {
     }
 
 }
+
+
+/* ==========================================================
+   MENSAGENS
+========================================================== */
+
+.agenda-messages {
+
+    margin-bottom:
+        14px;
+
+}
+
+
+.agenda-message {
+
+    padding:
+        11px 14px;
+
+    border-radius:
+        6px;
+
+    font-size:
+        .74rem;
+
+}
+
+
+.agenda-message.success {
+
+    color:
+        #25d47b;
+
+    border:
+        1px solid
+        rgba(30,205,115,.45);
+
+    background:
+        rgba(8,120,70,.22);
+
+}
+
+
+.agenda-message.error {
+
+    color:
+        #ff8992;
+
+    border:
+        1px solid
+        rgba(255,90,100,.45);
+
+    background:
+        rgba(155,35,45,.23);
+
+}

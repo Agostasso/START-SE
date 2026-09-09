@@ -55,7 +55,9 @@
         <nav class="sidebar-menu">
 
 
-            <!-- DASHBOARD -->
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
 
             <a
                 href="{% url 'mentor_dashboard' %}"
@@ -74,6 +76,7 @@
 
                 </span>
 
+
                 <span>
                     Dashboard
                 </span>
@@ -82,7 +85,9 @@
 
 
 
-            <!-- PROJECTOS -->
+            <!-- =================================================
+                 PROJECTOS
+            ================================================== -->
 
             <a
                 href="{% url 'mentor_projects' %}"
@@ -105,6 +110,7 @@
 
                 </span>
 
+
                 <span>
                     Projectos atribuídos
                 </span>
@@ -113,7 +119,9 @@
 
 
 
-            <!-- AGENDA -->
+            <!-- =================================================
+                 AGENDA
+            ================================================== -->
 
             <a
                 href="{% url 'mentor_agenda' %}"
@@ -142,6 +150,7 @@
 
                 </span>
 
+
                 <span>
                     Agenda de mentoria
                 </span>
@@ -150,7 +159,9 @@
 
 
 
-            <!-- ACOMPANHAMENTO -->
+            <!-- =================================================
+                 ACOMPANHAMENTO
+            ================================================== -->
 
             <a
                 href="{% url 'mentor_acompanhamento' %}"
@@ -184,6 +195,7 @@
                     </svg>
 
                 </span>
+
 
                 <span>
                     Acompanhamento
@@ -222,6 +234,7 @@
 
                 </span>
 
+
                 <span>
                     Sair
                 </span>
@@ -250,7 +263,9 @@
         <header class="top-header">
 
 
-            <!-- TÍTULO -->
+            <!-- =================================================
+                 TÍTULO
+            ================================================== -->
 
             <div class="page-title">
 
@@ -281,7 +296,9 @@
             <div class="header-right">
 
 
-                <!-- MENTOR -->
+                <!-- =================================================
+                     MENTOR LOGADO
+                ================================================== -->
 
                 <div class="mentor-user">
 
@@ -319,6 +336,7 @@
                         </strong>
 
 
+
                         <span>
 
                             {% if mentor.usuario.email %}
@@ -346,16 +364,19 @@
 
 
 
-                <!-- NOVO AGENDAMENTO -->
+                <!-- =================================================
+                     NOVO AGENDAMENTO
+                ================================================== -->
 
                 <a
-                    href="#"
+                    href="{% url 'mentor_novo_agendamento' %}"
                     class="new-schedule-button"
                 >
 
                     <span class="plus-icon">
                         +
                     </span>
+
 
                     <span>
                         Novo Agendamento
@@ -368,6 +389,30 @@
 
 
         </header>
+
+
+
+        <!-- =====================================================
+             MENSAGENS
+        ====================================================== -->
+
+        {% if messages %}
+
+            <div class="agenda-messages">
+
+                {% for message in messages %}
+
+                    <div class="agenda-message {{ message.tags }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
 
 
 
@@ -420,8 +465,10 @@
                     </h3>
 
 
+                    <!-- NÚMERO DINÂMICO -->
+
                     <strong>
-                        2
+                        {{ sessoes_hoje }}
                     </strong>
 
 
@@ -431,7 +478,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_agenda' %}?periodo=hoje"
                         class="card-button yellow-button"
                     >
                         Ver agenda de hoje
@@ -486,19 +533,30 @@
                     </h3>
 
 
+                    <!-- NÚMERO DINÂMICO -->
+
                     <strong>
-                        5
+                        {{ sessoes_semana }}
                     </strong>
 
 
+                    <!-- INTERVALO DINÂMICO -->
+
                     <p>
-                        Sessões de mentoria
-                        entre 07 e 13 Set
+
+                        Sessões de mentoria entre
+
+                        {{ inicio_semana|date:"d M" }}
+
+                        e
+
+                        {{ fim_semana|date:"d M" }}
+
                     </p>
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_agenda' %}?periodo=semana"
                         class="card-button blue-button"
                     >
                         Ver esta semana
@@ -545,8 +603,10 @@
                     </h3>
 
 
+                    <!-- NÚMERO DINÂMICO -->
+
                     <strong>
-                        1
+                        {{ sessoes_reagendadas }}
                     </strong>
 
 
@@ -557,7 +617,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_agenda' %}?estado=REAGENDADA"
                         class="card-button yellow-button"
                     >
                         Ver detalhes
@@ -596,8 +656,10 @@
                     </h3>
 
 
+                    <!-- NÚMERO DINÂMICO -->
+
                     <strong>
-                        8
+                        {{ sessoes_concluidas }}
                     </strong>
 
 
@@ -608,7 +670,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_agenda' %}?estado=CONCLUIDA"
                         class="card-button purple-button"
                     >
                         Ver histórico

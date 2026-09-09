@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.utils.dateparse import parse_datetime
+from datetime import timedelta
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from estudante.models import Projecto
-from .models import Mentor, SessaoMentoria
+from .models import Mentor, SessaoMentoria, AtaMentoria
+from django.urls import reverse
 
 
 @login_required
@@ -480,10 +483,1104 @@ def projects(request):
         contexto
     )
 
+@login_required
 def agenda(request):
-    if request.method == 'GET':
-        return render(request, 'mentor_agenda.html')
 
+    # =====================================================
+    # VERIFICAR PERMISSÃO
+    # =====================================================
+
+    if not request.user.groups.filter(
+        name='Mentor'
+    ).exists():
+
+        messages.error(
+            request,
+            'Não possui autorização para acessar a área do Mentor.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # MENTOR LOGADO
+    # =====================================================
+
+    mentor = (
+        Mentor.objects
+        .filter(
+            usuario=request.user,
+            ativo=True
+        )
+        .first()
+    )
+
+
+    if not mentor:
+
+        messages.error(
+            request,
+            'Perfil de Mentor não encontrado.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # DATAS
+    # =====================================================
+
+    hoje = timezone.localdate()
+
+    inicio_semana = (
+        hoje
+        - timedelta(
+            days=hoje.weekday()
+        )
+    )
+
+    fim_semana = (
+        inicio_semana
+        + timedelta(days=6)
+    )
+
+
+    # =====================================================
+    # ESTADOS QUE AINDA FAZEM PARTE DA AGENDA
+    # =====================================================
+
+    estados_agendados = [
+        SessaoMentoria.Estado.AGENDADA,
+        SessaoMentoria.Estado.REAGENDADA,
+    ]
+
+
+    # =====================================================
+    # SESSÕES HOJE
+    # =====================================================
+
+    sessoes_hoje = (
+        SessaoMentoria.objects
+        .filter(
+            mentor=mentor,
+            estado__in=estados_agendados,
+            data_hora_inicio__date=hoje
+        )
+        .count()
+    )
+
+
+    # =====================================================
+    # SESSÕES DESTA SEMANA
+    # =====================================================
+
+    sessoes_semana = (
+        SessaoMentoria.objects
+        .filter(
+            mentor=mentor,
+            estado__in=estados_agendados,
+            data_hora_inicio__date__range=(
+                inicio_semana,
+                fim_semana
+            )
+        )
+        .count()
+    )
+    # =====================================================
+    # REAGENDADAS
+    # =====================================================
+
+    sessoes_reagendadas = (
+        SessaoMentoria.objects
+        .filter(
+            mentor=mentor,
+            estado=SessaoMentoria.Estado.REAGENDADA
+        )
+        .count()
+    )
+    # =====================================================
+    # CONCLUÍDAS NESTE MÊS
+    # =====================================================
+
+    sessoes_concluidas = (
+        SessaoMentoria.objects
+        .filter(
+            mentor=mentor,
+            estado=SessaoMentoria.Estado.CONCLUIDA,
+            data_hora_inicio__year=hoje.year,
+            data_hora_inicio__month=hoje.month
+        )
+        .count()
+    )
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
+    contexto = {
+
+        'mentor':
+            mentor,
+
+        'sessoes_hoje':
+            sessoes_hoje,
+
+        'sessoes_semana':
+            sessoes_semana,
+
+        'sessoes_reagendadas':
+            sessoes_reagendadas,
+
+        'sessoes_concluidas':
+            sessoes_concluidas,
+
+        'inicio_semana':
+            inicio_semana,
+
+        'fim_semana':
+            fim_semana,
+
+    }
+    return render(
+        request,
+        'mentor_agenda.html',
+        contexto
+    )
+
+@login_required
 def acompanhamento(request):
-    if request.method == 'GET':
-        return render(request, 'mentor_acompanhamento.html')
+
+    # =====================================================
+    # VERIFICAR PERMISSÃO
+    # =====================================================
+
+    if not request.user.groups.filter(
+        name='Mentor'
+    ).exists():
+
+        messages.error(
+            request,
+            'Não possui autorização para acessar a área do Mentor.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # MENTOR LOGADO
+    # =====================================================
+
+    mentor = (
+        Mentor.objects
+        .filter(
+            usuario=request.user,
+            ativo=True
+        )
+        .first()
+    )
+
+
+    if not mentor:
+
+        messages.error(
+            request,
+            'Perfil de Mentor não encontrado.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    agora = timezone.now()
+
+
+    # =====================================================
+    # MENTORIAS ACTIVAS
+    # =====================================================
+
+    projectos_mentor = (
+        Projecto.objects
+        .filter(
+            mentor=mentor
+        )
+    )
+
+
+    mentorias_activas = (
+        projectos_mentor
+        .filter(
+            estado__in=[
+                Projecto.EstadoProjecto.APROVADO,
+                Projecto.EstadoProjecto.EM_INCUBACAO,
+            ]
+        )
+        .count()
+    )
+
+
+    # =====================================================
+    # ATAS DO MENTOR
+    # =====================================================
+
+    atas = (
+        AtaMentoria.objects
+        .filter(
+            sessao__mentor=mentor
+        )
+        .select_related(
+            'sessao',
+            'sessao__projecto'
+        )
+    )
+
+
+    # =====================================================
+    # REGISTOS FEITOS
+    # =====================================================
+
+    registos_feitos = (
+        atas
+        .filter(
+            estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
+        )
+        .count()
+    )
+
+
+    # =====================================================
+    # PROJECTOS EM RISCO
+    #
+    # Vamos considerar o registo MAIS RECENTE
+    # de cada projecto.
+    # =====================================================
+
+    projectos_em_risco = 0
+
+
+    for projecto in projectos_mentor:
+
+        ultima_ata = (
+            atas
+            .filter(
+                sessao__projecto=projecto,
+                estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
+            )
+            .order_by(
+                '-atualizado_em'
+            )
+            .first()
+        )
+
+
+        if (
+            ultima_ata
+            and ultima_ata.estado_projecto
+            == AtaMentoria.EstadoProjecto.RISCO
+        ):
+
+            projectos_em_risco += 1
+
+
+    # =====================================================
+    # ÚLTIMA ACTUALIZAÇÃO
+    # =====================================================
+
+    ultima_ata = (
+        atas
+        .filter(
+            estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
+        )
+        .order_by(
+            '-atualizado_em'
+        )
+        .first()
+    )
+
+
+    # =====================================================
+    # SESSÃO SELECCIONADA
+    #
+    # URL:
+    # /mentor/acompanhamento/?sessao=3
+    # =====================================================
+
+    sessao_id = request.GET.get(
+        'sessao'
+    )
+
+
+    sessao_seleccionada = None
+
+    ata = None
+
+
+    if sessao_id:
+
+        sessao_seleccionada = get_object_or_404(
+
+            SessaoMentoria.objects.select_related(
+                'projecto',
+                'projecto__estudante'
+            ),
+
+            id=sessao_id,
+
+            mentor=mentor
+
+        )
+
+
+        ata = (
+            AtaMentoria.objects
+            .filter(
+                sessao=sessao_seleccionada
+            )
+            .first()
+        )
+
+
+    # =====================================================
+    # POST - GUARDAR / SUBMETER ATA
+    # =====================================================
+
+    if request.method == 'POST':
+
+        sessao_id = request.POST.get(
+            'sessao_id'
+        )
+
+
+        sessao = get_object_or_404(
+
+            SessaoMentoria.objects.select_related(
+                'projecto',
+                'projecto__estudante'
+            ),
+
+            id=sessao_id,
+
+            mentor=mentor
+
+        )
+
+
+        resumo = request.POST.get(
+            'resumo',
+            ''
+        ).strip()
+
+
+        decisoes = request.POST.get(
+            'decisoes',
+            ''
+        ).strip()
+
+
+        proximos_passos = request.POST.get(
+            'proximos_passos',
+            ''
+        ).strip()
+
+
+        estado_projecto = request.POST.get(
+            'estado_projecto'
+        )
+
+
+        acao = request.POST.get(
+            'acao'
+        )
+
+
+        # =================================================
+        # VALIDAR ESTADO
+        # =================================================
+
+        estados_validos = [
+            valor
+            for valor, nome
+            in AtaMentoria.EstadoProjecto.choices
+        ]
+
+
+        if estado_projecto not in estados_validos:
+
+            messages.error(
+                request,
+                'Seleccione um estado válido para o projecto.'
+            )
+
+            url = ( reverse('mentor_acompanhamento')+ f'?sessao={sessao.id}')
+
+            return redirect(url)
+
+
+        # =================================================
+        # SUBMISSÃO EXIGE CAMPOS PREENCHIDOS
+        # =================================================
+
+        if acao == 'submeter':
+
+            if (
+                not resumo
+                or not decisoes
+                or not proximos_passos
+            ):
+
+                messages.error(
+                    request,
+                    'Preencha todos os campos obrigatórios antes de submeter a ata.'
+                )
+
+                return redirect(
+                    f'/mentor/acompanhamento/?sessao={sessao.id}'
+                )
+
+
+        # =================================================
+        # CRIAR OU ACTUALIZAR ATA
+        # =================================================
+
+        ata, criada = (
+            AtaMentoria.objects
+            .get_or_create(
+                sessao=sessao
+            )
+        )
+
+
+        ata.resumo = resumo
+
+        ata.decisoes = decisoes
+
+        ata.proximos_passos = proximos_passos
+
+        ata.estado_projecto = estado_projecto
+
+
+        # =================================================
+        # GUARDAR RASCUNHO
+        # =================================================
+
+        if acao == 'rascunho':
+
+            ata.estado_ata = (
+                AtaMentoria.EstadoAta.RASCUNHO
+            )
+
+            ata.save()
+
+
+            messages.success(
+                request,
+                'Rascunho guardado com sucesso.'
+            )
+
+
+            return redirect(
+                f'/mentor/acompanhamento/?sessao={sessao.id}'
+            )
+
+
+        # =================================================
+        # SUBMETER ATA
+        # =================================================
+
+        elif acao == 'submeter':
+
+            ata.estado_ata = (
+                AtaMentoria.EstadoAta.SUBMETIDA
+            )
+
+            ata.submetido_em = agora
+
+            ata.save()
+
+
+            # Sessão passa a concluída
+
+            sessao.estado = (
+                SessaoMentoria.Estado.CONCLUIDA
+            )
+
+            sessao.save(
+                update_fields=[
+                    'estado'
+                ]
+            )
+
+
+            messages.success(
+                request,
+                'Ata de mentoria submetida com sucesso.'
+            )
+
+
+            return redirect(
+                'mentor_acompanhamento'
+            )
+
+
+    # =====================================================
+    # SESSÕES PENDENTES DE ATA
+    # =====================================================
+
+    sessoes_pendentes_ata = (
+        SessaoMentoria.objects
+        .filter(
+            mentor=mentor,
+            data_hora_fim__lte=agora
+        )
+        .exclude(
+            estado=SessaoMentoria.Estado.CANCELADA
+        )
+        .exclude(
+            ata__estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
+        )
+        .select_related(
+            'projecto',
+            'projecto__estudante'
+        )
+        .order_by(
+            '-data_hora_inicio'
+        )
+    )
+
+
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
+    contexto = {
+
+        'mentor':
+            mentor,
+
+        'mentorias_activas':
+            mentorias_activas,
+
+        'registos_feitos':
+            registos_feitos,
+
+        'projectos_em_risco':
+            projectos_em_risco,
+
+        'ultima_atualizacao':
+            ultima_ata,
+
+        'sessao_seleccionada':
+            sessao_seleccionada,
+
+        'ata':
+            ata,
+
+        'estados_projecto':
+            AtaMentoria.EstadoProjecto.choices,
+
+        'sessoes_pendentes_ata':
+            sessoes_pendentes_ata,
+
+    }
+
+
+    return render(
+        request,
+        'mentor_acompanhamento.html',
+        contexto
+    )
+
+
+
+@login_required
+def projecto_ficha(request, projecto_id):
+    # =====================================================
+    # VERIFICAR SE O UTILIZADOR É MENTOR
+    # =====================================================
+
+    if not request.user.groups.filter(
+        name='Mentor'
+    ).exists():
+
+        messages.error(
+            request,
+            'Não possui autorização para acessar a área do Mentor.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # RECUPERAR O MENTOR LOGADO
+    # =====================================================
+
+    mentor = (
+        Mentor.objects
+        .filter(
+            usuario=request.user,
+            ativo=True
+        )
+        .first()
+    )
+
+
+    if not mentor:
+
+        messages.error(
+            request,
+            'Perfil de Mentor não encontrado.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # RECUPERAR PROJECTO
+    #
+    # IMPORTANTE:
+    # O PROJECTO PRECISA ESTAR ATRIBUÍDO AO MENTOR LOGADO.
+    # =====================================================
+
+    projecto = get_object_or_404(
+
+        Projecto.objects.select_related(
+            'estudante',
+            'estudante__curso',
+            'estudante__curso__faculdade'
+        ),
+
+        id=projecto_id,
+
+        mentor=mentor
+
+    )
+
+
+    # =====================================================
+    # SESSÕES DO PROJECTO
+    # =====================================================
+
+    sessoes = (
+        SessaoMentoria.objects
+        .filter(
+            projecto=projecto,
+            mentor=mentor
+        )
+        .order_by(
+            '-data_hora_inicio'
+        )
+    )
+
+
+    # =====================================================
+    # PRÓXIMA SESSÃO
+    # =====================================================
+
+    agora = timezone.now()
+
+
+    proxima_sessao = (
+        sessoes
+        .filter(
+            estado=SessaoMentoria.Estado.AGENDADA,
+            data_hora_inicio__gte=agora
+        )
+        .order_by(
+            'data_hora_inicio'
+        )
+        .first()
+    )
+
+
+    # =====================================================
+    # ÚLTIMA SESSÃO CONCLUÍDA
+    # =====================================================
+
+    ultima_sessao = (
+        sessoes
+        .filter(
+            estado=SessaoMentoria.Estado.CONCLUIDA
+        )
+        .order_by(
+            '-data_hora_inicio'
+        )
+        .first()
+    )
+
+
+    # =====================================================
+    # TOTAL DE SESSÕES CONCLUÍDAS
+    # =====================================================
+
+    total_sessoes_concluidas = (
+        sessoes
+        .filter(
+            estado=SessaoMentoria.Estado.CONCLUIDA
+        )
+        .count()
+    )
+
+
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
+    contexto = {
+
+        'mentor':
+            mentor,
+
+        'projecto':
+            projecto,
+
+        'sessoes':
+            sessoes,
+
+        'proxima_sessao':
+            proxima_sessao,
+
+        'ultima_sessao':
+            ultima_sessao,
+
+        'total_sessoes_concluidas':
+            total_sessoes_concluidas,
+
+    }
+
+
+    return render(
+        request,
+        'mentor_projecto_ficha.html',
+        contexto
+    )
+
+
+
+@login_required
+def novo_agendamento(request):
+
+    # =====================================================
+    # PERMISSÃO
+    # =====================================================
+
+    if not request.user.groups.filter(
+        name='Mentor'
+    ).exists():
+
+        messages.error(
+            request,
+            'Não possui autorização para acessar a área do Mentor.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # MENTOR
+    # =====================================================
+
+    mentor = (
+        Mentor.objects
+        .filter(
+            usuario=request.user,
+            ativo=True
+        )
+        .first()
+    )
+
+
+    if not mentor:
+
+        messages.error(
+            request,
+            'Perfil de Mentor não encontrado.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # PROJECTOS QUE PODEM RECEBER MENTORIA
+    # =====================================================
+
+    projectos = (
+        Projecto.objects
+        .filter(
+            mentor=mentor,
+            estado__in=[
+                Projecto.EstadoProjecto.APROVADO,
+                Projecto.EstadoProjecto.EM_INCUBACAO,
+            ]
+        )
+        .order_by(
+            'titulo'
+        )
+    )
+
+
+    # =====================================================
+    # POST
+    # =====================================================
+
+    if request.method == 'POST':
+
+        projecto_id = request.POST.get(
+            'projecto'
+        )
+
+        titulo = request.POST.get(
+            'titulo',
+            ''
+        ).strip()
+
+        data_hora_inicio = request.POST.get(
+            'data_hora_inicio'
+        )
+
+        data_hora_fim = request.POST.get(
+            'data_hora_fim'
+        )
+
+        modalidade = request.POST.get(
+            'modalidade'
+        )
+
+        link_meet = request.POST.get(
+            'link_meet',
+            ''
+        ).strip()
+
+
+        # =================================================
+        # CAMPOS OBRIGATÓRIOS
+        # =================================================
+
+        if (
+            not projecto_id
+            or not titulo
+            or not data_hora_inicio
+            or not data_hora_fim
+            or not modalidade
+        ):
+
+            messages.error(
+                request,
+                'Preencha todos os campos obrigatórios.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # PROJECTO PRECISA PERTENCER AO MENTOR
+        # =================================================
+
+        projecto = get_object_or_404(
+            projectos,
+            id=projecto_id
+        )
+
+
+        # =================================================
+        # CONVERTER DATA/HORA
+        # =================================================
+
+        inicio = parse_datetime(
+            data_hora_inicio
+        )
+
+        fim = parse_datetime(
+            data_hora_fim
+        )
+
+
+        if not inicio or not fim:
+
+            messages.error(
+                request,
+                'Informe uma data e hora válidas.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # TORNAR AS DATAS CONSCIENTES DO FUSO HORÁRIO
+        # =================================================
+
+        if timezone.is_naive(inicio):
+
+            inicio = timezone.make_aware(
+                inicio
+            )
+
+
+        if timezone.is_naive(fim):
+
+            fim = timezone.make_aware(
+                fim
+            )
+
+
+        # =================================================
+        # FIM PRECISA SER POSTERIOR AO INÍCIO
+        # =================================================
+
+        if fim <= inicio:
+
+            messages.error(
+                request,
+                'A hora de término deve ser posterior à hora de início.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # NÃO PERMITIR AGENDAR NO PASSADO
+        # =================================================
+
+        if inicio < timezone.now():
+
+            messages.error(
+                request,
+                'Não é possível agendar uma sessão numa data passada.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # VALIDAR MODALIDADE
+        # =================================================
+
+        modalidades_validas = [
+            valor
+            for valor, nome
+            in SessaoMentoria.Modalidade.choices
+        ]
+
+
+        if modalidade not in modalidades_validas:
+
+            messages.error(
+                request,
+                'Modalidade inválida.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # VERIFICAR CONFLITO NA AGENDA
+        # =================================================
+
+        conflito = (
+            SessaoMentoria.objects
+            .filter(
+                mentor=mentor,
+                estado__in=[
+                    SessaoMentoria.Estado.AGENDADA,
+                    SessaoMentoria.Estado.REAGENDADA,
+                ],
+                data_hora_inicio__lt=fim,
+                data_hora_fim__gt=inicio
+            )
+            .exists()
+        )
+
+
+        if conflito:
+
+            messages.error(
+                request,
+                'Já existe uma sessão agendada nesse horário.'
+            )
+
+            return redirect(
+                'mentor_novo_agendamento'
+            )
+
+
+        # =================================================
+        # CRIAR SESSÃO
+        # =================================================
+
+        SessaoMentoria.objects.create(
+
+            mentor=mentor,
+
+            projecto=projecto,
+
+            titulo=titulo,
+
+            data_hora_inicio=inicio,
+
+            data_hora_fim=fim,
+
+            modalidade=modalidade,
+
+            link_meet=link_meet,
+
+            estado=SessaoMentoria.Estado.AGENDADA
+
+        )
+
+
+        messages.success(
+            request,
+            'Sessão de mentoria agendada com sucesso.'
+        )
+
+
+        return redirect(
+            'mentor_agenda'
+        )
+
+
+    # =====================================================
+    # GET
+    # =====================================================
+
+    contexto = {
+
+        'mentor':
+            mentor,
+
+        'projectos':
+            projectos,
+
+        'modalidades':
+            SessaoMentoria.Modalidade.choices,
+
+    }
+
+
+    return render(
+        request,
+        'mentor_novo_agendamento.html',
+        contexto
+    )

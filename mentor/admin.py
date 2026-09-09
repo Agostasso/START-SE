@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Mentor, SessaoMentoria
+from .models import Mentor, SessaoMentoria, AtaMentoria
 
 
 @admin.register(Mentor)
@@ -49,3 +49,24 @@ class SessaoMentoriaAdmin(admin.ModelAdmin):
         'mentor__usuario__first_name',
         'mentor__usuario__last_name',
     )
+
+@admin.register(AtaMentoria)
+class AtaMentoriaAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'sessao',
+        'estado_projecto',
+        'estado_ata',
+        'atualizado_em',
+    )
+
+    list_filter = (
+        'estado_projecto',
+        'estado_ata',
+    )
+
+    search_fields = (
+        'sessao__projecto__titulo',
+        'sessao__mentor__usuario__first_name',
+        'sessao__mentor__usuario__last_name',
+    )    

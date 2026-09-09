@@ -1,0 +1,1118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ projecto.titulo }} | Mentor | START.SE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'mentor/css/projecto_ficha.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="mentor-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Mentor
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'mentor_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+                        <path d="M5.5 10v10h13V10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTOS -->
+
+            <a
+                href="{% url 'mentor_projects' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="5"
+                            y="4"
+                            width="14"
+                            height="17"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h4"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projectos atribuídos
+                </span>
+
+            </a>
+
+
+
+            <!-- AGENDA -->
+
+            <a
+                href="{% url 'mentor_agenda' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+                        <path d="M17 3v4"></path>
+                        <path d="M3 10h18"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Agenda de mentoria
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'mentor_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="9" cy="7" r="3"></circle>
+                        <circle cx="17" cy="9" r="2.5"></circle>
+
+                        <path
+                            d="M3 20c0-4 2.5-7 6-7s6 3 6 7"
+                        ></path>
+
+                        <path
+                            d="M14 14c3.5 0 6 2 6 6"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 4H5v16h5"></path>
+                        <path d="M13 8l4 4-4 4"></path>
+                        <path d="M8 12h9"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
+        <header class="top-header">
+
+
+            <div class="page-title">
+
+                <a
+                    href="{% url 'mentor_projects' %}"
+                    class="back-link"
+                >
+                    ← Voltar aos projectos
+                </a>
+
+
+                <span class="page-label">
+                    Ficha do projecto
+                </span>
+
+
+                <h2>
+                    {{ projecto.titulo }}
+                </h2>
+
+
+                <p>
+                    Consulte as informações do projecto e acompanhe
+                    a evolução da mentoria.
+                </p>
+
+            </div>
+
+
+
+            <!-- MENTOR -->
+
+            <div class="mentor-user">
+
+
+                <div class="mentor-avatar">
+
+                    {% if mentor.usuario.first_name %}
+
+                        {{ mentor.usuario.first_name|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ mentor.usuario.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <div class="mentor-user-info">
+
+                    <strong>
+
+                        {% if mentor.usuario.get_full_name %}
+
+                            {{ mentor.usuario.get_full_name }}
+
+                        {% else %}
+
+                            {{ mentor.usuario.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if mentor.usuario.email %}
+
+                            {{ mentor.usuario.email }}
+
+                        {% else %}
+
+                            E-mail não informado
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="mentor-arrow">
+                    ⌄
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             INDICADORES
+        ====================================================== -->
+
+        <section class="summary-cards">
+
+
+            <!-- ESTADO -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon status-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M8 12l3 3 5-6"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Estado do projecto
+                    </span>
+
+                    <strong>
+                        {{ projecto.get_estado_display }}
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ÁREA -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon area-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h9l4 4v14H6z"></path>
+                        <path d="M15 3v5h5"></path>
+                        <path d="M9 12h7"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Área de actuação
+                    </span>
+
+                    <strong>
+
+                        {% if projecto.area_atuacao %}
+
+                            {{ projecto.get_area_atuacao_display }}
+
+                        {% else %}
+
+                            Não definida
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- SESSÕES REALIZADAS -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon sessions-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+                        <path d="M17 3v4"></path>
+                        <path d="M3 10h18"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Sessões realizadas
+                    </span>
+
+                    <strong>
+                        {{ total_sessoes_concluidas }}
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PRÓXIMA SESSÃO -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon next-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M12 7v6l4 2"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <span>
+                        Próxima sessão
+                    </span>
+
+
+                    {% if proxima_sessao %}
+
+                        <strong class="small-value">
+
+                            {{ proxima_sessao.data_hora_inicio|date:"d M Y" }}
+
+                            <br>
+
+                            {{ proxima_sessao.data_hora_inicio|date:"H:i" }}
+
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="small-value">
+                            Não agendada
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTEÚDO
+        ====================================================== -->
+
+        <section class="project-layout">
+
+
+            <!-- =================================================
+                 COLUNA PRINCIPAL
+            ================================================== -->
+
+            <div class="project-main">
+
+
+                <!-- =================================================
+                     INFORMAÇÕES DO PROJECTO
+                ================================================== -->
+
+                <section class="content-panel">
+
+
+                    <div class="panel-header">
+
+                        <h3>
+                            Informações do projecto
+                        </h3>
+
+                        <p>
+                            Dados submetidos pelo estudante.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- RESUMO -->
+
+                    <div class="project-section">
+
+                        <h4>
+                            Resumo executivo
+                        </h4>
+
+                        <p>
+                            {{ projecto.resumo_executivo }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- PROBLEMA -->
+
+                    <div class="project-section">
+
+                        <h4>
+                            Problema identificado
+                        </h4>
+
+                        <p>
+                            {{ projecto.problema }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- SOLUÇÃO -->
+
+                    <div class="project-section">
+
+                        <h4>
+                            Solução proposta
+                        </h4>
+
+                        <p>
+                            {{ projecto.solucao }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- MODELO -->
+
+                    <div class="project-section">
+
+                        <h4>
+                            Modelo de negócio
+                        </h4>
+
+                        <p>
+                            {{ projecto.modelo_negocio }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- EQUIPA -->
+
+                    <div class="project-section">
+
+                        <h4>
+                            Equipa
+                        </h4>
+
+                        <p>
+                            {{ projecto.equipa }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- ANEXO -->
+
+                    <div class="project-section attachment-section">
+
+                        <h4>
+                            Documento do projecto
+                        </h4>
+
+
+                        {% if projecto.anexo %}
+
+                            <a
+                                href="{{ projecto.anexo.url }}"
+                                target="_blank"
+                                class="attachment-button"
+                            >
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M6 3h9l4 4v14H6z"></path>
+                                    <path d="M15 3v5h5"></path>
+                                    <path d="M9 13h6"></path>
+
+                                </svg>
+
+                                Ver documento anexado
+
+                            </a>
+
+                        {% else %}
+
+                            <p class="empty-text">
+                                Nenhum documento foi anexado.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     HISTÓRICO DE SESSÕES
+                ================================================== -->
+
+                <section class="content-panel sessions-panel">
+
+
+                    <div class="panel-header">
+
+                        <h3>
+                            Histórico de sessões
+                        </h3>
+
+                        <p>
+                            Sessões de mentoria relacionadas com este projecto.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="sessions-table-wrapper">
+
+
+                        <table class="sessions-table">
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Sessão
+                                    </th>
+
+                                    <th>
+                                        Data
+                                    </th>
+
+                                    <th>
+                                        Modalidade
+                                    </th>
+
+                                    <th>
+                                        Estado
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+
+                            <tbody>
+
+
+                                {% for sessao in sessoes %}
+
+                                    <tr>
+
+
+                                        <td>
+
+                                            <strong>
+                                                {{ sessao.titulo }}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ sessao.data_hora_inicio|date:"d M Y" }}
+
+                                            <br>
+
+                                            <span class="time-text">
+                                                {{ sessao.data_hora_inicio|date:"H:i" }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ sessao.get_modalidade_display }}
+
+                                        </td>
+
+
+                                        <td>
+
+
+                                            {% if sessao.estado == 'CONCLUIDA' %}
+
+                                                <span class="session-status completed">
+                                                    Concluída
+                                                </span>
+
+
+                                            {% elif sessao.estado == 'AGENDADA' %}
+
+                                                <span class="session-status scheduled">
+                                                    Agendada
+                                                </span>
+
+
+                                            {% elif sessao.estado == 'REAGENDADA' %}
+
+                                                <span class="session-status rescheduled">
+                                                    Reagendada
+                                                </span>
+
+
+                                            {% elif sessao.estado == 'CANCELADA' %}
+
+                                                <span class="session-status cancelled">
+                                                    Cancelada
+                                                </span>
+
+
+                                            {% else %}
+
+                                                <span class="session-status">
+                                                    {{ sessao.get_estado_display }}
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                {% empty %}
+
+                                    <tr>
+
+                                        <td
+                                            colspan="4"
+                                            class="empty-table"
+                                        >
+                                            Ainda não existem sessões de mentoria para este projecto.
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+
+                        </table>
+
+
+                    </div>
+
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 COLUNA DIREITA
+            ================================================== -->
+
+            <aside class="project-sidebar">
+
+
+                <!-- =================================================
+                     ESTUDANTE
+                ================================================== -->
+
+                <section class="side-panel">
+
+
+                    <div class="side-panel-header">
+
+                        <h3>
+                            Responsável pelo projecto
+                        </h3>
+
+                    </div>
+
+
+
+                    <div class="student-profile">
+
+
+                        <div class="student-avatar">
+
+                            {% if projecto.estudante.nome_completo %}
+
+                                {{ projecto.estudante.nome_completo|slice:":1"|upper }}
+
+                            {% else %}
+
+                                E
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <div class="student-name">
+
+                            <strong>
+                                {{ projecto.estudante.nome_completo }}
+                            </strong>
+
+                            <span>
+                                Estudante
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="detail-list">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Nº de estudante
+                            </span>
+
+                            <strong>
+                                {{ projecto.estudante.numero_estudante }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Curso
+                            </span>
+
+                            <strong>
+                                {{ projecto.estudante.curso.nome }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Faculdade
+                            </span>
+
+                            <strong>
+                                {{ projecto.estudante.curso.faculdade.nome }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                E-mail
+                            </span>
+
+                            <strong class="email-text">
+                                {{ projecto.estudante.email_institucional }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     DADOS DO PROJECTO
+                ================================================== -->
+
+                <section class="side-panel">
+
+
+                    <div class="side-panel-header">
+
+                        <h3>
+                            Dados do projecto
+                        </h3>
+
+                    </div>
+
+
+
+                    <div class="detail-list">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Submetido em
+                            </span>
+
+                            <strong>
+                                {{ projecto.submetido_em|date:"d M Y" }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Última actualização
+                            </span>
+
+                            <strong>
+                                {{ projecto.atualizado_em|date:"d M Y" }}
+                            </strong>
+
+                        </div>
+
+
+
+                        {% if projecto.avaliado_em %}
+
+                            <div class="detail-item">
+
+                                <span>
+                                    Avaliado em
+                                </span>
+
+                                <strong>
+                                    {{ projecto.avaliado_em|date:"d M Y" }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ÚLTIMA SESSÃO
+                ================================================== -->
+
+                <section class="side-panel">
+
+
+                    <div class="side-panel-header">
+
+                        <h3>
+                            Última sessão
+                        </h3>
+
+                    </div>
+
+
+                    {% if ultima_sessao %}
+
+
+                        <div class="last-session">
+
+
+                            <strong>
+                                {{ ultima_sessao.titulo }}
+                            </strong>
+
+
+                            <span>
+
+                                {{ ultima_sessao.data_hora_inicio|date:"d M Y" }}
+
+                                ·
+
+                                {{ ultima_sessao.data_hora_inicio|date:"H:i" }}
+
+                            </span>
+
+
+                            <span>
+
+                                {{ ultima_sessao.get_modalidade_display }}
+
+                            </span>
+
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <p class="empty-text">
+                            Ainda não existem sessões concluídas.
+                        </p>
+
+
+                    {% endif %}
+
+
+                </section>
+
+
+            </aside>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+</html>

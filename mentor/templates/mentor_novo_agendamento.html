@@ -1,0 +1,302 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Novo Agendamento | START.SE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'mentor/css/novo_agendamento.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="schedule-page">
+
+
+    <div class="schedule-container">
+
+
+        <!-- VOLTAR -->
+
+        <a
+            href="{% url 'mentor_agenda' %}"
+            class="back-link"
+        >
+            ← Voltar à agenda
+        </a>
+
+
+
+        <!-- CABEÇALHO -->
+
+        <div class="schedule-header">
+
+            <span>
+                Agenda de mentoria
+            </span>
+
+            <h1>
+                Novo Agendamento
+            </h1>
+
+            <p>
+                Agende uma nova sessão de mentoria para um dos
+                projectos sob a sua responsabilidade.
+            </p>
+
+        </div>
+
+
+
+        <!-- MENSAGENS -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+
+        <!-- FORMULÁRIO -->
+
+        <form
+            method="POST"
+            class="schedule-form"
+        >
+
+            {% csrf_token %}
+
+
+
+            <!-- PROJECTO -->
+
+            <div class="form-group">
+
+                <label for="projecto">
+                    Projecto
+                    <span>*</span>
+                </label>
+
+
+                <select
+                    id="projecto"
+                    name="projecto"
+                    required
+                >
+
+                    <option
+                        value=""
+                        selected
+                        disabled
+                    >
+                        Seleccione o projecto
+                    </option>
+
+
+                    {% for projecto in projectos %}
+
+                        <option value="{{ projecto.id }}">
+
+                            {{ projecto.titulo }}
+
+                            {% if projecto.area_atuacao %}
+                                —
+                                {{ projecto.get_area_atuacao_display }}
+                            {% endif %}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+
+            <!-- TÍTULO -->
+
+            <div class="form-group">
+
+                <label for="titulo">
+                    Tema da sessão
+                    <span>*</span>
+                </label>
+
+
+                <input
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    placeholder="Ex.: Estratégia de mercado"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- DATAS -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label for="data_hora_inicio">
+                        Início
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="data_hora_inicio"
+                        name="data_hora_inicio"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="data_hora_fim">
+                        Término
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="data_hora_fim"
+                        name="data_hora_fim"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- MODALIDADE -->
+
+            <div class="form-group">
+
+                <label for="modalidade">
+                    Modalidade
+                    <span>*</span>
+                </label>
+
+
+                <select
+                    id="modalidade"
+                    name="modalidade"
+                    required
+                >
+
+                    <option
+                        value=""
+                        selected
+                        disabled
+                    >
+                        Seleccione a modalidade
+                    </option>
+
+
+                    {% for valor, nome in modalidades %}
+
+                        <option value="{{ valor }}">
+                            {{ nome }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+
+            <!-- GOOGLE MEET -->
+
+            <div class="form-group">
+
+                <label for="link_meet">
+                    Link da sessão
+                </label>
+
+
+                <input
+                    type="url"
+                    id="link_meet"
+                    name="link_meet"
+                    placeholder="https://meet.google.com/..."
+                >
+
+                <small>
+                    Opcional. Utilize este campo para sessões online.
+                </small>
+
+            </div>
+
+
+
+            <!-- BOTÕES -->
+
+            <div class="form-actions">
+
+                <a
+                    href="{% url 'mentor_agenda' %}"
+                    class="cancel-button"
+                >
+                    Cancelar
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    Agendar sessão
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

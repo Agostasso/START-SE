@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 
+
 class Mentor(models.Model):
 
     usuario = models.OneToOneField(
@@ -113,4 +114,74 @@ class SessaoMentoria(models.Model):
         return (
             f'{self.projecto.titulo} - '
             f'{self.data_hora_inicio}'
+    
         )
+
+
+class AtaMentoria(models.Model):
+
+    class EstadoProjecto(models.TextChoices):
+
+        ACTIVO = 'ACTIVO', 'Activo'
+        PAUSA = 'PAUSA', 'Em pausa'
+        RISCO = 'RISCO', 'Em risco'
+        CONCLUIDO = 'CONCLUIDO', 'Concluído'
+
+    class EstadoAta(models.TextChoices):
+
+        RASCUNHO = 'RASCUNHO', 'Rascunho'
+        SUBMETIDA = 'SUBMETIDA', 'Submetida'
+
+
+    sessao = models.OneToOneField(
+        SessaoMentoria,
+        on_delete=models.CASCADE,
+        related_name='ata'
+    )
+
+
+    resumo = models.TextField()
+
+
+    decisoes = models.TextField()
+
+
+    proximos_passos = models.TextField()
+
+
+    estado_projecto = models.CharField(
+        max_length=20,
+        choices=EstadoProjecto.choices,
+        default=EstadoProjecto.ACTIVO
+    )
+
+
+    estado_ata = models.CharField(
+        max_length=20,
+        choices=EstadoAta.choices,
+        default=EstadoAta.RASCUNHO
+    )
+
+
+    criado_em = models.DateTimeField(
+    auto_now_add=True
+    )
+
+
+    atualizado_em = models.DateTimeField(
+    auto_now=True
+    )
+
+
+    submetido_em = models.DateTimeField(
+    null=True,
+    blank=True
+    )
+
+
+    def __str__(self):
+
+        return (
+            f'Ata - {self.sessao.projecto.titulo} - '
+            f'{self.sessao.data_hora_inicio}'
+            )
