@@ -98,7 +98,7 @@
             <!-- PROJECTOS ATRIBUÍDOS -->
 
             <a
-                href="#"
+                href="{% url 'mentor_projects' %}"
                 class="sidebar-link"
             >
 
@@ -138,7 +138,7 @@
             <!-- AGENDA DE MENTORIA -->
 
             <a
-                href="#"
+                href="{% url 'mentor_agenda' %}"
                 class="sidebar-link"
             >
 
@@ -182,7 +182,7 @@
             <!-- ACOMPANHAMENTO -->
 
             <a
-                href="#"
+                href="{% url 'mentor_acompanhamento' %}"
                 class="sidebar-link"
             >
 
@@ -456,7 +456,7 @@
 
 
                     <strong class="card-number">
-                        4
+                        {{ total_projectos }}
                     </strong>
 
 
@@ -533,20 +533,40 @@
                     </h3>
 
 
-                    <strong class="card-date">
+                    {% if proxima_sessao %}
 
-                        10 Set 2026 | 14:00
+                        <strong class="card-date">
 
-                    </strong>
+                            {{ proxima_sessao.data_hora_inicio|date:"d M Y" }}
+        |
+                             {{ proxima_sessao.data_hora_inicio|date:"H:i" }}
+
+                            </strong>
+
 
 
                     <p>
 
-                        Mentoria com a EcoTech
-                        <br>
-                        (Online).
+                         Mentoria com
+                         {{ proxima_sessao.projecto.titulo }}
+
+                         <br>
+
+                        ({{ proxima_sessao.get_modalidade_display }}).
 
                     </p>
+
+                    {% else %}
+
+                     <strong class="card-date">
+                            Sem sessão
+                    </strong>
+
+                     <p>
+                         Nenhuma sessão futura agendada.
+                    </p>
+
+                    {% endif %}
 
 
                     <a
@@ -614,7 +634,7 @@
 
 
                     <strong class="card-number">
-                        12
+                        {{ sessoes_realizadas }}
                     </strong>
 
 
@@ -683,7 +703,7 @@
 
 
                     <strong class="card-number">
-                        3
+                        {{ mentorias_activas }}
                     </strong>
 
 
@@ -833,408 +853,219 @@
                     <tbody>
 
 
+{% for item in projectos_dashboard %}
 
-                        <!-- =====================================
-                             ECOTECH
-                        ====================================== -->
 
-                        <tr>
+    <tr>
 
 
-                            <td>
+        <!-- STARTUP -->
 
-                                <div class="startup-cell">
+        <td>
 
+            <div class="startup-cell">
 
-                                    <span class="startup-icon">
-                                        🌿
-                                    </span>
+                <span class="startup-icon">
+                    🚀
+                </span>
 
+                <strong>
+                    {{ item.projecto.titulo }}
+                </strong>
 
-                                    <strong>
-                                        EcoTech
-                                    </strong>
+            </div>
 
+        </td>
 
-                                </div>
 
-                            </td>
 
+        <!-- ÁREA DE ACTUAÇÃO -->
 
+        <td>
 
-                            <td>
-                                Tecnologia Verde
-                            </td>
+            {% if item.projecto.area_atuacao %}
 
+                {{ item.projecto.area_atuacao }}
 
+            {% else %}
 
-                            <td>
+                Não definida
 
-                                <span class="phase phase-submission">
+            {% endif %}
 
-                                    Submissão
+        </td>
 
-                                </span>
 
-                            </td>
 
+        <!-- FASE ACTUAL -->
 
+        <td>
 
-                            <td>
-                                03 Set 2026
-                            </td>
+            {% if item.projecto.estado == 'PENDENTE' %}
 
+                <span class="phase phase-submission">
+                    Pendente
+                </span>
 
 
-                            <td>
+            {% elif item.projecto.estado == 'APROVADO' %}
 
-                                10 Set 2026
-                                <br>
-                                14:00
+                <span class="phase phase-validation">
+                    Aprovado
+                </span>
 
-                            </td>
 
+            {% elif item.projecto.estado == 'EM_INCUBACAO' %}
 
+                <span class="phase phase-incubation">
+                    Incubação
+                </span>
 
-                            <td>
 
-                                <span class="status status-active">
+            {% elif item.projecto.estado == 'PUBLICADO' %}
 
+                <span class="phase phase-validation">
+                    Publicado
+                </span>
 
-                                    <span class="status-dot">
-                                    </span>
 
+            {% else %}
 
-                                    Activo
+                <span class="phase phase-evaluation">
 
+                    {{ item.projecto.get_estado_display }}
 
-                                </span>
+                </span>
 
-                            </td>
+            {% endif %}
 
+        </td>
 
 
-                            <td>
 
-                                <button
-                                    type="button"
-                                    class="action-menu"
-                                    title="Acções"
-                                >
+        <!-- ÚLTIMA SESSÃO -->
 
-                                    •••
+        <td>
 
-                                </button>
+            {% if item.ultima_sessao %}
 
-                            </td>
+                {{ item.ultima_sessao.data_hora_inicio|date:"d M Y" }}
 
+            {% else %}
 
-                        </tr>
+                --
 
+            {% endif %}
 
+        </td>
 
-                        <!-- =====================================
-                             EDUMAIS
-                        ====================================== -->
 
-                        <tr>
 
+        <!-- PRÓXIMA SESSÃO -->
 
-                            <td>
+        <td>
 
-                                <div class="startup-cell">
+            {% if item.proxima_sessao %}
 
+                {{ item.proxima_sessao.data_hora_inicio|date:"d M Y" }}
 
-                                    <span class="startup-icon">
-                                        🎓
-                                    </span>
+                <br>
 
+                {{ item.proxima_sessao.data_hora_inicio|date:"H:i" }}
 
-                                    <strong>
-                                        EduMais
-                                    </strong>
+            {% else %}
 
+                --
 
-                                </div>
+            {% endif %}
 
-                            </td>
+        </td>
 
 
 
-                            <td>
-                                Educação
-                            </td>
+        <!-- ESTADO -->
 
+        <td>
 
+            {% if item.projecto.estado == 'PUBLICADO' %}
 
-                            <td>
+                <span class="status status-active">
 
-                                <span class="phase phase-validation">
+                    <span class="status-dot"></span>
 
-                                    Validação
+                    Concluído
 
-                                </span>
+                </span>
 
-                            </td>
 
+            {% elif item.projecto.estado == 'REJEITADO' %}
 
+                <span class="status status-paused">
 
-                            <td>
-                                28 Ago 2026
-                            </td>
+                    <span class="status-dot"></span>
 
+                    Rejeitado
 
+                </span>
 
-                            <td>
 
-                                12 Set 2026
-                                <br>
-                                10:00
+            {% else %}
 
-                            </td>
+                <span class="status status-active">
 
+                    <span class="status-dot"></span>
 
+                    Activo
 
-                            <td>
+                </span>
 
-                                <span class="status status-active">
+            {% endif %}
 
+        </td>
 
-                                    <span class="status-dot">
-                                    </span>
 
 
-                                    Activo
+        <!-- ACÇÕES -->
 
+        <td>
 
-                                </span>
+            <button
+                type="button"
+                class="action-menu"
+            >
+                •••
+            </button>
 
-                            </td>
+        </td>
 
 
+    </tr>
 
-                            <td>
 
-                                <button
-                                    type="button"
-                                    class="action-menu"
-                                    title="Acções"
-                                >
+{% empty %}
 
-                                    •••
 
-                                </button>
+    <tr>
 
-                            </td>
+        <td
+            colspan="7"
+            style="
+                text-align:center;
+                padding:35px;
+            "
+        >
 
+            Nenhum projecto foi atribuído a este Mentor.
 
-                        </tr>
+        </td>
 
+    </tr>
 
 
-                        <!-- =====================================
-                             SAÚDE+
-                        ====================================== -->
+{% endfor %}
 
-                        <tr>
 
-
-                            <td>
-
-                                <div class="startup-cell">
-
-
-                                    <span class="startup-icon">
-                                        💙
-                                    </span>
-
-
-                                    <strong>
-                                        Saúde+
-                                    </strong>
-
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-                                Saúde Digital
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="phase phase-evaluation">
-
-                                    Avaliação
-
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-                                01 Set 2026
-                            </td>
-
-
-
-                            <td>
-
-                                15 Set 2026
-                                <br>
-                                16:00
-
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="status status-active">
-
-
-                                    <span class="status-dot">
-                                    </span>
-
-
-                                    Activo
-
-
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <button
-                                    type="button"
-                                    class="action-menu"
-                                    title="Acções"
-                                >
-
-                                    •••
-
-                                </button>
-
-                            </td>
-
-
-                        </tr>
-
-
-
-                        <!-- =====================================
-                             AGROLDA
-                        ====================================== -->
-
-                        <tr>
-
-
-                            <td>
-
-                                <div class="startup-cell">
-
-
-                                    <span class="startup-icon">
-                                        🌱
-                                    </span>
-
-
-                                    <strong>
-                                        AgroLda
-                                    </strong>
-
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-
-                                Agricultura
-                                <br>
-                                Sustentável
-
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="phase phase-incubation">
-
-                                    Incubação
-
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-                                25 Ago 2026
-                            </td>
-
-
-
-                            <td>
-
-                                18 Set 2026
-                                <br>
-                                11:00
-
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="status status-paused">
-
-
-                                    <span class="status-dot">
-                                    </span>
-
-
-                                    Em pausa
-
-
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <button
-                                    type="button"
-                                    class="action-menu"
-                                    title="Acções"
-                                >
-
-                                    •••
-
-                                </button>
-
-                            </td>
-
-
-                        </tr>
-
-
-                    </tbody>
-
+</tbody>
 
                 </table>
 

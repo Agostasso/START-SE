@@ -196,6 +196,34 @@ class PerfilAcademico(models.Model):
 
 class Projecto(models.Model):
 
+    class AreaAtuacao(models.TextChoices):
+
+        FINTECH = 'FINTECH', 'Fintech'
+
+        AGROTECH = 'AGROTECH', 'Agrotech'
+
+        EDUTECH = 'EDUTECH', 'Edutech'
+
+        HEALTHTECH = 'HEALTHTECH', 'Healthtech'
+
+        PROPTECH_CONSTRUTECH = (
+            'PROPTECH_CONSTRUTECH',
+            'Proptech / Construtech'
+        )
+
+        RETAILTECH_LOGTECH = (
+            'RETAILTECH_LOGTECH',
+            'Retailtech / Logtech'
+        )
+
+        GREENTECH_CLEANTECH = (
+            'GREENTECH_CLEANTECH',
+            'Greentech / Cleantech'
+        )
+
+        GOVTECH = 'GOVTECH', 'Govtech'
+
+
     class EstadoProjecto(models.TextChoices):
 
         PENDENTE = (
@@ -236,6 +264,12 @@ class Projecto(models.Model):
     )
 
 
+    area_atuacao = models.CharField(
+        max_length=30,
+        choices=AreaAtuacao.choices,
+        blank=True
+    )
+
     resumo_executivo = models.TextField()
 
 
@@ -246,7 +280,6 @@ class Projecto(models.Model):
 
 
     modelo_negocio = models.TextField()
-
 
     equipa = models.TextField()
 
@@ -285,6 +318,14 @@ class Projecto(models.Model):
         auto_now=True
     )
 
+
+    mentor = models.ForeignKey(
+    'mentor.Mentor',
+    on_delete=models.SET_NULL,
+    related_name='projectos',
+    null=True,
+    blank=True
+    )
 
     def __str__(self):
 

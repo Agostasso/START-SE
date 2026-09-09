@@ -1,0 +1,1159 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Acompanhamento | Mentor | START.SE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'mentor/css/acompanhamento.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="mentor-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>START.SE</h1>
+
+            <p>Área do Mentor</p>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'mentor_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+                        <path d="M5.5 10v10h13V10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTOS -->
+
+            <a
+                href="{% url 'mentor_projects' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h9l4 4v14H6z"></path>
+                        <path d="M15 3v5h5"></path>
+                        <path d="M9 12h7"></path>
+                        <path d="M9 16h7"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projectos atribuídos
+                </span>
+
+            </a>
+
+
+
+            <!-- AGENDA -->
+
+            <a
+                href="{% url 'mentor_agenda' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+                        <path d="M17 3v4"></path>
+                        <path d="M3 10h18"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Agenda de mentoria
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'mentor_acompanhamento' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="9" cy="7" r="3"></circle>
+                        <circle cx="17" cy="9" r="2.5"></circle>
+
+                        <path
+                            d="M3 20c0-4 2.5-7 6-7s6 3 6 7"
+                        ></path>
+
+                        <path
+                            d="M14 14c3.5 0 6 2 6 6"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SAIR -->
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 4H5v16h5"></path>
+                        <path d="M13 8l4 4-4 4"></path>
+                        <path d="M8 12h9"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
+        <header class="top-header">
+
+
+            <div class="page-title">
+
+                <span class="page-label">
+                    Acompanhamento
+                </span>
+
+                <h2>
+                    Acompanhamento
+                </h2>
+
+                <p>
+                    Acompanhe o progresso dos projectos que mentoriza
+                    e registe as suas notas de acompanhamento.
+                </p>
+
+            </div>
+
+
+
+            <!-- MENTOR -->
+
+            <div class="mentor-user">
+
+
+                <div class="mentor-avatar">
+
+                    {% if mentor.usuario.first_name %}
+
+                        {{ mentor.usuario.first_name|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ mentor.usuario.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="mentor-user-info">
+
+                    <strong>
+
+                        {% if mentor.usuario.get_full_name %}
+
+                            {{ mentor.usuario.get_full_name }}
+
+                        {% else %}
+
+                            {{ mentor.usuario.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if mentor.usuario.email %}
+
+                            {{ mentor.usuario.email }}
+
+                        {% else %}
+
+                            E-mail não informado
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="mentor-arrow">
+                    ⌄
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CARDS
+        ====================================================== -->
+
+        <section class="summary-cards">
+
+
+            <!-- MENTORIAS ACTIVAS -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon purple-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M5 20v-5"></path>
+                        <path d="M10 20V11"></path>
+                        <path d="M15 20V7"></path>
+                        <path d="M20 20V3"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <h3>
+                        Mentorias activas
+                    </h3>
+
+                    <strong>
+                        3
+                    </strong>
+
+                    <p>
+                        Projectos em acompanhamento activo.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="summary-button purple-button"
+                    >
+                        Ver projectos
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- REGISTOS -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon blue-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h9l4 4v14H6z"></path>
+                        <path d="M15 3v5h5"></path>
+                        <path d="M9 12h7"></path>
+                        <path d="M9 16h7"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <h3>
+                        Registos feitos
+                    </h3>
+
+                    <strong>
+                        18
+                    </strong>
+
+                    <p>
+                        Notas de acompanhamento registadas.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="summary-button blue-button"
+                    >
+                        Ver registos
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PROJECTOS EM RISCO -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon yellow-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M12 3L2.5 20h19z"></path>
+                        <path d="M12 9v5"></path>
+                        <path d="M12 17h.01"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <h3>
+                        Projectos em risco
+                    </h3>
+
+                    <strong>
+                        1
+                    </strong>
+
+                    <p>
+                        Projectos que requerem atenção.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="summary-button yellow-button"
+                    >
+                        Ver detalhes
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ÚLTIMA ACTUALIZAÇÃO -->
+
+            <article class="summary-card">
+
+                <div class="summary-icon green-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+                        <path d="M17 3v4"></path>
+                        <path d="M3 10h18"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="summary-content">
+
+                    <h3>
+                        Última actualização
+                    </h3>
+
+                    <strong class="date-value">
+                        03 Set 2026
+                    </strong>
+
+                    <p>
+                        Há 2 dias
+                    </p>
+
+                    <a
+                        href="#"
+                        class="summary-button green-button"
+                    >
+                        Registar nota
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTEÚDO INFERIOR
+        ====================================================== -->
+
+        <section class="followup-layout">
+
+
+            <!-- =================================================
+                 FORMULÁRIO
+            ================================================== -->
+
+            <div class="report-panel">
+
+
+                <div class="report-header">
+
+                    <h3>
+                        Preencher ata de mentoria
+                    </h3>
+
+                    <p>
+                        Registe os principais pontos da sessão de mentoria,
+                        decisões e próximos passos.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ALERTA -->
+
+                <div class="session-alert">
+
+
+                    <span class="session-check">
+                        ✓
+                    </span>
+
+
+                    <div>
+
+                        <strong>
+                            Sessão concluída · Preencher Ata
+                        </strong>
+
+                        <p>
+                            A sessão terminou na sua agenda.
+                            Complete a ata de mentoria abaixo.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FORMULÁRIO
+                ================================================== -->
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <!-- PRIMEIRA LINHA -->
+
+                    <div class="form-grid first-row">
+
+
+                        <!-- STARTUP -->
+
+                        <div class="form-group">
+
+                            <label for="startup">
+
+                                Startup
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <select
+                                id="startup"
+                                name="startup"
+                                required
+                            >
+
+                                <option value="ECOTECH">
+                                    🌿 EcoTech
+                                </option>
+
+                                <option value="EDUMAIS">
+                                    EduMais
+                                </option>
+
+                                <option value="SAUDE">
+                                    Saúde+
+                                </option>
+
+                                <option value="AGROLDA">
+                                    AgroLda
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- DATA -->
+
+                        <div class="form-group">
+
+                            <label for="data_sessao">
+
+                                Data da sessão
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <input
+                                type="date"
+                                id="data_sessao"
+                                name="data_sessao"
+                                value="2026-09-03"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- HORA -->
+
+                        <div class="form-group">
+
+                            <label for="hora">
+
+                                Hora
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="hora"
+                                name="hora"
+                                value="14:00 – 15:00"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- SEGUNDA LINHA -->
+
+                    <div class="form-grid second-row">
+
+
+                        <!-- TIPO -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Tipo de sessão
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <div class="radio-options">
+
+
+                                <label class="radio-option">
+
+                                    <input
+                                        type="radio"
+                                        name="tipo_sessao"
+                                        value="ONLINE"
+                                        checked
+                                    >
+
+                                    <span class="radio-circle"></span>
+
+                                    Online
+
+                                </label>
+
+
+
+                                <label class="radio-option">
+
+                                    <input
+                                        type="radio"
+                                        name="tipo_sessao"
+                                        value="PRESENCIAL"
+                                    >
+
+                                    <span class="radio-circle"></span>
+
+                                    Presencial
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- TEMA -->
+
+                        <div class="form-group topic-group">
+
+                            <label for="tema">
+
+                                Tema da mentoria
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="tema"
+                                name="tema"
+                                placeholder="Ex.: Estratégia de mercado, Produto, Captação de investimento..."
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- RESUMO -->
+
+                    <div class="form-group textarea-group">
+
+                        <label for="resumo">
+
+                            Resumo da sessão
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <textarea
+                            id="resumo"
+                            name="resumo"
+                            maxlength="1000"
+                            placeholder="Descreva os principais tópicos discutidos, questões levantadas e insights partilhados..."
+                            required
+                        ></textarea>
+
+
+                        <span class="counter">
+                            0/1000
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DECISÕES -->
+
+                    <div class="form-group textarea-group">
+
+                        <label for="decisoes">
+
+                            Decisões e encaminhamentos
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <textarea
+                            id="decisoes"
+                            name="decisoes"
+                            maxlength="1000"
+                            placeholder="Registe as decisões tomadas, orientações dadas e encaminhamentos definidos..."
+                            required
+                        ></textarea>
+
+
+                        <span class="counter">
+                            0/1000
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- PRÓXIMOS PASSOS -->
+
+                    <div class="form-group textarea-group">
+
+                        <label for="proximos_passos">
+
+                            Próximos passos
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <textarea
+                            id="proximos_passos"
+                            name="proximos_passos"
+                            maxlength="1000"
+                            placeholder="Liste as acções a serem realizadas, responsáveis e prazos (se aplicável)..."
+                            required
+                        ></textarea>
+
+
+                        <span class="counter">
+                            0/1000
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- ESTADO -->
+
+                    <div class="form-group project-status">
+
+                        <label for="estado_projecto">
+
+                            Estado do projecto
+
+                            <span>*</span>
+
+                        </label>
+
+
+                        <select
+                            id="estado_projecto"
+                            name="estado_projecto"
+                            required
+                        >
+
+                            <option value="ACTIVO">
+                                🟢 Activo
+                            </option>
+
+                            <option value="PAUSA">
+                                🟡 Em pausa
+                            </option>
+
+                            <option value="RISCO">
+                                🔴 Em risco
+                            </option>
+
+                            <option value="CONCLUIDO">
+                                Concluído
+                            </option>
+
+                        </select>
+
+
+                        <small>
+                            Seleccione o estado actual do projecto após esta sessão.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- BOTÕES -->
+
+                    <div class="form-actions">
+
+
+                        <button
+                            type="button"
+                            class="draft-button"
+                        >
+                            Guardar rascunho
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="submit-button"
+                        >
+
+                            <span>
+                                ➤
+                            </span>
+
+                            Submeter ata
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SESSÃO SELECCIONADA
+            ================================================== -->
+
+            <aside class="selected-session">
+
+
+                <h3>
+                    Sessão seleccionada
+                </h3>
+
+
+
+                <!-- STARTUP -->
+
+                <div class="session-detail">
+
+                    <span class="detail-icon green-text">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M19 4C11 4 5 8 5 15c4-4 8-5 13-5"
+                            ></path>
+
+                            <path
+                                d="M5 20c1-7 6-11 14-16"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+
+                    <span class="detail-label">
+                        Startup
+                    </span>
+
+
+                    <strong>
+                        EcoTech
+                    </strong>
+
+                </div>
+
+
+
+                <!-- MENTORADO -->
+
+                <div class="session-detail">
+
+                    <span class="detail-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="9"
+                                cy="7"
+                                r="3"
+                            ></circle>
+
+                            <path
+                                d="M3 20c0-4 2.5-7 6-7s6 3 6 7"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+
+                    <span class="detail-label">
+                        Mentorado
+                    </span>
+
+
+                    <strong>
+                        Ana Silva
+                    </strong>
+
+                </div>
+
+
+
+                <!-- DATA -->
+
+                <div class="session-detail">
+
+                    <span class="detail-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <rect
+                                x="3"
+                                y="5"
+                                width="18"
+                                height="16"
+                                rx="2"
+                            ></rect>
+
+                            <path d="M7 3v4"></path>
+                            <path d="M17 3v4"></path>
+
+                        </svg>
+
+                    </span>
+
+
+                    <span class="detail-label">
+                        Data
+                    </span>
+
+
+                    <strong>
+                        03 Set 2026
+                    </strong>
+
+                </div>
+
+
+
+                <!-- HORA -->
+
+                <div class="session-detail">
+
+                    <span class="detail-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="9"
+                            ></circle>
+
+                            <path
+                                d="M12 7v6l4 2"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+
+                    <span class="detail-label">
+                        Hora
+                    </span>
+
+
+                    <strong>
+                        14:00 – 15:00
+                    </strong>
+
+                </div>
+
+
+
+                <!-- MODALIDADE -->
+
+                <div class="session-detail">
+
+                    <span class="detail-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <rect
+                                x="3"
+                                y="6"
+                                width="13"
+                                height="12"
+                                rx="2"
+                            ></rect>
+
+                            <path
+                                d="M16 10l5-3v10l-5-3"
+                            ></path>
+
+                        </svg>
+
+                    </span>
+
+
+                    <span class="detail-label">
+                        Modalidade
+                    </span>
+
+
+                    <strong>
+                        Online
+                    </strong>
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="session-detail">
+
+                    <span class="complete-icon">
+                        ✓
+                    </span>
+
+
+                    <span class="detail-label">
+                        Estado
+                    </span>
+
+
+                    <strong class="completed-status">
+                        Concluída
+                    </strong>
+
+                </div>
+
+
+            </aside>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

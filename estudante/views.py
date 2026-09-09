@@ -677,6 +677,10 @@ def submeter_projecto(request):
             ''
         ).strip()
 
+        area_atuacao = request.POST.get(
+            'area_atuacao'
+                    )
+
         resumo_executivo = request.POST.get(
             'resumo_executivo',
             ''
@@ -713,6 +717,7 @@ def submeter_projecto(request):
 
         if not all([
             titulo,
+            area_atuacao,
             resumo_executivo,
             problema,
             solucao,
@@ -743,6 +748,8 @@ def submeter_projecto(request):
             estudante=perfil,
 
             titulo=titulo,
+
+            area_atuacao=area_atuacao,
 
             resumo_executivo=resumo_executivo,
 
@@ -778,6 +785,7 @@ def submeter_projecto(request):
 
     contexto = {
         'perfil': perfil,
+        'area_atuacao': Projecto.AreaAtuacao.choices,
     }
     return render(
         request,

@@ -1,0 +1,634 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Agenda de mentoria | Mentor | START.SE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'mentor/css/agenda.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="mentor-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Mentor
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="{% url 'mentor_dashboard' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 11.5L12 4l9 7.5"></path>
+
+                        <path d="M5.5 10v10h13V10"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <!-- PROJECTOS -->
+
+            <a
+                href="{% url 'mentor_projects' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M6 3h9l4 4v14H6z"></path>
+
+                        <path d="M15 3v5h5"></path>
+
+                        <path d="M9 12h7"></path>
+
+                        <path d="M9 16h7"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Projectos atribuídos
+                </span>
+
+            </a>
+
+
+
+            <!-- AGENDA -->
+
+            <a
+                href="{% url 'mentor_agenda' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+
+                        <path d="M17 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Agenda de mentoria
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHAMENTO -->
+
+            <a
+                href="{% url 'mentor_acompanhamento' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="3"
+                        ></circle>
+
+                        <circle
+                            cx="17"
+                            cy="9"
+                            r="2.5"
+                        ></circle>
+
+                        <path
+                            d="M3 20c0-4 2.5-7 6-7s6 3 6 7"
+                        ></path>
+
+                        <path
+                            d="M14 14c3.5 0 6 2 6 6"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Acompanhamento
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- =================================================
+             SAIR
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link logout-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 4H5v16h5"></path>
+
+                        <path d="M13 8l4 4-4 4"></path>
+
+                        <path d="M8 12h9"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="top-header">
+
+
+            <!-- TÍTULO -->
+
+            <div class="page-title">
+
+                <span class="page-label">
+                    Agenda
+                </span>
+
+
+                <h2>
+                    Agenda de mentoria
+                </h2>
+
+
+                <p>
+                    Consulte e gerencie as suas sessões de mentoria,
+                    acompanhe os próximos encontros e mantenha a sua
+                    agenda organizada.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LADO DIREITO
+            ================================================== -->
+
+            <div class="header-right">
+
+
+                <!-- MENTOR -->
+
+                <div class="mentor-user">
+
+
+                    <div class="mentor-avatar">
+
+                        {% if mentor.usuario.first_name %}
+
+                            {{ mentor.usuario.first_name|slice:":1"|upper }}
+
+                        {% else %}
+
+                            {{ mentor.usuario.username|slice:":1"|upper }}
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="mentor-user-info">
+
+                        <strong>
+
+                            {% if mentor.usuario.get_full_name %}
+
+                                {{ mentor.usuario.get_full_name }}
+
+                            {% else %}
+
+                                {{ mentor.usuario.username }}
+
+                            {% endif %}
+
+                        </strong>
+
+
+                        <span>
+
+                            {% if mentor.usuario.email %}
+
+                                {{ mentor.usuario.email }}
+
+                            {% else %}
+
+                                E-mail não informado
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <span class="mentor-arrow">
+                        ⌄
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- NOVO AGENDAMENTO -->
+
+                <a
+                    href="#"
+                    class="new-schedule-button"
+                >
+
+                    <span class="plus-icon">
+                        +
+                    </span>
+
+                    <span>
+                        Novo Agendamento
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CARDS
+        ====================================================== -->
+
+        <section class="agenda-cards">
+
+
+            <!-- =================================================
+                 SESSÕES HOJE
+            ================================================== -->
+
+            <article class="agenda-card">
+
+
+                <div class="card-icon blue-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+
+                        <path d="M17 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Sessões hoje
+                    </h3>
+
+
+                    <strong>
+                        2
+                    </strong>
+
+
+                    <p>
+                        Sessões agendadas para hoje
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button yellow-button"
+                    >
+                        Ver agenda de hoje
+                    </a>
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 ESTA SEMANA
+            ================================================== -->
+
+            <article class="agenda-card">
+
+
+                <div class="card-icon green-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <rect
+                            x="3"
+                            y="5"
+                            width="18"
+                            height="16"
+                            rx="2"
+                        ></rect>
+
+                        <path d="M7 3v4"></path>
+
+                        <path d="M17 3v4"></path>
+
+                        <path d="M3 10h18"></path>
+
+                        <path d="M8 14h2"></path>
+
+                        <path d="M14 14h2"></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Esta semana
+                    </h3>
+
+
+                    <strong>
+                        5
+                    </strong>
+
+
+                    <p>
+                        Sessões de mentoria
+                        entre 07 e 13 Set
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button blue-button"
+                    >
+                        Ver esta semana
+                    </a>
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 REAGENDADAS
+            ================================================== -->
+
+            <article class="agenda-card">
+
+
+                <div class="card-icon yellow-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M12 7v6"></path>
+
+                        <path d="M12 13l4 2"></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Reagendadas
+                    </h3>
+
+
+                    <strong>
+                        1
+                    </strong>
+
+
+                    <p>
+                        Sessões que foram
+                        reagendadas
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button yellow-button"
+                    >
+                        Ver detalhes
+                    </a>
+
+                </div>
+
+
+            </article>
+
+
+
+            <!-- =================================================
+                 CONCLUÍDAS
+            ================================================== -->
+
+            <article class="agenda-card">
+
+
+                <div class="card-icon purple-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M5 12l4 4L19 6"></path>
+
+                    </svg>
+
+                </div>
+
+
+
+                <div class="card-content">
+
+                    <h3>
+                        Concluídas
+                    </h3>
+
+
+                    <strong>
+                        8
+                    </strong>
+
+
+                    <p>
+                        Sessões concluídas
+                        neste mês
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="card-button purple-button"
+                    >
+                        Ver histórico
+                    </a>
+
+                </div>
+
+
+            </article>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

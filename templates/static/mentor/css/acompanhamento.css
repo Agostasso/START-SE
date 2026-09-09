@@ -1,0 +1,1746 @@
+/* ==========================================================
+   START.SE
+   ACOMPANHAMENTO DO MENTOR
+========================================================== */
+
+:root {
+
+    --navy-dark: #031027;
+    --navy: #06182f;
+    --navy-card: #082444;
+
+    --gold: #e5ad00;
+    --gold-light: #ffc719;
+
+    --white: #ffffff;
+
+    --text: #d4dde8;
+    --muted: #9eabba;
+
+    --border:
+        rgba(255, 255, 255, .09);
+
+    --blue: #2995ff;
+    --green: #1dcc72;
+    --purple: #9850de;
+
+}
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:
+        #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 72% 7%,
+            #0a2a4d 0%,
+            #061d39 35%,
+            #03152d 70%,
+            #021024 100%
+        );
+
+}
+
+
+/* ==========================================================
+   PÁGINA
+========================================================== */
+
+.mentor-page {
+
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar {
+
+    position:
+        fixed;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        230px;
+
+    height:
+        100vh;
+
+    z-index:
+        20;
+
+    padding:
+        25px 14px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #04162f 0%,
+            #031127 100%
+        );
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.04);
+
+}
+
+
+.sidebar-header {
+
+    padding:
+        0 14px;
+
+    margin-bottom:
+        34px;
+
+}
+
+
+.sidebar-header h1 {
+
+    margin:
+        0 0 12px;
+
+    color:
+        var(--gold);
+
+    font-size:
+        1.6rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.sidebar-header p {
+
+    margin:
+        0;
+
+    font-size:
+        .88rem;
+
+}
+
+
+/* ==========================================================
+   MENU
+========================================================== */
+
+.sidebar-menu {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.sidebar-link {
+
+    min-height:
+        47px;
+
+    padding:
+        0 14px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    border-radius:
+        8px;
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .88rem;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.sidebar-link:hover {
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+
+.sidebar-link.active {
+
+    color:
+        var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(211,163,0,.30),
+            rgba(151,116,0,.20)
+        );
+
+}
+
+
+.sidebar-icon {
+
+    width:
+        25px;
+
+    height:
+        25px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.sidebar-icon svg {
+
+    width:
+        22px;
+
+    height:
+        22px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.45;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+/* ==========================================================
+   SAIR
+========================================================== */
+
+.sidebar-bottom {
+
+    margin-top:
+        42px;
+
+    padding-top:
+        17px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+}
+
+
+/* ==========================================================
+   CONTEÚDO PRINCIPAL
+========================================================== */
+
+.main-content {
+
+    width:
+        calc(100% - 230px);
+
+    min-height:
+        100vh;
+
+    margin-left:
+        230px;
+
+    padding:
+        27px 27px 40px;
+
+}
+
+
+/* ==========================================================
+   CABEÇALHO
+========================================================== */
+
+.top-header {
+
+    min-height:
+        98px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap:
+        30px;
+
+}
+
+
+.page-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--gold);
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.page-title h2 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        1.85rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.page-title p {
+
+    margin:
+        0;
+
+    color:
+        #d1d9e4;
+
+    font-size:
+        .82rem;
+
+}
+
+
+/* ==========================================================
+   MENTOR
+========================================================== */
+
+.mentor-user {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+}
+
+
+.mentor-avatar {
+
+    width:
+        49px;
+
+    height:
+        49px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        var(--gold);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--gold);
+
+}
+
+
+.mentor-user-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+
+}
+
+
+.mentor-user-info strong {
+
+    font-size:
+        .86rem;
+
+}
+
+
+.mentor-user-info span {
+
+    color:
+        #bdc7d5;
+
+    font-size:
+        .72rem;
+
+}
+
+
+.mentor-arrow {
+
+    margin-left:
+        4px;
+
+}
+
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.summary-cards {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        12px;
+
+}
+
+
+.summary-card {
+
+    min-height:
+        158px;
+
+    padding:
+        16px;
+
+    display:
+        flex;
+
+    gap:
+        13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,37,69,.93),
+            rgba(5,27,53,.93)
+        );
+
+}
+
+
+/* ==========================================================
+   ÍCONES DOS CARDS
+========================================================== */
+
+.summary-icon {
+
+    width:
+        53px;
+
+    height:
+        53px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+}
+
+
+.summary-icon svg {
+
+    width:
+        28px;
+
+    height:
+        28px;
+
+    fill:
+        none;
+
+    stroke:
+        #ffffff;
+
+    stroke-width:
+        1.5;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+.purple-icon {
+
+    background:
+        linear-gradient(
+            145deg,
+            #9e55df,
+            #7434ba
+        );
+
+}
+
+
+.blue-icon {
+
+    background:
+        linear-gradient(
+            145deg,
+            #3193ff,
+            #176ed8
+        );
+
+}
+
+
+.yellow-icon {
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffbd00,
+            #eaa100
+        );
+
+}
+
+
+.green-icon {
+
+    background:
+        linear-gradient(
+            145deg,
+            #21c970,
+            #11984f
+        );
+
+}
+
+
+/* ==========================================================
+   CONTEÚDO DOS CARDS
+========================================================== */
+
+.summary-content {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+}
+
+
+.summary-content h3 {
+
+    margin:
+        2px 0 3px;
+
+    font-size:
+        .84rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.summary-content strong {
+
+    margin-bottom:
+        5px;
+
+    font-size:
+        1.45rem;
+
+    font-weight:
+        500;
+
+}
+
+
+.summary-content .date-value {
+
+    font-size:
+        1.15rem;
+
+}
+
+
+.summary-content p {
+
+    margin:
+        0 0 9px;
+
+    color:
+        #c7d0dc;
+
+    font-size:
+        .7rem;
+
+    line-height:
+        1.4;
+
+}
+
+
+/* ==========================================================
+   BOTÕES DOS CARDS
+========================================================== */
+
+.summary-button {
+
+    width:
+        fit-content;
+
+    min-width:
+        122px;
+
+    height:
+        32px;
+
+    margin-top:
+        auto;
+
+    padding:
+        0 14px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        5px;
+
+    background:
+        transparent;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .7rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.purple-button {
+
+    color:
+        #c27cff;
+
+    border:
+        1px solid
+        #9958db;
+
+}
+
+
+.blue-button {
+
+    color:
+        #39a0ff;
+
+    border:
+        1px solid
+        #248bea;
+
+}
+
+
+.yellow-button {
+
+    color:
+        var(--gold-light);
+
+    border:
+        1px solid
+        var(--gold);
+
+}
+
+
+.green-button {
+
+    color:
+        #20cd72;
+
+    border:
+        1px solid
+        #18b867;
+
+}
+
+
+/* ==========================================================
+   ÁREA INFERIOR
+========================================================== */
+
+.followup-layout {
+
+    margin-top:
+        12px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 2.7fr)
+        minmax(280px, 1fr);
+
+    gap:
+        10px;
+
+    align-items:
+        start;
+
+}
+
+
+/* ==========================================================
+   FORMULÁRIO
+========================================================== */
+
+.report-panel {
+
+    padding:
+        16px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,36,67,.95),
+            rgba(5,26,52,.95)
+        );
+
+}
+
+
+.report-header h3 {
+
+    margin:
+        0 0 4px;
+
+    font-size:
+        1rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.report-header p {
+
+    margin:
+        0 0 12px;
+
+    color:
+        #c5cfdb;
+
+    font-size:
+        .7rem;
+
+}
+
+
+/* ==========================================================
+   ALERTA SESSÃO
+========================================================== */
+
+.session-alert {
+
+    min-height:
+        56px;
+
+    margin-bottom:
+        14px;
+
+    padding:
+        9px 13px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    border:
+        1px solid
+        rgba(42,137,230,.62);
+
+    border-radius:
+        6px;
+
+    background:
+        rgba(13,70,122,.20);
+
+}
+
+
+.session-check {
+
+    width:
+        27px;
+
+    height:
+        27px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        #1ccd77;
+
+    color:
+        #ffffff;
+
+}
+
+
+.session-alert strong {
+
+    color:
+        #ffc20b;
+
+    font-size:
+        .73rem;
+
+}
+
+
+.session-alert p {
+
+    margin:
+        3px 0 0;
+
+    color:
+        #b9c5d3;
+
+    font-size:
+        .65rem;
+
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.form-grid {
+
+    display:
+        grid;
+
+    gap:
+        11px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.first-row {
+
+    grid-template-columns:
+        1.35fr
+        .92fr
+        .92fr;
+
+}
+
+
+.second-row {
+
+    grid-template-columns:
+        .9fr
+        2.1fr;
+
+}
+
+
+.form-group {
+
+    min-width:
+        0;
+
+}
+
+
+.form-group > label {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    font-size:
+        .69rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.form-group > label span {
+
+    color:
+        #ff5667;
+
+}
+
+
+/* ==========================================================
+   CAMPOS
+========================================================== */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width:
+        100%;
+
+    border:
+        1px solid
+        rgba(104,151,199,.40);
+
+    border-radius:
+        5px;
+
+    outline:
+        none;
+
+    background:
+        rgba(5,30,57,.86);
+
+    color:
+        #ffffff;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .68rem;
+
+}
+
+
+.form-group input,
+.form-group select {
+
+    height:
+        37px;
+
+    padding:
+        0 11px;
+
+}
+
+
+.form-group textarea {
+
+    min-height:
+        59px;
+
+    padding:
+        10px 11px;
+
+    resize:
+        vertical;
+
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color:
+        #8493a6;
+
+}
+
+
+/* ==========================================================
+   RADIO
+========================================================== */
+
+.radio-options {
+
+    height:
+        37px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        22px;
+
+}
+
+
+.radio-option {
+
+    display:
+        flex !important;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    margin:
+        0 !important;
+
+    color:
+        #dce5ef;
+
+    font-size:
+        .69rem !important;
+
+    font-weight:
+        400 !important;
+
+    cursor:
+        pointer;
+
+}
+
+
+.radio-option input {
+
+    display:
+        none;
+
+}
+
+
+.radio-circle {
+
+    width:
+        17px;
+
+    height:
+        17px;
+
+    position:
+        relative;
+
+    border:
+        2px solid
+        #8ca0ba;
+
+    border-radius:
+        50%;
+
+}
+
+
+.radio-option input:checked + .radio-circle {
+
+    border-color:
+        #ffc000;
+
+}
+
+
+.radio-option input:checked + .radio-circle::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        3px;
+
+    left:
+        3px;
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        #ffc000;
+
+}
+
+
+/* ==========================================================
+   TEXTAREA
+========================================================== */
+
+.textarea-group {
+
+    position:
+        relative;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.counter {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        #8999ad;
+
+    font-size:
+        .61rem;
+
+    text-align:
+        right;
+
+}
+
+
+/* ==========================================================
+   ESTADO
+========================================================== */
+
+.project-status {
+
+    width:
+        44%;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.project-status small {
+
+    display:
+        block;
+
+    margin-top:
+        4px;
+
+    color:
+        #8292a6;
+
+    font-size:
+        .61rem;
+
+}
+
+
+/* ==========================================================
+   BOTÕES FORM
+========================================================== */
+
+.form-actions {
+
+    padding-top:
+        9px;
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        9px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+
+.form-actions button {
+
+    min-height:
+        36px;
+
+    padding:
+        0 22px;
+
+    border-radius:
+        5px;
+
+    font-size:
+        .68rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+}
+
+
+.draft-button {
+
+    border:
+        1px solid
+        #8296ac;
+
+    background:
+        transparent;
+
+    color:
+        #ffffff;
+
+}
+
+
+.submit-button {
+
+    border:
+        1px solid
+        var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            #ecae00,
+            #ffc720
+        );
+
+    color:
+        #07152d;
+
+}
+
+
+/* ==========================================================
+   SESSÃO SELECCIONADA
+========================================================== */
+
+.selected-session {
+
+    padding:
+        17px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,36,67,.95),
+            rgba(5,26,52,.95)
+        );
+
+}
+
+
+.selected-session h3 {
+
+    margin:
+        0 0 17px;
+
+    font-size:
+        .98rem;
+
+    font-weight:
+        600;
+
+}
+
+
+/* ==========================================================
+   DETALHES DA SESSÃO
+========================================================== */
+
+.session-detail {
+
+    min-height:
+        37px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        27px
+        1fr
+        1.2fr;
+
+    gap:
+        6px;
+
+    align-items:
+        center;
+
+}
+
+
+.detail-icon {
+
+    width:
+        21px;
+
+    height:
+        21px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #dbe4ee;
+
+}
+
+
+.detail-icon svg {
+
+    width:
+        19px;
+
+    height:
+        19px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.5;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+.green-text {
+
+    color:
+        #1dcc72;
+
+}
+
+
+.detail-label {
+
+    color:
+        #b9c5d4;
+
+    font-size:
+        .65rem;
+
+}
+
+
+.session-detail strong {
+
+    color:
+        #ffffff;
+
+    font-size:
+        .69rem;
+
+    font-weight:
+        500;
+
+}
+
+
+.complete-icon {
+
+    width:
+        21px;
+
+    height:
+        21px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        #1ccc72;
+
+    color:
+        #062b3b;
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.completed-status {
+
+    width:
+        fit-content;
+
+    padding:
+        6px 11px;
+
+    border-radius:
+        7px;
+
+    background:
+        rgba(10,119,70,.30);
+
+    color:
+        #1ed377 !important;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media (max-width: 1250px) {
+
+    .summary-cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .followup-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .selected-session {
+
+        max-width:
+            500px;
+
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+
+        width:
+            190px;
+
+    }
+
+
+    .main-content {
+
+        width:
+            calc(100% - 190px);
+
+        margin-left:
+            190px;
+
+        padding:
+            24px 20px 40px;
+
+    }
+
+
+    .first-row,
+    .second-row {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .project-status {
+
+        width:
+            100%;
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .sidebar {
+
+        display:
+            none;
+
+    }
+
+
+    .main-content {
+
+        width:
+            100%;
+
+        margin-left:
+            0;
+
+        padding:
+            20px 14px 35px;
+
+    }
+
+
+    .top-header {
+
+        flex-direction:
+            column-reverse;
+
+        gap:
+            15px;
+
+    }
+
+
+    .mentor-user {
+
+        align-self:
+            flex-end;
+
+    }
+
+
+    .summary-cards {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .form-actions {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .form-actions button {
+
+        width:
+            100%;
+
+    }
+
+}

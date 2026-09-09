@@ -411,6 +411,36 @@
                     ></textarea>
 
                 </div>
+                <!-- AREA DE ATUAÇÃO -->
+
+                <div class="project-form-group">
+
+                    <label for="area_atuacao">
+    Área de actuação
+</label>
+
+<select
+    id="area_atuacao"
+    name="area_atuacao"
+    required
+>
+
+    <option value="" selected disabled>
+        Seleccione a área de actuação
+    </option>
+
+    {% for valor, nome in areas_atuacao %}
+
+        <option value="{{ valor }}">
+            {{ nome }}
+        </option>
+
+    {% endfor %}
+
+</select>
+
+                </div>
+
 
 
 
