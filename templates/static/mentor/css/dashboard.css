@@ -1222,3 +1222,34 @@ body {
     }
 
 }
+
+
+/* ==========================================================
+   AJUSTES DINÂMICOS DO DASHBOARD
+========================================================== */
+
+/* O menu de acções da tabela agora é um link para a ficha do projecto. */
+.action-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* Projecto ainda pendente de avaliação. */
+.status-pending {
+    color: #ffc400;
+    background: rgba(164, 127, 0, .28);
+}
+
+.status-pending .status-dot {
+    background: #ffc000;
+}
+
+/* Mantém os botões navegáveis com resposta visual. */
+.card-button:focus-visible,
+.see-all-projects:focus-visible,
+.action-menu:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}

@@ -1095,8 +1095,6 @@ def acompanhamento(request):
         contexto
     )
 
-
-
 @login_required
 def projecto_ficha(request, projecto_id):
     # =====================================================
@@ -1262,8 +1260,6 @@ def projecto_ficha(request, projecto_id):
         'mentor_projecto_ficha.html',
         contexto
     )
-
-
 
 @login_required
 def novo_agendamento(request):

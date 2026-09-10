@@ -666,9 +666,53 @@ Dashboard | START.SE
 
 
 
-                    <span class="card-status status-mentor">
+                    <span
+                        class="
+                            card-status
 
-                        {{ mentoria_estado }}
+                            {% if projeto and projeto.estado == 'PUBLICADO' %}
+                                status-validado
+
+                            {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
+                                status-mentor
+
+                            {% elif projeto and projeto.estado == 'APROVADO' and projeto.mentor %}
+                                status-mentor
+
+                            {% elif projeto and projeto.estado == 'APROVADO' %}
+                                status-pending
+
+                            {% else %}
+                                status-blocked
+                            {% endif %}
+                        "
+                    >
+
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
+
+                            Concluída
+
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' and projeto.mentor %}
+
+                            Em acompanhamento
+
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
+
+                            Em incubação
+
+                        {% elif projeto and projeto.estado == 'APROVADO' and projeto.mentor %}
+
+                            Mentor atribuído
+
+                        {% elif projeto and projeto.estado == 'APROVADO' %}
+
+                            Aguardando mentor
+
+                        {% else %}
+
+                            Indisponível
+
+                        {% endif %}
 
                     </span>
 
@@ -676,21 +720,37 @@ Dashboard | START.SE
 
                     <p>
 
+                        {% if projeto and projeto.estado == 'APROVADO' and projeto.mentor %}
 
-                        {% if projeto and projeto.estado == 'APROVADO' %}
+                            O seu projecto foi aprovado e já possui
+                            um mentor atribuído. Consulte o acompanhamento
+                            para ver os dados da mentoria.
+
+                        {% elif projeto and projeto.estado == 'APROVADO' %}
 
                             O seu projecto foi aprovado.
                             Aguarde a atribuição de um mentor.
 
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' and projeto.mentor %}
+
+                            O seu projecto encontra-se em processo
+                            de incubação e mentoria com
+
+                            {% if projeto.mentor.usuario.get_full_name %}
+                                {{ projeto.mentor.usuario.get_full_name }}.
+                            {% else %}
+                                {{ projeto.mentor.usuario.username }}.
+                            {% endif %}
+
                         {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
 
-                            O seu projecto encontra-se
-                            em processo de incubação e mentoria.
+                            O seu projecto encontra-se em processo
+                            de incubação. Aguarde a atribuição do mentor.
 
                         {% elif projeto and projeto.estado == 'PUBLICADO' %}
 
-                            A etapa de incubação do seu projecto
-                            foi concluída.
+                            A etapa de incubação e mentoria
+                            do seu projecto foi concluída.
 
                         {% else %}
 
@@ -699,19 +759,31 @@ Dashboard | START.SE
 
                         {% endif %}
 
-
                     </p>
 
 
 
-                    <span
-                        class="
-                            card-button
-                            button-disabled
-                        "
-                    >
-                        Ver mentor
-                    </span>
+                    {% if projeto and projeto.mentor %}
+
+                        <a
+                            href="{% url 'estudante_acompanhamento' %}#perfil-mentor"
+                            class="card-button button-green"
+                        >
+                            Ver mentor
+                        </a>
+
+                    {% else %}
+
+                        <span
+                            class="
+                                card-button
+                                button-disabled
+                            "
+                        >
+                            Ver mentor
+                        </span>
+
+                    {% endif %}
 
 
                 </div>
@@ -745,7 +817,10 @@ Dashboard | START.SE
 
 
 
-            <div class="journey-steps">
+            <div
+                class="journey-steps"
+                style="--journey-progress: {{ progresso|default:0 }}%;"
+            >
 
 
                 <div class="journey-line"></div>
@@ -994,14 +1069,14 @@ Dashboard | START.SE
                     class="
                         journey-step
 
-                        {% if projeto.estado == 'PUBLICADO' %}
-
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
                             completed
 
-                        {% elif projeto.estado == 'APROVADO' or projeto.estado == 'EM_INCUBACAO' %}
-
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
                             current
 
+                        {% elif projeto and projeto.estado == 'APROVADO' %}
+                            current
                         {% endif %}
                     "
                 >
@@ -1009,7 +1084,7 @@ Dashboard | START.SE
 
                     <div class="step-circle">
 
-                        {% if projeto.estado == 'PUBLICADO' %}
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
 
                             ✓
 
@@ -1032,17 +1107,25 @@ Dashboard | START.SE
 
                     <span>
 
-                        {% if projeto.estado == 'PUBLICADO' %}
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
 
                             Concluído
 
-                        {% elif projeto.estado == 'EM_INCUBACAO' %}
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' and projeto.mentor %}
 
                             Em curso
 
-                        {% elif projeto.estado == 'APROVADO' %}
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
 
-                            Próxima etapa
+                            Aguardando mentor
+
+                        {% elif projeto and projeto.estado == 'APROVADO' and projeto.mentor %}
+
+                            Mentor atribuído
+
+                        {% elif projeto and projeto.estado == 'APROVADO' %}
+
+                            Aguardando mentor
 
                         {% else %}
 
@@ -1065,8 +1148,11 @@ Dashboard | START.SE
                     class="
                         journey-step
 
-                        {% if projeto.estado == 'PUBLICADO' %}
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
                             completed
+
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
+                            upcoming
                         {% endif %}
                     "
                 >
@@ -1074,7 +1160,7 @@ Dashboard | START.SE
 
                     <div class="step-circle">
 
-                        {% if projeto.estado == 'PUBLICADO' %}
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
 
                             ✓
 
@@ -1096,9 +1182,13 @@ Dashboard | START.SE
 
                     <span>
 
-                        {% if projeto.estado == 'PUBLICADO' %}
+                        {% if projeto and projeto.estado == 'PUBLICADO' %}
 
                             Concluído
+
+                        {% elif projeto and projeto.estado == 'EM_INCUBACAO' %}
+
+                            Próxima etapa
 
                         {% else %}
 
@@ -1117,19 +1207,60 @@ Dashboard | START.SE
                      7 - INVESTIMENTO
                 ================================================== -->
 
-                <div class="journey-step">
+                <div
+                    class="
+                        journey-step
+
+                        {% if investimento_realizado %}
+                            completed
+
+                        {% elif projeto and projeto.estado == 'PUBLICADO' %}
+                            current
+                        {% endif %}
+                    "
+                >
+
 
                     <div class="step-circle">
-                        7
+
+                        {% if investimento_realizado %}
+
+                            ✓
+
+                        {% else %}
+
+                            7
+
+                        {% endif %}
+
                     </div>
+
+
 
                     <strong>
                         Investimento
                     </strong>
 
+
+
                     <span>
-                        Pendente
+
+                        {% if investimento_realizado %}
+
+                            Concluído
+
+                        {% elif projeto and projeto.estado == 'PUBLICADO' %}
+
+                            Disponível
+
+                        {% else %}
+
+                            Pendente
+
+                        {% endif %}
+
                     </span>
+
 
                 </div>
 
@@ -1149,14 +1280,14 @@ Dashboard | START.SE
 
                     <div
                         class="progress-value"
-                        style="width: {{ progresso }}%;"
+                        style="width: {{ progresso|default:0 }}%;"
                     ></div>
 
                 </div>
 
 
                 <span>
-                    {{ progresso }}% concluído
+                    {{ progresso|default:0 }}% concluído
                 </span>
 
 

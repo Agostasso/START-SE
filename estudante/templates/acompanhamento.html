@@ -2,591 +2,641 @@
 
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acompanhamento | START.SE</title>
-
-    <link
-        rel="stylesheet"
-        href="{% static 'estudante/css/acompanhamento.css' %}"
-    >
-
+    <link rel="stylesheet" href="{% static 'estudante/css/acompanhamento.css' %}">
 </head>
 
-
 <body>
-
 <div class="student-page">
-
 
     <!-- =====================================================
          SIDEBAR
     ====================================================== -->
-
     <aside class="student-sidebar">
 
-
         <div class="sidebar-header">
-
-            <h1>
-                START.SE
-            </h1>
-
-            <p>
-                Área do Estudante
-            </p>
-
+            <h1>START.SE</h1>
+            <p>Área do Estudante</p>
         </div>
-
-
 
         <nav class="sidebar-menu">
 
-
-            <!-- DASHBOARD -->
-
-            <a
-                href="{% url 'estudante_dashboard' %}"
-                class="sidebar-link"
-            >
-
+            <a href="{% url 'estudante_dashboard' %}" class="sidebar-link">
                 <span class="sidebar-icon">
-
                     <svg viewBox="0 0 24 24">
-
                         <path d="M3 11.5L12 4l9 7.5"></path>
-
                         <path d="M5.5 10v10h13V10"></path>
-
                         <path d="M9.5 20v-6h5v6"></path>
-
                     </svg>
-
                 </span>
-
-                <span>
-                    Dashboard
-                </span>
-
+                <span>Dashboard</span>
             </a>
 
-
-
-            <!-- PERFIL ACADÉMICO -->
-
-            <a
-                href="{% url 'perfil_academico' %}"
-                class="sidebar-link"
-            >
-
+            <a href="{% url 'perfil_academico' %}" class="sidebar-link">
                 <span class="sidebar-icon">
-
                     <svg viewBox="0 0 24 24">
-
-                        <circle
-                            cx="12"
-                            cy="7"
-                            r="4"
-                        ></circle>
-
-                        <path
-                            d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
-                        ></path>
-
+                        <circle cx="12" cy="7" r="4"></circle>
+                        <path d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"></path>
                     </svg>
-
                 </span>
-
-                <span>
-                    Perfil Académico
-                </span>
-
+                <span>Perfil Académico</span>
             </a>
 
-
-
-            <!-- PROJECTO -->
-
-            <a
-                href="{% url 'estudante_projeto' %}"
-                class="sidebar-link"
-            >
-
+            <a href="{% url 'estudante_projeto' %}" class="sidebar-link">
                 <span class="sidebar-icon">
-
                     <svg viewBox="0 0 24 24">
-
                         <path d="M6 3h8l4 4v14H6z"></path>
-
                         <path d="M14 3v5h5"></path>
-
                         <path d="M9 12h6"></path>
-
                         <path d="M9 16h6"></path>
-
                     </svg>
-
                 </span>
-
-                <span>
-                    Projecto
-                </span>
-
+                <span>Projecto</span>
             </a>
 
-
-
-            <!-- ACOMPANHAMENTO -->
-
-            <a
-                href="{% url 'estudante_acompanhamento' %}"
-                class="sidebar-link active"
-            >
-
+            <a href="{% url 'estudante_acompanhamento' %}" class="sidebar-link active">
                 <span class="sidebar-icon">
-
                     <svg viewBox="0 0 24 24">
-
-                        <rect
-                            x="4"
-                            y="5"
-                            width="16"
-                            height="15"
-                            rx="2"
-                        ></rect>
-
+                        <rect x="4" y="5" width="16" height="15" rx="2"></rect>
                         <path d="M8 3v4"></path>
-
                         <path d="M16 3v4"></path>
-
                         <path d="M4 10h16"></path>
-
                     </svg>
-
                 </span>
-
-                <span>
-                    Acompanhamento
-                </span>
-
+                <span>Acompanhamento</span>
             </a>
 
         </nav>
 
-
-
-        <!-- SAIR -->
-
         <div class="sidebar-logout">
-
-            <a
-                href="{% url 'estudante_sair' %}"
-                class="sidebar-link"
-            >
-
+            <a href="{% url 'estudante_sair' %}" class="sidebar-link">
                 <span class="sidebar-icon">
-
                     <svg viewBox="0 0 24 24">
-
                         <path d="M10 5H5v14h5"></path>
-
                         <path d="M14 8l4 4-4 4"></path>
-
                         <path d="M8 12h10"></path>
-
                     </svg>
-
                 </span>
-
-                <span>
-                    Sair
-                </span>
-
+                <span>Sair</span>
             </a>
-
         </div>
 
     </aside>
 
 
-
     <!-- =====================================================
          CONTEÚDO PRINCIPAL
     ====================================================== -->
-
     <main class="student-content">
-
-
-        <!-- =================================================
-             CABEÇALHO
-        ================================================== -->
 
         <header class="page-header">
 
-
             <div class="header-text">
-
-                <h2>
-                    Acompanhamento e Mentoria
-                </h2>
-
-                <p>
-                    Acompanhe as sessões de mentoria e o progresso do seu projecto.
-                </p>
-
+                <h2>Acompanhamento e Mentoria</h2>
+                <p>Acompanhe as sessões de mentoria e o progresso do seu projecto.</p>
             </div>
-
-
-
-            <!-- UTILIZADOR -->
 
             <div class="student-user">
 
-
                 <div class="user-avatar">
-
-                    {% if request.user.first_name %}
-
+                    {% if perfil and perfil.nome_completo %}
+                        {{ perfil.nome_completo|slice:":1"|upper }}
+                    {% elif request.user.first_name %}
                         {{ request.user.first_name|slice:":1"|upper }}
-
                     {% else %}
-
-                        E
-
+                        {{ request.user.username|slice:":1"|upper }}
                     {% endif %}
-
                 </div>
-
 
                 <div class="user-info">
-
                     <strong>
-
-                        {% if request.user.first_name %}
-
-                            {{ request.user.first_name }}
-
+                        {% if perfil and perfil.nome_completo %}
+                            {{ perfil.nome_completo }}
+                        {% elif request.user.get_full_name %}
+                            {{ request.user.get_full_name }}
                         {% else %}
-
-                            Estudante
-
+                            {{ request.user.username }}
                         {% endif %}
-
                     </strong>
 
-
                     <span>
-
-                        {% if request.user.email %}
-
+                        {% if perfil and perfil.email_institucional %}
+                            {{ perfil.email_institucional }}
+                        {% elif request.user.email %}
                             {{ request.user.email }}
-
                         {% else %}
-
-                            estudante@uniluanda.ao
-
+                            E-mail não informado
                         {% endif %}
-
                     </span>
-
                 </div>
 
-
-                <span class="user-arrow">
-                    ⌄
-                </span>
+                <span class="user-arrow">⌄</span>
 
             </div>
 
         </header>
 
 
+        <!-- =====================================================
+             RESUMO DO PROJECTO
+        ====================================================== -->
+        {% if projecto %}
+            <section class="project-summary">
 
-        <!-- =================================================
-             CARDS DE ACOMPANHAMENTO
-        ================================================== -->
-
-        <section class="mentoring-cards">
-
-
-            <!-- =================================================
-                 MENTOR ATRIBUÍDO
-            ================================================== -->
-
-            <article class="mentoring-card">
-
-
-                <div class="card-icon icon-mentor">
-
-                    <svg viewBox="0 0 24 24">
-
-                        <circle cx="8" cy="8" r="3"></circle>
-
-                        <circle cx="16" cy="8" r="3"></circle>
-
-                        <circle cx="12" cy="6" r="3"></circle>
-
-                        <path d="M3 19c.3-4 2-6 5-6"></path>
-
-                        <path d="M21 19c-.3-4-2-6-5-6"></path>
-
-                        <path d="M6 19c.4-4 2.5-6 6-6s5.6 2 6 6"></path>
-
-                    </svg>
-
+                <div class="project-summary-main">
+                    <span class="summary-kicker">Projecto acompanhado</span>
+                    <strong>{{ projecto.titulo }}</strong>
                 </div>
 
+                <div class="project-summary-item">
+                    <span>Área de actuação</span>
+                    <strong>
+                        {% if projecto.area_atuacao %}
+                            {{ projecto.get_area_atuacao_display }}
+                        {% else %}
+                            Não definida
+                        {% endif %}
+                    </strong>
+                </div>
+
+                <div class="project-summary-item">
+                    <span>Estado</span>
+                    <strong>{{ projecto.get_estado_display }}</strong>
+                </div>
+
+            </section>
+        {% endif %}
+
+
+        <!-- =====================================================
+             CARDS DE ACOMPANHAMENTO
+        ====================================================== -->
+        <section class="mentoring-cards">
+
+            <!-- MENTOR -->
+            <article class="mentoring-card">
+                <div class="card-icon icon-mentor">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="8" cy="8" r="3"></circle>
+                        <circle cx="16" cy="8" r="3"></circle>
+                        <circle cx="12" cy="6" r="3"></circle>
+                        <path d="M3 19c.3-4 2-6 5-6"></path>
+                        <path d="M21 19c-.3-4-2-6-5-6"></path>
+                        <path d="M6 19c.4-4 2.5-6 6-6s5.6 2 6 6"></path>
+                    </svg>
+                </div>
 
                 <div class="card-content">
-
-                    <span class="card-label">
-                        Mentor atribuído
-                    </span>
-
+                    <span class="card-label">Mentor atribuído</span>
 
                     <h3>
                         {% if mentor %}
-                            {{ mentor.nome }}
+                            {% if mentor.usuario.get_full_name %}
+                                {{ mentor.usuario.get_full_name }}
+                            {% else %}
+                                {{ mentor.usuario.username }}
+                            {% endif %}
                         {% else %}
-                            Eng. Carlos Manuel
+                            Ainda não atribuído
                         {% endif %}
                     </h3>
 
-
-                    <p class="card-small">
-                        Especialidade
-                    </p>
-
-
+                    <p class="card-small">Especialidade</p>
                     <p class="card-description">
-
                         {% if mentor %}
                             {{ mentor.especialidade }}
                         {% else %}
-                            Inovação e Negócios
+                            Aguarde a atribuição de um Mentor.
                         {% endif %}
-
                     </p>
 
-
-                    <a
-                        href="#"
-                        class="card-button button-gold"
-                    >
-                        Ver perfil do mentor
-                    </a>
-
+                    {% if mentor %}
+                        <button
+                            type="button"
+                            class="card-button button-gold panel-trigger"
+                            data-target="perfil-mentor"
+                            aria-expanded="false"
+                        >
+                            Ver perfil do mentor
+                        </button>
+                    {% endif %}
                 </div>
-
             </article>
 
 
-
-            <!-- =================================================
-                 PRÓXIMA SESSÃO
-            ================================================== -->
-
+            <!-- PRÓXIMA SESSÃO -->
             <article class="mentoring-card">
-
-
                 <div class="card-icon icon-session">
-
                     <svg viewBox="0 0 24 24">
-
-                        <rect
-                            x="4"
-                            y="5"
-                            width="16"
-                            height="15"
-                            rx="2"
-                        ></rect>
-
+                        <rect x="4" y="5" width="16" height="15" rx="2"></rect>
                         <path d="M8 3v4"></path>
-
                         <path d="M16 3v4"></path>
-
                         <path d="M4 10h16"></path>
-
                         <path d="M8 14h2"></path>
-
                         <path d="M14 14h2"></path>
-
                         <path d="M8 17h2"></path>
-
                         <path d="M14 17h2"></path>
-
                     </svg>
-
                 </div>
-
 
                 <div class="card-content">
+                    <span class="card-label">Próxima sessão</span>
 
-                    <span class="card-label">
-                        Próxima sessão
-                    </span>
+                    {% if proxima_sessao %}
+                        <h3 class="session-date">
+                            {{ proxima_sessao.data_hora_inicio|date:"d M Y" }}
+                        </h3>
 
+                        <strong class="session-time">
+                            {{ proxima_sessao.data_hora_inicio|date:"H:i" }}
+                        </strong>
 
-                    <h3 class="session-date">
+                        <p class="card-description">{{ proxima_sessao.titulo }}</p>
 
-                        {% if proxima_sessao %}
-                            {{ proxima_sessao.data|date:"d M Y" }}
-                        {% else %}
-                            24 Mai 2025
-                        {% endif %}
-
-                    </h3>
-
-
-                    <strong class="session-time">
-
-                        {% if proxima_sessao %}
-                            {{ proxima_sessao.hora }}
-                        {% else %}
-                            10:00
-                        {% endif %}
-
-                    </strong>
-
-
-                    <p class="card-description">
-                        Sessão de acompanhamento
-                    </p>
-
-
-                    <a
-                        href="#"
-                        class="card-button button-blue"
-                    >
-                        Ver detalhes
-                    </a>
-
+                        <button
+                            type="button"
+                            class="card-button button-blue panel-trigger"
+                            data-target="proxima-sessao"
+                            aria-expanded="false"
+                        >
+                            Ver detalhes
+                        </button>
+                    {% else %}
+                        <h3 class="session-date">--</h3>
+                        <strong class="session-time">--</strong>
+                        <p class="card-description">Nenhuma sessão futura agendada.</p>
+                    {% endif %}
                 </div>
-
             </article>
 
 
-
-            <!-- =================================================
-                 SESSÕES REALIZADAS
-            ================================================== -->
-
+            <!-- SESSÕES REALIZADAS -->
             <article class="mentoring-card">
-
-
                 <div class="card-icon icon-completed">
-
                     <svg viewBox="0 0 24 24">
-
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="9"
-                        ></circle>
-
+                        <circle cx="12" cy="12" r="9"></circle>
                         <path d="M8 12l3 3 5-6"></path>
-
                     </svg>
-
                 </div>
 
-
                 <div class="card-content">
+                    <span class="card-label">Sessões realizadas</span>
+                    <h3 class="number-value">{{ sessoes_realizadas }}</h3>
+                    <p class="card-description">de {{ total_sessoes }} sessões agendadas</p>
 
-                    <span class="card-label">
-                        Sessões realizadas
-                    </span>
-
-
-                    <h3 class="number-value">
-                        {{ sessoes_realizadas|default:"2" }}
-                    </h3>
-
-
-                    <p class="card-description">
-                        de {{ total_sessoes|default:"10" }} agendadas
-                    </p>
-
-
-                    <a
-                        href="#"
-                        class="card-button button-green"
+                    <button
+                        type="button"
+                        class="card-button button-green panel-trigger"
+                        data-target="historico-sessoes"
+                        aria-expanded="false"
                     >
                         Ver histórico
-                    </a>
-
+                    </button>
                 </div>
-
             </article>
 
 
-
-            <!-- =================================================
-                 REGISTOS
-            ================================================== -->
-
+            <!-- REGISTOS -->
             <article class="mentoring-card">
-
-
                 <div class="card-icon icon-record">
-
                     <svg viewBox="0 0 24 24">
-
                         <path d="M6 4h13v16H6z"></path>
-
                         <path d="M3 7h3"></path>
-
                         <path d="M3 11h3"></path>
-
                         <path d="M3 15h3"></path>
-
                         <path d="M10 9h5"></path>
-
                         <path d="M10 13h5"></path>
-
                         <path d="M10 17h4"></path>
-
                     </svg>
-
                 </div>
-
 
                 <div class="card-content">
+                    <span class="card-label">Registos de<br>acompanhamento</span>
+                    <h3 class="number-value">{{ total_registos }}</h3>
+                    <p class="card-description">registos efectuados</p>
 
-                    <span class="card-label">
-                        Registos de<br>
-                        acompanhamento
-                    </span>
-
-
-                    <h3 class="number-value">
-                        {{ total_registos|default:"2" }}
-                    </h3>
-
-
-                    <p class="card-description">
-                        registos efectuados
-                    </p>
-
-
-                    <a
-                        href="#"
-                        class="card-button button-purple"
+                    <button
+                        type="button"
+                        class="card-button button-purple panel-trigger"
+                        data-target="registos-acompanhamento"
+                        aria-expanded="false"
                     >
                         Ver registos
-                    </a>
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             SEM PROJECTO
+        ====================================================== -->
+        {% if not projecto %}
+            <section class="empty-followup">
+                <h3>Nenhum projecto disponível para acompanhamento</h3>
+                <p>Submeta o seu projecto e aguarde a avaliação e atribuição de um Mentor.</p>
+                <a href="{% url 'estudante_projeto' %}" class="card-button button-gold">
+                    Ver projecto
+                </a>
+            </section>
+        {% endif %}
+
+
+        <!-- =====================================================
+             PAINÉIS DE DETALHE
+             FICAM FECHADOS ATÉ O UTILIZADOR CLICAR NUM CARD
+        ====================================================== -->
+
+        <!-- PERFIL DO MENTOR -->
+        {% if mentor %}
+            <section class="detail-panel" id="perfil-mentor" aria-hidden="true">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-label">Mentoria</span>
+                        <h3>Perfil do Mentor</h3>
+                        <p>Informações do Mentor responsável pelo acompanhamento do seu projecto.</p>
+                    </div>
+
+                    <button type="button" class="panel-close" aria-label="Fechar painel">×</button>
+                </div>
+
+                <div class="mentor-profile-content">
+
+                    <div class="mentor-profile-main">
+                        <div class="mentor-profile-avatar">
+                            {% if mentor.usuario.first_name %}
+                                {{ mentor.usuario.first_name|slice:":1"|upper }}
+                            {% else %}
+                                {{ mentor.usuario.username|slice:":1"|upper }}
+                            {% endif %}
+                        </div>
+
+                        <div class="mentor-profile-name">
+                            <h4>
+                                {% if mentor.usuario.get_full_name %}
+                                    {{ mentor.usuario.get_full_name }}
+                                {% else %}
+                                    {{ mentor.usuario.username }}
+                                {% endif %}
+                            </h4>
+                            <span>Mentor START.SE</span>
+                        </div>
+                    </div>
+
+                    <div class="mentor-information">
+
+                        <div class="information-item">
+                            <span>Especialidade</span>
+                            <strong>{{ mentor.especialidade }}</strong>
+                        </div>
+
+                        <div class="information-item">
+                            <span>Departamento</span>
+                            <strong>
+                                {% if mentor.departamento %}
+                                    {{ mentor.departamento }}
+                                {% else %}
+                                    Não informado
+                                {% endif %}
+                            </strong>
+                        </div>
+
+                        <div class="information-item">
+                            <span>E-mail</span>
+                            <strong>
+                                {% if mentor.usuario.email %}
+                                    {{ mentor.usuario.email }}
+                                {% else %}
+                                    Não informado
+                                {% endif %}
+                            </strong>
+                        </div>
+
+                        <div class="information-item">
+                            <span>Telefone</span>
+                            <strong>
+                                {% if mentor.telefone %}
+                                    {{ mentor.telefone }}
+                                {% else %}
+                                    Não informado
+                                {% endif %}
+                            </strong>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+        {% endif %}
+
+
+        <!-- PRÓXIMA SESSÃO -->
+        {% if proxima_sessao %}
+            <section class="detail-panel" id="proxima-sessao" aria-hidden="true">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-label">Próxima sessão</span>
+                        <h3>{{ proxima_sessao.titulo }}</h3>
+                        <p>Consulte os dados do próximo encontro com o seu Mentor.</p>
+                    </div>
+
+                    <div class="panel-header-actions">
+                        <span class="session-status scheduled">
+                            {{ proxima_sessao.get_estado_display }}
+                        </span>
+                        <button type="button" class="panel-close" aria-label="Fechar painel">×</button>
+                    </div>
+                </div>
+
+                <div class="next-session-grid">
+
+                    <div class="session-information">
+                        <span>Projecto</span>
+                        <strong>{{ proxima_sessao.projecto.titulo }}</strong>
+                    </div>
+
+                    <div class="session-information">
+                        <span>Data</span>
+                        <strong>{{ proxima_sessao.data_hora_inicio|date:"d M Y" }}</strong>
+                    </div>
+
+                    <div class="session-information">
+                        <span>Hora</span>
+                        <strong>
+                            {{ proxima_sessao.data_hora_inicio|date:"H:i" }} –
+                            {{ proxima_sessao.data_hora_fim|date:"H:i" }}
+                        </strong>
+                    </div>
+
+                    <div class="session-information">
+                        <span>Modalidade</span>
+                        <strong>{{ proxima_sessao.get_modalidade_display }}</strong>
+                    </div>
+
+                    <div class="session-information">
+                        <span>Mentor</span>
+                        <strong>
+                            {% if proxima_sessao.mentor.usuario.get_full_name %}
+                                {{ proxima_sessao.mentor.usuario.get_full_name }}
+                            {% else %}
+                                {{ proxima_sessao.mentor.usuario.username }}
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="session-information">
+                        <span>Estado</span>
+                        <strong>{{ proxima_sessao.get_estado_display }}</strong>
+                    </div>
 
                 </div>
 
-            </article>
+                {% if proxima_sessao.modalidade == 'ONLINE' %}
+                    {% if proxima_sessao.link_meet %}
+                        <a
+                            href="{{ proxima_sessao.link_meet }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="meeting-button"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <rect x="3" y="6" width="13" height="12" rx="2"></rect>
+                                <path d="M16 10l5-3v10l-5-3"></path>
+                            </svg>
+                            Entrar na reunião
+                        </a>
+                    {% else %}
+                        <p class="meeting-warning">O link da reunião ainda não foi disponibilizado.</p>
+                    {% endif %}
+                {% else %}
+                    <p class="meeting-warning">Esta sessão será realizada presencialmente.</p>
+                {% endif %}
+
+            </section>
+        {% endif %}
+
+
+        <!-- HISTÓRICO -->
+        <section class="detail-panel" id="historico-sessoes" aria-hidden="true">
+
+            <div class="panel-header">
+                <div>
+                    <span class="panel-label">Histórico</span>
+                    <h3>Sessões de mentoria</h3>
+                    <p>Consulte as sessões relacionadas com o acompanhamento do seu projecto.</p>
+                </div>
+
+                <button type="button" class="panel-close" aria-label="Fechar painel">×</button>
+            </div>
+
+            <div class="followup-table-wrapper">
+                <table class="followup-table">
+                    <thead>
+                        <tr>
+                            <th>Tema</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Modalidade</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for sessao in sessoes %}
+                            <tr>
+                                <td><strong>{{ sessao.titulo }}</strong></td>
+                                <td>{{ sessao.data_hora_inicio|date:"d M Y" }}</td>
+                                <td>
+                                    {{ sessao.data_hora_inicio|date:"H:i" }} –
+                                    {{ sessao.data_hora_fim|date:"H:i" }}
+                                </td>
+                                <td>{{ sessao.get_modalidade_display }}</td>
+                                <td>
+                                    {% if sessao.estado == 'CONCLUIDA' %}
+                                        <span class="session-status completed">Concluída</span>
+                                    {% elif sessao.estado == 'AGENDADA' %}
+                                        <span class="session-status scheduled">Agendada</span>
+                                    {% elif sessao.estado == 'REAGENDADA' %}
+                                        <span class="session-status rescheduled">Reagendada</span>
+                                    {% elif sessao.estado == 'CANCELADA' %}
+                                        <span class="session-status cancelled">Cancelada</span>
+                                    {% else %}
+                                        {{ sessao.get_estado_display }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="empty-table">
+                                    Ainda não existem sessões de mentoria.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+
+        <!-- REGISTOS -->
+        <section class="detail-panel" id="registos-acompanhamento" aria-hidden="true">
+
+            <div class="panel-header">
+                <div>
+                    <span class="panel-label">Acompanhamento</span>
+                    <h3>Registos de acompanhamento</h3>
+                    <p>Consulte os registos das sessões de mentoria já concluídas.</p>
+                </div>
+
+                <button type="button" class="panel-close" aria-label="Fechar painel">×</button>
+            </div>
+
+            <div class="records-list">
+                {% for ata in atas %}
+                    <article class="record-item">
+
+                        <div class="record-header">
+                            <div>
+                                <span>{{ ata.sessao.data_hora_inicio|date:"d M Y" }}</span>
+                                <h4>{{ ata.sessao.titulo }}</h4>
+                            </div>
+
+                            <span class="project-followup-status status-{{ ata.estado_projecto|lower }}">
+                                {{ ata.get_estado_projecto_display }}
+                            </span>
+                        </div>
+
+                        <div class="record-content">
+                            <div>
+                                <span class="record-label">Resumo</span>
+                                <p>{{ ata.resumo }}</p>
+                            </div>
+
+                            <div>
+                                <span class="record-label">Decisões e encaminhamentos</span>
+                                <p>{{ ata.decisoes }}</p>
+                            </div>
+
+                            <div>
+                                <span class="record-label">Próximos passos</span>
+                                <p>{{ ata.proximos_passos }}</p>
+                            </div>
+                        </div>
+
+                    </article>
+                {% empty %}
+                    <div class="empty-records">
+                        <p>Ainda não existem registos de acompanhamento submetidos pelo Mentor.</p>
+                    </div>
+                {% endfor %}
+            </div>
 
         </section>
 
@@ -594,6 +644,107 @@
 
 </div>
 
-</body>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const triggers = document.querySelectorAll('.panel-trigger');
+    const panels = document.querySelectorAll('.detail-panel');
+    const closeButtons = document.querySelectorAll('.panel-close');
+
+    function closeAllPanels() {
+        panels.forEach(function (panel) {
+            panel.classList.remove('is-visible');
+            panel.setAttribute('aria-hidden', 'true');
+        });
+
+        triggers.forEach(function (trigger) {
+            trigger.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    triggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+
+            const targetId = this.dataset.target;
+            const targetPanel = document.getElementById(targetId);
+
+            if (!targetPanel) {
+                return;
+            }
+
+            const wasOpen = targetPanel.classList.contains('is-visible');
+
+            closeAllPanels();
+
+            if (!wasOpen) {
+                targetPanel.classList.add('is-visible');
+                targetPanel.setAttribute('aria-hidden', 'false');
+                this.setAttribute('aria-expanded', 'true');
+
+                setTimeout(function () {
+                    targetPanel.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 40);
+            }
+        });
+    });
+
+    closeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            closeAllPanels();
+        });
+    });
+
+
+    /* ==========================================================
+       ABRIR PAINEL VINDO DE OUTRA PÁGINA
+       Ex.: dashboard -> #perfil-mentor
+    ========================================================== */
+
+    function openPanelFromHash() {
+
+        if (!window.location.hash) {
+            return;
+        }
+
+        const targetId = window.location.hash.substring(1);
+        const targetPanel = document.getElementById(targetId);
+
+        if (!targetPanel || !targetPanel.classList.contains('detail-panel')) {
+            return;
+        }
+
+        closeAllPanels();
+
+        targetPanel.classList.add('is-visible');
+        targetPanel.setAttribute('aria-hidden', 'false');
+
+        const relatedTrigger = document.querySelector(
+            '.panel-trigger[data-target="' + targetId + '"]'
+        );
+
+        if (relatedTrigger) {
+            relatedTrigger.setAttribute('aria-expanded', 'true');
+        }
+
+        setTimeout(function () {
+            targetPanel.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 80);
+    }
+
+
+    openPanelFromHash();
+
+    window.addEventListener('hashchange', openPanelFromHash);
+
+});
+</script>
+
+</body>
 </html>

@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from .models import Faculdade, PerfilAcademico, Curso, Projecto
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from  mentor.models import SessaoMentoria, AtaMentoria
 
 
 
@@ -574,8 +575,247 @@ def projeto(request):
     )
 
 
+@login_required
 def acompanhamento(request):
-    return render(request, 'acompanhamento.html')
+
+    # =====================================================
+    # VERIFICAR SE É ESTUDANTE
+    # =====================================================
+
+    if not request.user.groups.filter(
+        name='Estudante'
+    ).exists():
+
+        messages.error(
+            request,
+            'Não possui autorização para acessar a área do Estudante.'
+        )
+
+        return redirect(
+            'escolher_area'
+        )
+
+
+    # =====================================================
+    # PERFIL ACADÉMICO
+    # =====================================================
+
+    perfil = (
+        PerfilAcademico.objects
+        .filter(
+            usuario=request.user
+        )
+        .select_related(
+            'curso',
+            'curso__faculdade'
+        )
+        .first()
+    )
+
+
+    if not perfil:
+
+        messages.error(
+            request,
+            'Perfil académico não encontrado.'
+        )
+
+        return redirect(
+            'perfil_academico'
+        )
+
+
+    # =====================================================
+    # PROJECTO DO ESTUDANTE
+    #
+    # Neste momento usamos o projecto mais recente.
+    # =====================================================
+
+    projecto = (
+        Projecto.objects
+        .filter(
+            estudante=perfil
+        )
+        .select_related(
+            'mentor',
+            'mentor__usuario'
+        )
+        .order_by(
+            '-submetido_em'
+        )
+        .first()
+    )
+
+
+    # =====================================================
+    # VALORES INICIAIS
+    # =====================================================
+
+    mentor = None
+
+    proxima_sessao = None
+
+    sessoes = SessaoMentoria.objects.none()
+
+    sessoes_realizadas = 0
+
+    total_sessoes = 0
+
+    atas = AtaMentoria.objects.none()
+
+    total_registos = 0
+
+
+    # =====================================================
+    # SE EXISTIR PROJECTO
+    # =====================================================
+
+    if projecto:
+
+        mentor = projecto.mentor
+
+
+        # =================================================
+        # TODAS AS SESSÕES DO PROJECTO
+        # =================================================
+
+        sessoes = (
+            SessaoMentoria.objects
+            .filter(
+                projecto=projecto
+            )
+            .select_related(
+                'mentor',
+                'mentor__usuario',
+                'projecto'
+            )
+            .order_by(
+                '-data_hora_inicio'
+            )
+        )
+
+
+        # =================================================
+        # TOTAL DE SESSÕES
+        #
+        # Canceladas não entram no total.
+        # =================================================
+
+        total_sessoes = (
+            sessoes
+            .filter(
+                estado__in=[
+                    SessaoMentoria.Estado.AGENDADA,
+                    SessaoMentoria.Estado.REAGENDADA,
+                    SessaoMentoria.Estado.CONCLUIDA,
+                ]
+            )
+            .count()
+        )
+
+
+        # =================================================
+        # SESSÕES REALIZADAS
+        # =================================================
+
+        sessoes_realizadas = (
+            sessoes
+            .filter(
+                estado=SessaoMentoria.Estado.CONCLUIDA
+            )
+            .count()
+        )
+
+
+        # =================================================
+        # PRÓXIMA SESSÃO
+        # =================================================
+
+        proxima_sessao = (
+            sessoes
+            .filter(
+                estado__in=[
+                    SessaoMentoria.Estado.AGENDADA,
+                    SessaoMentoria.Estado.REAGENDADA,
+                ],
+                data_hora_inicio__gte=timezone.now()
+            )
+            .order_by(
+                'data_hora_inicio'
+            )
+            .first()
+        )
+
+
+        # =================================================
+        # ATAS SUBMETIDAS
+        #
+        # O estudante não vê rascunhos do Mentor.
+        # =================================================
+
+        atas = (
+            AtaMentoria.objects
+            .filter(
+                sessao__projecto=projecto,
+                estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
+            )
+            .select_related(
+                'sessao',
+                'sessao__mentor',
+                'sessao__mentor__usuario'
+            )
+            .order_by(
+                '-submetido_em'
+            )
+        )
+
+
+        total_registos = (
+            atas.count()
+        )
+
+
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
+    contexto = {
+
+        'perfil':
+            perfil,
+
+        'projecto':
+            projecto,
+
+        'mentor':
+            mentor,
+
+        'proxima_sessao':
+            proxima_sessao,
+
+        'sessoes':
+            sessoes,
+
+        'sessoes_realizadas':
+            sessoes_realizadas,
+
+        'total_sessoes':
+            total_sessoes,
+
+        'atas':
+            atas,
+
+        'total_registos':
+            total_registos,
+
+    }
+
+
+    return render(
+        request,
+        'acompanhamento.html',
+        contexto
+    )
 
 
 

@@ -824,6 +824,113 @@
 }
 
 
+
+/* ==========================================================
+   ESTADOS ADICIONAIS DOS CARDS
+========================================================== */
+
+.status-validado {
+
+    color:
+        #dff9e9;
+
+    background:
+        #176b3c;
+
+}
+
+
+.status-rejeitado {
+
+    color:
+        #ffe5e8;
+
+    background:
+        #7c2630;
+
+}
+
+
+.status-incompleto {
+
+    color:
+        #d7deea;
+
+    background:
+        #3a4659;
+
+}
+
+
+.status-disponivel {
+
+    color:
+        #ffffff;
+
+    background:
+        #1b5d9c;
+
+}
+
+
+/* ==========================================================
+   BOTÃO DESACTIVADO
+========================================================== */
+
+.button-disabled {
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    color:
+        #7f8ca0;
+
+    background:
+        rgba(255,255,255,.025);
+
+    cursor:
+        not-allowed;
+
+    pointer-events:
+        none;
+
+}
+
+
+/* ==========================================================
+   ESTADO FUTURO DO PERCURSO
+========================================================== */
+
+.journey-step.upcoming .step-circle {
+
+    border-color:
+        #53637b;
+
+    color:
+        #9eabba;
+
+}
+
+
+.journey-step.upcoming strong,
+.journey-step.upcoming > span {
+
+    color:
+        #a6b0c0;
+
+}
+
+
+
+.button-green:hover {
+
+    background:
+        rgba(35,129,76,.10);
+
+}
+
+
 /* ==========================================================
    PERCURSO
 ========================================================== */
@@ -933,7 +1040,7 @@
 }
 
 
-/* parte verde da linha */
+/* parte concluída da linha - valor recebido do HTML */
 
 .journey-line::before {
 
@@ -946,14 +1053,23 @@
     left:
         0;
 
+    top:
+        0;
+
     width:
-        8%;
+        var(--journey-progress, 0%);
 
     height:
         100%;
 
+    border-radius:
+        inherit;
+
     background:
         #2b9c58;
+
+    transition:
+        width .35s ease;
 
 }
 

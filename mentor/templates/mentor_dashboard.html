@@ -466,7 +466,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_projects' %}"
                         class="card-button yellow-button"
                     >
                         Ver projectos
@@ -569,12 +569,25 @@
                     {% endif %}
 
 
-                    <a
-                        href="#"
-                        class="card-button blue-button"
-                    >
-                        Ver agenda
-                    </a>
+                    {% if proxima_sessao %}
+
+                        <a
+                            href="{% url 'mentor_agenda' %}?sessao={{ proxima_sessao.id }}"
+                            class="card-button blue-button"
+                        >
+                            Ver agenda
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'mentor_agenda' %}"
+                            class="card-button blue-button"
+                        >
+                            Ver agenda
+                        </a>
+
+                    {% endif %}
 
 
                 </div>
@@ -647,7 +660,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_agenda' %}?estado=CONCLUIDA"
                         class="card-button green-button"
                     >
                         Ver histórico
@@ -713,7 +726,7 @@
 
 
                     <a
-                        href="#"
+                        href="{% url 'mentor_acompanhamento' %}"
                         class="card-button purple-button"
                     >
                         Ver acompanhamento
@@ -766,7 +779,7 @@
 
 
                 <a
-                    href="#"
+                    href="{% url 'mentor_projects' %}"
                     class="see-all-projects"
                 >
 
@@ -885,7 +898,7 @@
 
             {% if item.projecto.area_atuacao %}
 
-                {{ item.projecto.area_atuacao }}
+                {{ item.projecto.get_area_atuacao_display }}
 
             {% else %}
 
@@ -1009,6 +1022,17 @@
                 </span>
 
 
+            {% elif item.projecto.estado == 'PENDENTE' %}
+
+                <span class="status status-pending">
+
+                    <span class="status-dot"></span>
+
+                    Pendente
+
+                </span>
+
+
             {% else %}
 
                 <span class="status status-active">
@@ -1029,12 +1053,14 @@
 
         <td>
 
-            <button
-                type="button"
+            <a
+                href="{% url 'mentor_projecto_ficha' item.projecto.id %}"
                 class="action-menu"
+                title="Ver ficha do projecto"
+                aria-label="Ver ficha do projecto"
             >
                 •••
-            </button>
+            </a>
 
         </td>
 
