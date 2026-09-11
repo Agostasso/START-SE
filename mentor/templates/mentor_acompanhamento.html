@@ -490,7 +490,7 @@
 
 
                     <a
-                        href="{% url 'mentor_acompanhamento' %}"
+                        href="{% url 'mentor_acompanhamento' %}?visualizar=registos#registos-atas"
                         class="summary-button blue-button"
                     >
                         Ver registos
@@ -655,11 +655,145 @@
 
 
 
+
+        <!-- =====================================================
+             HISTÓRICO DE ATAS SUBMETIDAS
+        ====================================================== -->
+
+        {% if mostrar_registos %}
+
+            <section class="records-panel" id="registos-atas">
+
+                <div class="records-panel-header">
+
+                    <div>
+                        <span class="records-label">Histórico</span>
+                        <h3>Atas de mentoria submetidas</h3>
+                        <p>
+                            Consulte os registos das sessões de mentoria
+                            já realizadas.
+                        </p>
+                    </div>
+
+                    <a
+                        href="{% url 'mentor_acompanhamento' %}"
+                        class="records-close"
+                        title="Fechar histórico"
+                        aria-label="Fechar histórico"
+                    >
+                        ×
+                    </a>
+
+                </div>
+
+                {% if atas_submetidas %}
+
+                    <div class="records-list">
+
+                        {% for registo in atas_submetidas %}
+
+                            <article class="record-card">
+
+                                <div class="record-card-header">
+
+                                    <div>
+                                        <span class="record-date">
+                                            {{ registo.sessao.data_hora_inicio|date:"d M Y" }}
+                                            ·
+                                            {{ registo.sessao.data_hora_inicio|date:"H:i" }}
+                                        </span>
+
+                                        <h4>{{ registo.sessao.projecto.titulo }}</h4>
+
+                                        <p>{{ registo.sessao.titulo }}</p>
+                                    </div>
+
+                                    <span class="record-status record-status-{{ registo.estado_projecto|lower }}">
+                                        {{ registo.get_estado_projecto_display }}
+                                    </span>
+
+                                </div>
+
+                                <div class="record-info-grid">
+
+                                    <div>
+                                        <span>Mentorado</span>
+                                        <strong>
+                                            {{ registo.sessao.projecto.estudante.nome_completo }}
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <span>Modalidade</span>
+                                        <strong>
+                                            {{ registo.sessao.get_modalidade_display }}
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <span>Ata submetida em</span>
+                                        <strong>
+                                            {% if registo.submetido_em %}
+                                                {{ registo.submetido_em|date:"d M Y - H:i" }}
+                                            {% else %}
+                                                --
+                                            {% endif %}
+                                        </strong>
+                                    </div>
+
+                                </div>
+
+                                <div class="record-body">
+
+                                    <div>
+                                        <span class="record-title">Resumo da sessão</span>
+                                        <p>{{ registo.resumo|truncatechars:260 }}</p>
+                                    </div>
+
+                                    <div>
+                                        <span class="record-title">Decisões e encaminhamentos</span>
+                                        <p>{{ registo.decisoes|truncatechars:260 }}</p>
+                                    </div>
+
+                                    <div>
+                                        <span class="record-title">Próximos passos</span>
+                                        <p>{{ registo.proximos_passos|truncatechars:260 }}</p>
+                                    </div>
+
+                                </div>
+
+                                <div class="record-actions">
+                                    <a
+                                        href="{% url 'mentor_acompanhamento' %}?sessao={{ registo.sessao.id }}&visualizar=registos#form-ata"
+                                        class="record-view-button"
+                                    >
+                                        Consultar ata completa
+                                    </a>
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="records-empty">
+                        <p>Ainda não existem atas de mentoria submetidas.</p>
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        {% endif %}
+
         <!-- =====================================================
              CONTEÚDO INFERIOR
         ====================================================== -->
 
-        <section class="followup-layout">
+        <section class="followup-layout" id="form-ata">
 
 
             <!-- =================================================
@@ -1733,6 +1867,27 @@
 
 </div>
 
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.textarea-group textarea[maxlength]').forEach(function (textarea) {
+        const group = textarea.closest('.textarea-group');
+        if (!group) return;
+
+        const counter = group.querySelector('.counter');
+        if (!counter) return;
+
+        const updateCounter = function () {
+            const max = textarea.getAttribute('maxlength') || 1000;
+            counter.textContent = textarea.value.length + '/' + max;
+        };
+
+        updateCounter();
+        textarea.addEventListener('input', updateCounter);
+    });
+});
+</script>
 
 </body>
 

@@ -1744,3 +1744,264 @@ body {
     }
 
 }
+
+
+/* ==========================================================
+   HISTÓRICO DE ATAS SUBMETIDAS
+========================================================== */
+
+.records-panel {
+    margin-top: 12px;
+    padding: 17px;
+    scroll-margin-top: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: linear-gradient(145deg, rgba(9,36,67,.95), rgba(5,26,52,.95));
+}
+
+.records-panel-header {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.records-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--blue);
+    font-size: .67rem;
+    font-weight: 600;
+}
+
+.records-panel-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.records-panel-header p {
+    margin: 5px 0 0;
+    color: var(--muted);
+    font-size: .68rem;
+    line-height: 1.45;
+}
+
+.records-close {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: .2s ease;
+}
+
+.records-close:hover {
+    border-color: rgba(255,255,255,.28);
+    background: rgba(255,255,255,.06);
+}
+
+.records-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.record-card {
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 7px;
+    background: rgba(3,19,39,.35);
+}
+
+.record-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.record-date {
+    color: #91a1b4;
+    font-size: .62rem;
+}
+
+.record-card-header h4 {
+    margin: 5px 0 3px;
+    color: #ffffff;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.record-card-header p {
+    margin: 0;
+    color: #b9c4d1;
+    font-size: .66rem;
+}
+
+.record-status {
+    padding: 6px 10px;
+    border-radius: 7px;
+    white-space: nowrap;
+    font-size: .62rem;
+    font-weight: 600;
+}
+
+.record-status-activo {
+    color: #22d17a;
+    background: rgba(8,120,70,.28);
+}
+
+.record-status-pausa {
+    color: #ffc400;
+    background: rgba(155,119,0,.29);
+}
+
+.record-status-risco {
+    color: #ff6b76;
+    background: rgba(173,44,55,.25);
+}
+
+.record-status-concluido {
+    color: #b879ff;
+    background: rgba(107,53,158,.30);
+}
+
+.record-info-grid {
+    margin-top: 13px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+}
+
+.record-info-grid div {
+    padding: 9px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 6px;
+    background: rgba(5,30,57,.40);
+}
+
+.record-info-grid span {
+    color: #8f9fb2;
+    font-size: .60rem;
+}
+
+.record-info-grid strong {
+    color: #ffffff;
+    font-size: .67rem;
+    font-weight: 500;
+}
+
+.record-body {
+    margin-top: 13px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+}
+
+.record-title {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--gold);
+    font-size: .62rem;
+    font-weight: 600;
+}
+
+.record-body p {
+    margin: 0;
+    color: #c6d0dd;
+    font-size: .66rem;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.record-actions {
+    margin-top: 14px;
+    padding-top: 11px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.record-view-button {
+    min-height: 32px;
+    padding: 0 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--blue);
+    border-radius: 5px;
+    color: #39a0ff;
+    background: transparent;
+    text-decoration: none;
+    font-size: .66rem;
+    font-weight: 600;
+}
+
+.record-view-button:hover {
+    background: rgba(41,149,255,.10);
+}
+
+.records-empty {
+    padding: 25px;
+    text-align: center;
+    color: var(--muted);
+    font-size: .70rem;
+}
+
+/* ==========================================================
+   PEQUENOS AJUSTES DE USABILIDADE
+========================================================== */
+
+.summary-button {
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.summary-button:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.form-group input[readonly],
+.form-group textarea[readonly],
+.form-group select:disabled {
+    opacity: .82;
+    cursor: default;
+}
+
+@media (max-width: 850px) {
+    .record-info-grid,
+    .record-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .record-card-header {
+        flex-direction: column;
+    }
+
+    .record-status {
+        align-self: flex-start;
+    }
+
+    .record-actions {
+        justify-content: stretch;
+    }
+
+    .record-view-button {
+        width: 100%;
+    }
+}

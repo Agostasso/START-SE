@@ -656,438 +656,289 @@ def acompanhamento(request):
     # =====================================================
     # VERIFICAR PERMISSÃO
     # =====================================================
-
-    if not request.user.groups.filter(
-        name='Mentor'
-    ).exists():
-
+    if not request.user.groups.filter(name='Mentor').exists():
         messages.error(
             request,
             'Não possui autorização para acessar a área do Mentor.'
         )
-
-        return redirect(
-            'escolher_area'
-        )
-
+        return redirect('escolher_area')
 
     # =====================================================
     # MENTOR LOGADO
     # =====================================================
-
     mentor = (
         Mentor.objects
-        .filter(
-            usuario=request.user,
-            ativo=True
-        )
+        .filter(usuario=request.user, ativo=True)
         .first()
     )
 
-
     if not mentor:
-
-        messages.error(
-            request,
-            'Perfil de Mentor não encontrado.'
-        )
-
-        return redirect(
-            'escolher_area'
-        )
-
+        messages.error(request, 'Perfil de Mentor não encontrado.')
+        return redirect('escolher_area')
 
     agora = timezone.now()
 
-
     # =====================================================
-    # MENTORIAS ACTIVAS
+    # PROJECTOS / MENTORIAS ACTIVAS
     # =====================================================
+    projectos_mentor = Projecto.objects.filter(mentor=mentor)
 
-    projectos_mentor = (
-        Projecto.objects
-        .filter(
-            mentor=mentor
-        )
-    )
-
-
-    mentorias_activas = (
-        projectos_mentor
-        .filter(
-            estado__in=[
-                Projecto.EstadoProjecto.APROVADO,
-                Projecto.EstadoProjecto.EM_INCUBACAO,
-            ]
-        )
-        .count()
-    )
-
+    mentorias_activas = projectos_mentor.filter(
+        estado__in=[
+            Projecto.EstadoProjecto.APROVADO,
+            Projecto.EstadoProjecto.EM_INCUBACAO,
+        ]
+    ).count()
 
     # =====================================================
     # ATAS DO MENTOR
     # =====================================================
-
     atas = (
         AtaMentoria.objects
-        .filter(
-            sessao__mentor=mentor
-        )
+        .filter(sessao__mentor=mentor)
         .select_related(
             'sessao',
-            'sessao__projecto'
+            'sessao__projecto',
+            'sessao__projecto__estudante',
         )
     )
 
-
-    # =====================================================
-    # REGISTOS FEITOS
-    # =====================================================
-
-    registos_feitos = (
+    atas_submetidas = (
         atas
-        .filter(
-            estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
-        )
-        .count()
+        .filter(estado_ata=AtaMentoria.EstadoAta.SUBMETIDA)
+        .order_by('-submetido_em', '-atualizado_em')
     )
 
+    registos_feitos = atas_submetidas.count()
 
     # =====================================================
     # PROJECTOS EM RISCO
-    #
-    # Vamos considerar o registo MAIS RECENTE
-    # de cada projecto.
+    # Considera o último registo SUBMETIDO de cada projecto.
     # =====================================================
-
     projectos_em_risco = 0
 
-
     for projecto in projectos_mentor:
-
-        ultima_ata = (
-            atas
-            .filter(
-                sessao__projecto=projecto,
-                estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
-            )
-            .order_by(
-                '-atualizado_em'
-            )
+        ultima_ata_projecto = (
+            atas_submetidas
+            .filter(sessao__projecto=projecto)
+            .order_by('-submetido_em', '-atualizado_em')
             .first()
         )
 
-
         if (
-            ultima_ata
-            and ultima_ata.estado_projecto
+            ultima_ata_projecto
+            and ultima_ata_projecto.estado_projecto
             == AtaMentoria.EstadoProjecto.RISCO
         ):
-
             projectos_em_risco += 1
-
 
     # =====================================================
     # ÚLTIMA ACTUALIZAÇÃO
     # =====================================================
+    ultima_ata = atas_submetidas.first()
 
-    ultima_ata = (
-        atas
-        .filter(
-            estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
-        )
-        .order_by(
-            '-atualizado_em'
-        )
-        .first()
-    )
-
+    # =====================================================
+    # MODO DE VISUALIZAÇÃO
+    # ?visualizar=registos
+    # =====================================================
+    visualizar = request.GET.get('visualizar', '').strip()
+    mostrar_registos = visualizar == 'registos'
 
     # =====================================================
     # SESSÃO SELECCIONADA
-    #
-    # URL:
     # /mentor/acompanhamento/?sessao=3
     # =====================================================
-
-    sessao_id = request.GET.get(
-        'sessao'
-    )
-
-
+    sessao_id = request.GET.get('sessao')
     sessao_seleccionada = None
-
     ata = None
 
-
     if sessao_id:
-
         sessao_seleccionada = get_object_or_404(
-
             SessaoMentoria.objects.select_related(
                 'projecto',
                 'projecto__estudante'
             ),
-
             id=sessao_id,
-
             mentor=mentor
-
         )
 
+        ata = AtaMentoria.objects.filter(
+            sessao=sessao_seleccionada
+        ).first()
 
-        ata = (
-            AtaMentoria.objects
-            .filter(
-                sessao=sessao_seleccionada
+        # Sessão futura não pode receber Ata.
+        # Ata já submetida continua acessível para consulta.
+        if (
+            sessao_seleccionada.data_hora_fim > agora
+            and not (
+                ata
+                and ata.estado_ata == AtaMentoria.EstadoAta.SUBMETIDA
             )
-            .first()
-        )
-
+        ):
+            messages.error(
+                request,
+                'A ata só pode ser preenchida depois do término da sessão.'
+            )
+            return redirect('mentor_acompanhamento')
 
     # =====================================================
     # POST - GUARDAR / SUBMETER ATA
     # =====================================================
-
     if request.method == 'POST':
+        sessao_id = request.POST.get('sessao_id')
 
-        sessao_id = request.POST.get(
-            'sessao_id'
-        )
-
+        if not sessao_id:
+            messages.error(request, 'Sessão de mentoria não informada.')
+            return redirect('mentor_acompanhamento')
 
         sessao = get_object_or_404(
-
             SessaoMentoria.objects.select_related(
                 'projecto',
                 'projecto__estudante'
             ),
-
             id=sessao_id,
-
             mentor=mentor
-
         )
 
+        agora_post = timezone.now()
 
-        resumo = request.POST.get(
-            'resumo',
-            ''
-        ).strip()
+        if sessao.data_hora_fim > agora_post:
+            messages.error(
+                request,
+                'A ata só pode ser preenchida depois do término da sessão.'
+            )
+            return redirect(reverse('mentor_agenda'))
 
+        ata_existente = AtaMentoria.objects.filter(sessao=sessao).first()
 
-        decisoes = request.POST.get(
-            'decisoes',
-            ''
-        ).strip()
+        if (
+            ata_existente
+            and ata_existente.estado_ata == AtaMentoria.EstadoAta.SUBMETIDA
+        ):
+            messages.error(
+                request,
+                'Esta ata já foi submetida e está disponível apenas para consulta.'
+            )
+            return redirect(
+                reverse('mentor_acompanhamento') + f'?sessao={sessao.id}'
+            )
 
+        resumo = request.POST.get('resumo', '').strip()
+        decisoes = request.POST.get('decisoes', '').strip()
+        proximos_passos = request.POST.get('proximos_passos', '').strip()
+        estado_projecto = request.POST.get('estado_projecto', '').strip()
+        acao = request.POST.get('acao', '').strip()
 
-        proximos_passos = request.POST.get(
-            'proximos_passos',
-            ''
-        ).strip()
-
-
-        estado_projecto = request.POST.get(
-            'estado_projecto'
-        )
-
-
-        acao = request.POST.get(
-            'acao'
-        )
-
-
-        # =================================================
-        # VALIDAR ESTADO
-        # =================================================
+        if acao not in ['rascunho', 'submeter']:
+            messages.error(request, 'Acção inválida.')
+            return redirect(
+                reverse('mentor_acompanhamento') + f'?sessao={sessao.id}'
+            )
 
         estados_validos = [
             valor
-            for valor, nome
-            in AtaMentoria.EstadoProjecto.choices
+            for valor, nome in AtaMentoria.EstadoProjecto.choices
         ]
 
-
         if estado_projecto not in estados_validos:
-
             messages.error(
                 request,
                 'Seleccione um estado válido para o projecto.'
             )
-
-            url = ( reverse('mentor_acompanhamento')+ f'?sessao={sessao.id}')
-
-            return redirect(url)
-
-
-        # =================================================
-        # SUBMISSÃO EXIGE CAMPOS PREENCHIDOS
-        # =================================================
-
-        if acao == 'submeter':
-
-            if (
-                not resumo
-                or not decisoes
-                or not proximos_passos
-            ):
-
-                messages.error(
-                    request,
-                    'Preencha todos os campos obrigatórios antes de submeter a ata.'
-                )
-
-                return redirect(
-                    f'/mentor/acompanhamento/?sessao={sessao.id}'
-                )
-
-
-        # =================================================
-        # CRIAR OU ACTUALIZAR ATA
-        # =================================================
-
-        ata, criada = (
-            AtaMentoria.objects
-            .get_or_create(
-                sessao=sessao
+            return redirect(
+                reverse('mentor_acompanhamento') + f'?sessao={sessao.id}'
             )
-        )
 
+        if acao == 'submeter' and (
+            not resumo
+            or not decisoes
+            or not proximos_passos
+        ):
+            messages.error(
+                request,
+                'Preencha todos os campos obrigatórios antes de submeter a ata.'
+            )
+            return redirect(
+                reverse('mentor_acompanhamento') + f'?sessao={sessao.id}'
+            )
+
+        ata, criada = AtaMentoria.objects.get_or_create(sessao=sessao)
 
         ata.resumo = resumo
-
         ata.decisoes = decisoes
-
         ata.proximos_passos = proximos_passos
-
         ata.estado_projecto = estado_projecto
-
 
         # =================================================
         # GUARDAR RASCUNHO
         # =================================================
-
         if acao == 'rascunho':
-
-            ata.estado_ata = (
-                AtaMentoria.EstadoAta.RASCUNHO
-            )
-
+            ata.estado_ata = AtaMentoria.EstadoAta.RASCUNHO
             ata.save()
 
-
-            messages.success(
-                request,
-                'Rascunho guardado com sucesso.'
-            )
-
-
+            messages.success(request, 'Rascunho guardado com sucesso.')
             return redirect(
-                f'/mentor/acompanhamento/?sessao={sessao.id}'
+                reverse('mentor_acompanhamento') + f'?sessao={sessao.id}'
             )
-
 
         # =================================================
         # SUBMETER ATA
         # =================================================
+        ata.estado_ata = AtaMentoria.EstadoAta.SUBMETIDA
+        ata.submetido_em = agora_post
+        ata.save()
 
-        elif acao == 'submeter':
+        # A sessão passa a CONCLUÍDA somente após a submissão da Ata.
+        sessao.estado = SessaoMentoria.Estado.CONCLUIDA
+        sessao.save(update_fields=['estado'])
 
-            ata.estado_ata = (
-                AtaMentoria.EstadoAta.SUBMETIDA
-            )
+        messages.success(
+            request,
+            'Ata de mentoria submetida com sucesso.'
+        )
 
-            ata.submetido_em = agora
-
-            ata.save()
-
-
-            # Sessão passa a concluída
-
-            sessao.estado = (
-                SessaoMentoria.Estado.CONCLUIDA
-            )
-
-            sessao.save(
-                update_fields=[
-                    'estado'
-                ]
-            )
-
-
-            messages.success(
-                request,
-                'Ata de mentoria submetida com sucesso.'
-            )
-
-
-            return redirect(
-                'mentor_acompanhamento'
-            )
-
+        return redirect(
+            reverse('mentor_acompanhamento')
+            + '?visualizar=registos#registos-atas'
+        )
 
     # =====================================================
     # SESSÕES PENDENTES DE ATA
+    # Inclui sessões já terminadas, mesmo que tenham sido
+    # marcadas manualmente como CONCLUÍDAS, desde que não
+    # possuam Ata SUBMETIDA.
     # =====================================================
-
     sessoes_pendentes_ata = (
         SessaoMentoria.objects
         .filter(
             mentor=mentor,
             data_hora_fim__lte=agora
         )
-        .exclude(
-            estado=SessaoMentoria.Estado.CANCELADA
-        )
-        .exclude(
-            ata__estado_ata=AtaMentoria.EstadoAta.SUBMETIDA
-        )
+        .exclude(estado=SessaoMentoria.Estado.CANCELADA)
+        .exclude(ata__estado_ata=AtaMentoria.EstadoAta.SUBMETIDA)
         .select_related(
             'projecto',
             'projecto__estudante'
         )
-        .order_by(
-            '-data_hora_inicio'
-        )
+        .order_by('-data_hora_inicio')
     )
-
 
     # =====================================================
     # CONTEXTO
     # =====================================================
-
     contexto = {
-
-        'mentor':
-            mentor,
-
-        'mentorias_activas':
-            mentorias_activas,
-
-        'registos_feitos':
-            registos_feitos,
-
-        'projectos_em_risco':
-            projectos_em_risco,
-
-        'ultima_atualizacao':
-            ultima_ata,
-
-        'sessao_seleccionada':
-            sessao_seleccionada,
-
-        'ata':
-            ata,
-
-        'estados_projecto':
-            AtaMentoria.EstadoProjecto.choices,
-
-        'sessoes_pendentes_ata':
-            sessoes_pendentes_ata,
-
+        'mentor': mentor,
+        'mentorias_activas': mentorias_activas,
+        'registos_feitos': registos_feitos,
+        'projectos_em_risco': projectos_em_risco,
+        'ultima_atualizacao': ultima_ata,
+        'sessao_seleccionada': sessao_seleccionada,
+        'ata': ata,
+        'estados_projecto': AtaMentoria.EstadoProjecto.choices,
+        'sessoes_pendentes_ata': sessoes_pendentes_ata,
+        'atas_submetidas': atas_submetidas,
+        'mostrar_registos': mostrar_registos,
     }
-
 
     return render(
         request,

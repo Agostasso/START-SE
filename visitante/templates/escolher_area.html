@@ -100,11 +100,6 @@
         <div class="background-carousel">
 
 
-            <!--
-                Usa aqui as mesmas imagens que já tens
-                no carrossel da página Home.
-            -->
-
             <div
                 class="background-slide slide-1"
             ></div>
@@ -119,8 +114,6 @@
                 class="background-slide slide-3"
             ></div>
 
-
-            <!-- camada escura -->
 
             <div class="background-overlay"></div>
 
@@ -225,10 +218,17 @@
                      ESTUDANTE
                 ================================================== -->
 
-                <article class="area-card student-card">
+                <article
+                    class="
+                        area-card
+                        {% if tem_perfil_estudante %}
+                            area-active
+                        {% endif %}
+                    "
+                >
 
 
-                    <div class="area-icon student-icon">
+                    <div class="area-icon">
 
                         <svg viewBox="0 0 24 24">
 
@@ -266,7 +266,10 @@
 
                         <a
                             href="{% url 'estudante_dashboard' %}"
-                            class="area-button student-button"
+                            class="
+                                area-button
+                                area-button-active
+                            "
                         >
                             Entrar como Estudante
                         </a>
@@ -293,7 +296,14 @@
                      MENTOR
                 ================================================== -->
 
-                <article class="area-card">
+                <article
+                    class="
+                        area-card
+                        {% if tem_perfil_mentor %}
+                            area-active
+                        {% endif %}
+                    "
+                >
 
 
                     <div class="area-icon">
@@ -347,7 +357,10 @@
 
                         <a
                             href="{% url 'mentor_dashboard' %}"
-                            class="area-button"
+                            class="
+                                area-button
+                                area-button-active
+                            "
                         >
                             Entrar como Mentor
                         </a>
@@ -374,7 +387,14 @@
                      PATROCINADOR
                 ================================================== -->
 
-                <article class="area-card">
+                <article
+                    class="
+                        area-card
+                        {% if tem_perfil_patrocinador %}
+                            area-active
+                        {% endif %}
+                    "
+                >
 
 
                     <div class="area-icon">
@@ -416,7 +436,10 @@
 
                         <a
                             href="#"
-                            class="area-button"
+                            class="
+                                area-button
+                                area-button-active
+                            "
                         >
                             Entrar como Patrocinador
                         </a>

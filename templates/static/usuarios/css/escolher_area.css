@@ -736,14 +736,6 @@ body {
 }
 
 
-.student-card {
-
-    border-color:
-        rgba(231,173,0,.85);
-
-}
-
-
 /* ==========================================================
    ÍCONES DOS CARDS
 ========================================================== */
@@ -903,38 +895,6 @@ body {
 
     background:
         rgba(231,173,0,.10);
-
-}
-
-
-/* ESTUDANTE DESTACADO */
-
-.student-button {
-
-    border:
-        none;
-
-    background:
-        linear-gradient(
-            90deg,
-            #e7ad00,
-            #ffc51a
-        );
-
-    color:
-        #07142c;
-
-}
-
-
-.student-button:hover {
-
-    background:
-        linear-gradient(
-            90deg,
-            #efb500,
-            #ffd13a
-        );
 
 }
 
@@ -1107,5 +1067,126 @@ body {
             .9rem;
 
     }
+
+}
+
+
+
+/* ==========================================================
+   PERFIL DISPONÍVEL / ÁREA ACTIVA
+========================================================== */
+
+.area-card.area-active {
+
+    border-color:
+        rgba(231,173,0,.92);
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.12),
+        0 0 0 1px rgba(231,173,0,.08);
+
+}
+
+
+.area-button-active {
+
+    border:
+        1.5px solid
+        var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold),
+            var(--gold-light)
+        );
+
+    color:
+        #07142c;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.area-button-active:hover {
+
+    border-color:
+        var(--gold-light);
+
+    background:
+        linear-gradient(
+            90deg,
+            #efb500,
+            #ffd13a
+        );
+
+    color:
+        #07142c;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.area-button-active:focus-visible {
+
+    outline:
+        2px solid
+        #ffffff;
+
+    outline-offset:
+        3px;
+
+}
+
+
+/* ==========================================================
+   PERFIL NÃO DISPONÍVEL
+========================================================== */
+
+.disabled-button {
+
+    border-color:
+        rgba(255,255,255,.18);
+
+    background:
+        rgba(5,18,39,.65);
+
+    color:
+        #6f7b8f;
+
+    cursor:
+        not-allowed;
+
+    pointer-events:
+        none;
+
+}
+
+
+/* ==========================================================
+   TRANSIÇÃO DOS CARDS
+========================================================== */
+
+.area-card {
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+
+}
+
+
+.area-card.area-active:hover {
+
+    transform:
+        translateY(-2px);
 
 }
