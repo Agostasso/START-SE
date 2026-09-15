@@ -7,10 +7,15 @@ from .models import Faculdade, PerfilAcademico, Curso, Projecto
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from  mentor.models import SessaoMentoria, AtaMentoria
+from investidor.models import ManifestacaoInteresse
+from django.urls import reverse
+from django.db.models import Count, Q
+from django.contrib.auth.decorators import login_required
 
 
 
 # Create your views here.
+
 @login_required
 def dashboard(request):
 
@@ -21,13 +26,9 @@ def dashboard(request):
     perfil = (
         PerfilAcademico.objects
         .filter(usuario=request.user)
-        .select_related(
-            'curso',
-            'curso__faculdade'
-        )
+        .select_related('curso', 'curso__faculdade')
         .first()
     )
-
 
     # =====================================================
     # VALORES INICIAIS
@@ -44,6 +45,12 @@ def dashboard(request):
 
     progresso = 14
 
+    total_interesses = 0
+    interesses_novos = 0
+
+    propostas_aceites = 0
+    conexao_investidor_estado = 'Pendente'
+    conexao_investidor_concluida = False
 
     # =====================================================
     # PERFIL ACADÉMICO
@@ -52,11 +59,7 @@ def dashboard(request):
     if perfil:
 
         estado_validacao = perfil.estado_validacao
-
-        estado_validacao_texto = (
-            perfil.get_estado_validacao_display()
-        )
-
+        estado_validacao_texto = perfil.get_estado_validacao_display()
 
         # =================================================
         # PERFIL VALIDADO
@@ -64,20 +67,15 @@ def dashboard(request):
 
         if (
             perfil.estado_validacao
-            ==
-            PerfilAcademico.EstadoValidacao.VALIDADO
+            == PerfilAcademico.EstadoValidacao.VALIDADO
         ):
 
             projeto_disponivel = True
-
             projeto_estado = 'Disponível'
-
-            # Conta criada + validação
             progresso = 28
 
-
             # =============================================
-            # PROJECTO DO ESTUDANTE
+            # PROJECTO MAIS RECENTE DO ESTUDANTE
             # =============================================
 
             projeto = (
@@ -87,119 +85,111 @@ def dashboard(request):
                 .first()
             )
 
-
             # =============================================
             # PROJECTO SUBMETIDO
             # =============================================
 
             if projeto:
 
-                projeto_estado = (
-                    projeto.get_estado_display()
-                )
-
-                # Conta
-                # + validação
-                # + submissão
+                projeto_estado = projeto.get_estado_display()
                 progresso = 42
-
 
                 # =========================================
                 # PROJECTO APROVADO
                 # =========================================
 
-                if (
-                    projeto.estado
-                    ==
-                    Projecto.EstadoProjecto.APROVADO
-                ):
-
+                if projeto.estado == Projecto.EstadoProjecto.APROVADO:
                     progresso = 57
-
 
                 # =========================================
                 # EM INCUBAÇÃO
                 # =========================================
 
-                elif (
-                    projeto.estado
-                    ==
-                    Projecto.EstadoProjecto.EM_INCUBACAO
-                ):
-
+                elif projeto.estado == Projecto.EstadoProjecto.EM_INCUBACAO:
                     progresso = 71
-
-                    mentoria_estado = (
-                        'Em incubação'
-                    )
-
+                    mentoria_estado = 'Em incubação'
 
                 # =========================================
                 # PUBLICADO
                 # =========================================
 
-                elif (
-                    projeto.estado
-                    ==
-                    Projecto.EstadoProjecto.PUBLICADO
-                ):
+                elif projeto.estado == Projecto.EstadoProjecto.PUBLICADO:
 
                     progresso = 85
+                    mentoria_estado = 'Concluída'
 
-                    mentoria_estado = (
-                        'Concluída'
+                    # =====================================
+                    # INTERESSES RECEBIDOS
+                    # =====================================
+
+                    total_interesses = (
+                        projeto.manifestacoes_interesse.count()
                     )
 
+                    interesses_novos = (
+                        projeto.manifestacoes_interesse
+                        .filter(
+                            estado=ManifestacaoInteresse.Estado.ENVIADA
+                        )
+                        .count()
+                    )
+
+                    # =====================================
+                    # PROPOSTAS DE INVESTIMENTO ACEITES
+                    # =====================================
+
+                    propostas_aceites = (
+                        projeto.manifestacoes_interesse
+                        .filter(
+                            assunto=ManifestacaoInteresse.Assunto.INVESTIMENTO,
+                            decisao=ManifestacaoInteresse.Decisao.ACEITE
+                        )
+                        .count()
+                    )
+
+                    # =====================================
+                    # ETAPA 7 - CONEXÃO COM INVESTIDOR
+                    # =====================================
+
+                    if projeto.captacao_encerrada:
+                        conexao_investidor_estado = 'Concluído'
+                        conexao_investidor_concluida = True
+                        progresso = 100
+
+                    elif propostas_aceites > 0:
+                        conexao_investidor_estado = 'Em captação'
+                        progresso = 85
+
+                    else:
+                        conexao_investidor_estado = 'Disponível'
+                        progresso = 85
 
                 # =========================================
                 # REJEITADO
                 # =========================================
 
-                elif (
-                    projeto.estado
-                    ==
-                    Projecto.EstadoProjecto.REJEITADO
-                ):
-
-                    # A submissão aconteceu,
-                    # mas a avaliação não foi concluída
-                    # com aprovação.
+                elif projeto.estado == Projecto.EstadoProjecto.REJEITADO:
                     progresso = 42
-
 
     # =====================================================
     # CONTEXTO
     # =====================================================
 
     contexto = {
-
         'perfil': perfil,
-
-        'estado_validacao': (
-            estado_validacao
-        ),
-
-        'estado_validacao_texto': (
-            estado_validacao_texto
-        ),
-
+        'estado_validacao': estado_validacao,
+        'estado_validacao_texto': estado_validacao_texto,
         'projeto': projeto,
-
-        'projeto_disponivel': (
-            projeto_disponivel
-        ),
-
-        'projeto_estado': (
-            projeto_estado
-        ),
-
-        'mentoria_estado': (
-            mentoria_estado
-        ),
-
+        'projeto_disponivel': projeto_disponivel,
+        'projeto_estado': projeto_estado,
+        'mentoria_estado': mentoria_estado,
         'progresso': progresso,
+        'total_interesses': total_interesses,
+        'interesses_novos': interesses_novos,
+        'propostas_aceites': propostas_aceites,
+        'conexao_investidor_estado': conexao_investidor_estado,
+        'conexao_investidor_concluida': conexao_investidor_concluida,
     }
-
 
     return render(
         request,
@@ -207,6 +197,458 @@ def dashboard(request):
         contexto
     )
 
+
+@login_required
+def projeto(request):
+
+    # =====================================================
+    # PERFIL ACADÉMICO DO ESTUDANTE LOGADO
+    # =====================================================
+
+    perfil = (
+        PerfilAcademico.objects
+        .filter(usuario=request.user)
+        .select_related('curso', 'curso__faculdade')
+        .first()
+    )
+
+    # =====================================================
+    # PROJECTO MAIS RECENTE DO ESTUDANTE
+    # =====================================================
+
+    projecto = None
+
+    if perfil:
+        projecto = (
+            Projecto.objects
+            .filter(estudante=perfil)
+            .order_by('-submetido_em')
+            .first()
+        )
+
+    # =====================================================
+    # MANIFESTAÇÕES RECEBIDAS
+    # =====================================================
+
+    manifestacoes = ManifestacaoInteresse.objects.none()
+
+    if (
+        perfil
+        and projecto
+        and projecto.estado == Projecto.EstadoProjecto.PUBLICADO
+    ):
+        manifestacoes = (
+            ManifestacaoInteresse.objects
+            .filter(
+                projecto=projecto,
+                projecto__estudante=perfil
+            )
+            .select_related(
+                'investidor',
+                'investidor__usuario',
+                'projecto'
+            )
+            .order_by('-atualizada_em', '-enviada_em')
+        )
+
+    # =====================================================
+    # CONTADORES GERAIS
+    # =====================================================
+
+    total_interesses = manifestacoes.count()
+
+    interesses_novos = (
+        manifestacoes
+        .filter(estado=ManifestacaoInteresse.Estado.ENVIADA)
+        .count()
+    )
+
+    interesses_em_analise = (
+        manifestacoes
+        .filter(estado=ManifestacaoInteresse.Estado.EM_ANALISE)
+        .count()
+    )
+
+    interesses_respondidos = (
+        manifestacoes
+        .filter(estado=ManifestacaoInteresse.Estado.RESPONDIDA)
+        .count()
+    )
+
+    # =====================================================
+    # CONTADORES DE INVESTIMENTO
+    # =====================================================
+
+    propostas_aceites = (
+        manifestacoes
+        .filter(
+            assunto=ManifestacaoInteresse.Assunto.INVESTIMENTO,
+            decisao=ManifestacaoInteresse.Decisao.ACEITE
+        )
+        .count()
+    )
+
+    propostas_recusadas = (
+        manifestacoes
+        .filter(
+            assunto=ManifestacaoInteresse.Assunto.INVESTIMENTO,
+            decisao=ManifestacaoInteresse.Decisao.RECUSADA
+        )
+        .count()
+    )
+
+    propostas_investimento_em_analise = (
+        manifestacoes
+        .filter(
+            assunto=ManifestacaoInteresse.Assunto.INVESTIMENTO,
+            estado=ManifestacaoInteresse.Estado.EM_ANALISE,
+            decisao=ManifestacaoInteresse.Decisao.PENDENTE
+        )
+        .count()
+    )
+
+    # =====================================================
+    # ABA ACTIVA
+    # =====================================================
+
+    secao_ativa = request.GET.get('secao', 'projecto').strip()
+
+    if secao_ativa not in ['projecto', 'interesses']:
+        secao_ativa = 'projecto'
+
+    if (
+        secao_ativa == 'interesses'
+        and (
+            not projecto
+            or projecto.estado != Projecto.EstadoProjecto.PUBLICADO
+        )
+    ):
+        secao_ativa = 'projecto'
+
+    # =====================================================
+    # MANIFESTAÇÃO SELECCIONADA
+    # =====================================================
+
+    manifestacao_id = request.GET.get('manifestacao')
+    manifestacao_seleccionada = None
+
+    if (
+        secao_ativa == 'interesses'
+        and manifestacao_id
+        and manifestacao_id.isdigit()
+    ):
+        manifestacao_seleccionada = (
+            manifestacoes
+            .filter(id=int(manifestacao_id))
+            .first()
+        )
+
+    if (
+        secao_ativa == 'interesses'
+        and manifestacao_seleccionada is None
+        and manifestacoes.exists()
+    ):
+        manifestacao_seleccionada = manifestacoes.first()
+
+    # =====================================================
+    # POST - INTERAGIR COM MANIFESTAÇÕES / CAPTAÇÃO
+    # =====================================================
+
+    if request.method == 'POST':
+
+        if (
+            not perfil
+            or not projecto
+            or projecto.estado != Projecto.EstadoProjecto.PUBLICADO
+        ):
+            messages.error(
+                request,
+                'Não é possível gerir manifestações de interesse neste momento.'
+            )
+            return redirect('estudante_projeto')
+
+        acao = request.POST.get('acao', '').strip()
+
+        # =================================================
+        # ENCERRAR CAPTAÇÃO
+        # =================================================
+
+        if acao == 'encerrar_captacao':
+
+            tem_proposta_aceite = (
+                projecto.manifestacoes_interesse
+                .filter(
+                    assunto=ManifestacaoInteresse.Assunto.INVESTIMENTO,
+                    decisao=ManifestacaoInteresse.Decisao.ACEITE
+                )
+                .exists()
+            )
+
+            if projecto.captacao_encerrada:
+                messages.info(
+                    request,
+                    'A captação de investimento já está encerrada.'
+                )
+
+            elif not tem_proposta_aceite:
+                messages.error(
+                    request,
+                    'É necessário aceitar pelo menos uma proposta de investimento antes de encerrar a captação.'
+                )
+
+            else:
+                projecto.captacao_encerrada = True
+                projecto.save()
+
+                messages.success(
+                    request,
+                    'Captação de investimento encerrada com sucesso.'
+                )
+
+            return redirect(
+                reverse('estudante_projeto')
+                + '?secao=interesses'
+                + '#interesses-recebidos'
+            )
+
+        # =================================================
+        # DAQUI PARA BAIXO É NECESSÁRIO manifestacao_id
+        # =================================================
+
+        manifestacao_id = request.POST.get('manifestacao_id')
+
+        if not manifestacao_id:
+            messages.error(
+                request,
+                'Manifestação de interesse não informada.'
+            )
+            return redirect(
+                reverse('estudante_projeto')
+                + '?secao=interesses'
+            )
+
+        manifestacao = get_object_or_404(
+            ManifestacaoInteresse.objects.select_related(
+                'projecto',
+                'investidor',
+                'investidor__usuario'
+            ),
+            id=manifestacao_id,
+            projecto=projecto,
+            projecto__estudante=perfil
+        )
+
+        url_manifestacao = (
+            reverse('estudante_projeto')
+            + '?secao=interesses'
+            + f'&manifestacao={manifestacao.id}'
+            + '#interesses-recebidos'
+        )
+
+        # =================================================
+        # MARCAR COMO EM ANÁLISE
+        # =================================================
+
+        if acao == 'analisar':
+
+            if manifestacao.estado == ManifestacaoInteresse.Estado.ENVIADA:
+                manifestacao.estado = ManifestacaoInteresse.Estado.EM_ANALISE
+                manifestacao.save()
+
+                messages.success(
+                    request,
+                    'Manifestação marcada como Em análise.'
+                )
+
+            elif manifestacao.estado == ManifestacaoInteresse.Estado.EM_ANALISE:
+                messages.info(
+                    request,
+                    'Esta manifestação já está em análise.'
+                )
+
+            else:
+                messages.info(
+                    request,
+                    'Esta manifestação já foi respondida.'
+                )
+
+            return redirect(url_manifestacao)
+
+        # =================================================
+        # ACEITAR PROPOSTA DE INVESTIMENTO
+        # =================================================
+
+        elif acao == 'aceitar':
+
+            if manifestacao.assunto != ManifestacaoInteresse.Assunto.INVESTIMENTO:
+                messages.error(
+                    request,
+                    'A opção Aceitar proposta aplica-se apenas a manifestações de investimento.'
+                )
+                return redirect(url_manifestacao)
+
+            if projecto.captacao_encerrada:
+                messages.error(
+                    request,
+                    'A captação já está encerrada. Não é possível aceitar novas propostas de investimento.'
+                )
+                return redirect(url_manifestacao)
+
+            if manifestacao.estado != ManifestacaoInteresse.Estado.EM_ANALISE:
+                messages.error(
+                    request,
+                    'Marque primeiro a proposta como Em análise.'
+                )
+                return redirect(url_manifestacao)
+
+            resposta = request.POST.get('resposta', '').strip()
+
+            if not resposta:
+                messages.error(
+                    request,
+                    'Escreva uma resposta antes de aceitar a proposta.'
+                )
+                return redirect(url_manifestacao)
+
+            manifestacao.resposta = resposta
+            manifestacao.estado = ManifestacaoInteresse.Estado.RESPONDIDA
+            manifestacao.decisao = ManifestacaoInteresse.Decisao.ACEITE
+            manifestacao.respondida_em = timezone.now()
+            manifestacao.save()
+
+            messages.success(
+                request,
+                'Proposta de investimento aceite com sucesso.'
+            )
+
+            return redirect(url_manifestacao)
+
+        # =================================================
+        # RECUSAR PROPOSTA DE INVESTIMENTO
+        # =================================================
+
+        elif acao == 'recusar':
+
+            if manifestacao.assunto != ManifestacaoInteresse.Assunto.INVESTIMENTO:
+                messages.error(
+                    request,
+                    'A opção Recusar proposta aplica-se apenas a manifestações de investimento.'
+                )
+                return redirect(url_manifestacao)
+
+            if manifestacao.estado != ManifestacaoInteresse.Estado.EM_ANALISE:
+                messages.error(
+                    request,
+                    'Marque primeiro a proposta como Em análise.'
+                )
+                return redirect(url_manifestacao)
+
+            resposta = request.POST.get('resposta', '').strip()
+
+            if not resposta:
+                messages.error(
+                    request,
+                    'Escreva uma resposta explicando a decisão antes de recusar a proposta.'
+                )
+                return redirect(url_manifestacao)
+
+            manifestacao.resposta = resposta
+            manifestacao.estado = ManifestacaoInteresse.Estado.RESPONDIDA
+            manifestacao.decisao = ManifestacaoInteresse.Decisao.RECUSADA
+            manifestacao.respondida_em = timezone.now()
+            manifestacao.save()
+
+            messages.success(
+                request,
+                'Proposta de investimento recusada.'
+            )
+
+            return redirect(url_manifestacao)
+
+        # =================================================
+        # RESPONDER PARCERIA OU PATROCÍNIO
+        # =================================================
+
+        elif acao == 'responder':
+
+            if manifestacao.assunto == ManifestacaoInteresse.Assunto.INVESTIMENTO:
+                messages.error(
+                    request,
+                    'Para uma proposta de investimento, escolha Aceitar proposta ou Recusar proposta.'
+                )
+                return redirect(url_manifestacao)
+
+            if manifestacao.estado != ManifestacaoInteresse.Estado.EM_ANALISE:
+                messages.error(
+                    request,
+                    'Marque primeiro a manifestação como Em análise antes de responder.'
+                )
+                return redirect(url_manifestacao)
+
+            resposta = request.POST.get('resposta', '').strip()
+
+            if not resposta:
+                messages.error(
+                    request,
+                    'Escreva uma resposta antes de enviar.'
+                )
+                return redirect(url_manifestacao)
+
+            manifestacao.resposta = resposta
+            manifestacao.estado = ManifestacaoInteresse.Estado.RESPONDIDA
+            manifestacao.respondida_em = timezone.now()
+            manifestacao.save()
+
+            messages.success(
+                request,
+                'Resposta enviada ao Investidor com sucesso.'
+            )
+
+            return redirect(url_manifestacao)
+
+        # =================================================
+        # ACÇÃO INVÁLIDA
+        # =================================================
+
+        messages.error(
+            request,
+            'Acção inválida.'
+        )
+
+        return redirect(
+            reverse('estudante_projeto')
+            + '?secao=interesses'
+        )
+
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
+    contexto = {
+        'perfil': perfil,
+        'projecto': projecto,
+        'secao_ativa': secao_ativa,
+        'manifestacoes': manifestacoes,
+        'manifestacao_seleccionada': manifestacao_seleccionada,
+        'total_interesses': total_interesses,
+        'interesses_novos': interesses_novos,
+        'interesses_em_analise': interesses_em_analise,
+        'interesses_respondidos': interesses_respondidos,
+        'propostas_aceites': propostas_aceites,
+        'propostas_recusadas': propostas_recusadas,
+        'propostas_investimento_em_analise': propostas_investimento_em_analise,
+        'captacao_encerrada': (
+            projecto.captacao_encerrada
+            if projecto
+            else False
+        ),
+    }
+
+    return render(
+        request,
+        'projeto.html',
+        contexto
+    )
 
 
 @login_required
@@ -534,13 +976,16 @@ def perfil_academico(request):
     )
 
 
-@login_required
-def projeto(request):
 
-    # Perfil académico do estudante logado
+    # =====================================================
+    # PERFIL ACADÉMICO DO ESTUDANTE LOGADO
+    # =====================================================
+
     perfil = (
         PerfilAcademico.objects
-        .filter(usuario=request.user)
+        .filter(
+            usuario=request.user
+        )
         .select_related(
             'curso',
             'curso__faculdade'
@@ -549,22 +994,465 @@ def projeto(request):
     )
 
 
-    # Projecto mais recente do estudante
+    # =====================================================
+    # PROJECTO MAIS RECENTE DO ESTUDANTE
+    # =====================================================
+
     projecto = None
+
 
     if perfil:
 
         projecto = (
             Projecto.objects
-            .filter(estudante=perfil)
-            .order_by('-submetido_em')
+            .filter(
+                estudante=perfil
+            )
+            .order_by(
+                '-submetido_em'
+            )
             .first()
         )
 
 
+    # =====================================================
+    # MANIFESTAÇÕES RECEBIDAS
+    #
+    # Só ficam disponíveis quando o projecto já estiver
+    # PUBLICADO.
+    # =====================================================
+
+    manifestacoes = (
+        ManifestacaoInteresse.objects
+        .none()
+    )
+
+
+    if (
+        perfil
+        and projecto
+        and projecto.estado
+        == Projecto.EstadoProjecto.PUBLICADO
+    ):
+
+        manifestacoes = (
+            ManifestacaoInteresse.objects
+            .filter(
+                projecto=projecto,
+                projecto__estudante=perfil
+            )
+            .select_related(
+                'investidor',
+                'investidor__usuario',
+                'projecto'
+            )
+            .order_by(
+                '-atualizada_em',
+                '-enviada_em'
+            )
+        )
+
+
+    # =====================================================
+    # CONTADORES
+    # =====================================================
+
+    total_interesses = (
+        manifestacoes.count()
+    )
+
+
+    interesses_novos = (
+        manifestacoes
+        .filter(
+            estado=ManifestacaoInteresse.Estado.ENVIADA
+        )
+        .count()
+    )
+
+
+    interesses_em_analise = (
+        manifestacoes
+        .filter(
+            estado=ManifestacaoInteresse.Estado.EM_ANALISE
+        )
+        .count()
+    )
+
+
+    interesses_respondidos = (
+        manifestacoes
+        .filter(
+            estado=ManifestacaoInteresse.Estado.RESPONDIDA
+        )
+        .count()
+    )
+
+
+    # =====================================================
+    # ABA ACTIVA
+    #
+    # ?secao=interesses
+    # =====================================================
+
+    secao_ativa = (
+        request.GET
+        .get(
+            'secao',
+            'projecto'
+        )
+        .strip()
+    )
+
+
+    if secao_ativa not in [
+        'projecto',
+        'interesses'
+    ]:
+
+        secao_ativa = 'projecto'
+
+
+    # Não existe área de interesses antes da publicação.
+
+    if (
+        secao_ativa == 'interesses'
+        and (
+            not projecto
+            or projecto.estado
+            != Projecto.EstadoProjecto.PUBLICADO
+        )
+    ):
+
+        secao_ativa = 'projecto'
+
+
+    # =====================================================
+    # MANIFESTAÇÃO SELECCIONADA
+    #
+    # ?secao=interesses&manifestacao=3
+    # =====================================================
+
+    manifestacao_id = (
+        request.GET
+        .get(
+            'manifestacao'
+        )
+    )
+
+
+    manifestacao_seleccionada = None
+
+
+    if (
+        secao_ativa == 'interesses'
+        and manifestacao_id
+        and manifestacao_id.isdigit()
+    ):
+
+        manifestacao_seleccionada = (
+            manifestacoes
+            .filter(
+                id=int(manifestacao_id)
+            )
+            .first()
+        )
+
+
+    # Se o estudante abriu a área de interesses sem escolher
+    # um registo, mostramos automaticamente o mais recente.
+
+    if (
+        secao_ativa == 'interesses'
+        and manifestacao_seleccionada is None
+        and manifestacoes.exists()
+    ):
+
+        manifestacao_seleccionada = (
+            manifestacoes.first()
+        )
+
+
+    # =====================================================
+    # POST - INTERAGIR COM A MANIFESTAÇÃO
+    # =====================================================
+
+    if request.method == 'POST':
+
+        # Segurança: só permite interagir se o projecto do
+        # estudante estiver publicado.
+
+        if (
+            not perfil
+            or not projecto
+            or projecto.estado
+            != Projecto.EstadoProjecto.PUBLICADO
+        ):
+
+            messages.error(
+                request,
+                'Não é possível gerir manifestações de interesse neste momento.'
+            )
+
+            return redirect(
+                'estudante_projeto'
+            )
+
+
+        manifestacao_id = (
+            request.POST
+            .get(
+                'manifestacao_id'
+            )
+        )
+
+
+        if not manifestacao_id:
+
+            messages.error(
+                request,
+                'Manifestação de interesse não informada.'
+            )
+
+            return redirect(
+                reverse('estudante_projeto')
+                + '?secao=interesses'
+            )
+
+
+        # A manifestação precisa pertencer ao projecto
+        # do estudante autenticado.
+
+        manifestacao = get_object_or_404(
+
+            ManifestacaoInteresse.objects
+            .select_related(
+                'projecto',
+                'investidor',
+                'investidor__usuario'
+            ),
+
+            id=manifestacao_id,
+            projecto=projecto,
+            projecto__estudante=perfil
+
+        )
+
+
+        acao = (
+            request.POST
+            .get(
+                'acao',
+                ''
+            )
+            .strip()
+        )
+
+
+        # =================================================
+        # MARCAR COMO EM ANÁLISE
+        # =================================================
+
+        if acao == 'analisar':
+
+            if (
+                manifestacao.estado
+                == ManifestacaoInteresse.Estado.ENVIADA
+            ):
+
+                manifestacao.estado = (
+                    ManifestacaoInteresse.Estado.EM_ANALISE
+                )
+
+                manifestacao.save(
+                    update_fields=[
+                        'estado',
+                        'atualizada_em',
+                    ]
+                )
+
+
+                messages.success(
+                    request,
+                    'Manifestação marcada como Em análise.'
+                )
+
+
+            elif (
+                manifestacao.estado
+                == ManifestacaoInteresse.Estado.EM_ANALISE
+            ):
+
+                messages.info(
+                    request,
+                    'Esta manifestação já está em análise.'
+                )
+
+
+            else:
+
+                messages.info(
+                    request,
+                    'Esta manifestação já foi respondida.'
+                )
+
+
+            url = (
+                reverse('estudante_projeto')
+                + '?secao=interesses'
+                + f'&manifestacao={manifestacao.id}'
+                + '#interesses-recebidos'
+            )
+
+            return redirect(
+                url
+            )
+
+
+        # =================================================
+        # RESPONDER AO INVESTIDOR
+        # =================================================
+
+        elif acao == 'responder':
+
+            if (
+                manifestacao.estado
+                != ManifestacaoInteresse.Estado.EM_ANALISE
+            ):
+
+                messages.error(
+                    request,
+                    'Marque primeiro a manifestação como Em análise antes de responder.'
+                )
+
+                url = (
+                    reverse('estudante_projeto')
+                    + '?secao=interesses'
+                    + f'&manifestacao={manifestacao.id}'
+                    + '#interesses-recebidos'
+                )
+
+                return redirect(
+                    url
+                )
+
+
+            resposta = (
+                request.POST
+                .get(
+                    'resposta',
+                    ''
+                )
+                .strip()
+            )
+
+
+            if not resposta:
+
+                messages.error(
+                    request,
+                    'Escreva uma resposta antes de enviar.'
+                )
+
+                url = (
+                    reverse('estudante_projeto')
+                    + '?secao=interesses'
+                    + f'&manifestacao={manifestacao.id}'
+                    + '#interesses-recebidos'
+                )
+
+                return redirect(
+                    url
+                )
+
+
+            manifestacao.resposta = resposta
+
+            manifestacao.estado = (
+                ManifestacaoInteresse.Estado.RESPONDIDA
+            )
+
+            manifestacao.respondida_em = (
+                timezone.now()
+            )
+
+            manifestacao.save(
+                update_fields=[
+                    'resposta',
+                    'estado',
+                    'respondida_em',
+                    'atualizada_em',
+                ]
+            )
+
+
+            messages.success(
+                request,
+                'Resposta enviada ao Investidor com sucesso.'
+            )
+
+
+            url = (
+                reverse('estudante_projeto')
+                + '?secao=interesses'
+                + f'&manifestacao={manifestacao.id}'
+                + '#interesses-recebidos'
+            )
+
+            return redirect(
+                url
+            )
+
+
+        # =================================================
+        # ACÇÃO INVÁLIDA
+        # =================================================
+
+        messages.error(
+            request,
+            'Acção inválida.'
+        )
+
+
+        return redirect(
+            reverse('estudante_projeto')
+            + '?secao=interesses'
+        )
+
+
+    # =====================================================
+    # CONTEXTO
+    # =====================================================
+
     contexto = {
-        'perfil': perfil,
-        'projecto': projecto,
+
+        'perfil':
+            perfil,
+
+        'projecto':
+            projecto,
+
+        'secao_ativa':
+            secao_ativa,
+
+        'manifestacoes':
+            manifestacoes,
+
+        'manifestacao_seleccionada':
+            manifestacao_seleccionada,
+
+        'total_interesses':
+            total_interesses,
+
+        'interesses_novos':
+            interesses_novos,
+
+        'interesses_em_analise':
+            interesses_em_analise,
+
+        'interesses_respondidos':
+            interesses_respondidos,
+
     }
 
 
@@ -573,7 +1461,6 @@ def projeto(request):
         'projeto.html',
         contexto
     )
-
 
 @login_required
 def acompanhamento(request):
@@ -816,7 +1703,6 @@ def acompanhamento(request):
         'acompanhamento.html',
         contexto
     )
-
 
 
 def sair(request):

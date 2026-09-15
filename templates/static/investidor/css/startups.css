@@ -1,0 +1,956 @@
+:root {
+
+    --navy-dark: #031027;
+    --navy: #06182f;
+    --navy-card: #082444;
+
+    --gold: #e5ad00;
+    --gold-light: #ffc719;
+
+    --white: #ffffff;
+
+    --text: #d4dde8;
+    --muted: #9eabba;
+
+    --border: rgba(255,255,255,.09);
+
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+    min-height: 100%;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 75% 10%,
+            #0a2c50 0%,
+            #061d39 35%,
+            #03152d 70%,
+            #021024 100%
+        );
+
+}
+
+
+.investor-page {
+
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    padding: 28px 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #04162f,
+            #031127
+        );
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.05);
+
+}
+
+
+.sidebar-header {
+
+    padding: 0 18px;
+    margin-bottom: 35px;
+}
+
+
+.sidebar-header h1 {
+
+    margin: 0 0 10px;
+
+    color: var(--gold);
+
+    font-size: 1.65rem;
+}
+
+
+.sidebar-header p {
+
+    margin: 0;
+    font-size: .88rem;
+}
+
+
+.sidebar-menu {
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+.sidebar-link {
+
+    min-height: 52px;
+
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    border-radius: 8px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: .85rem;
+}
+
+
+.sidebar-link.active {
+
+    color: var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(211,163,0,.30),
+            rgba(151,116,0,.18)
+        );
+
+}
+
+
+.sidebar-icon {
+
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sidebar-icon svg {
+
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+}
+
+
+.sidebar-bottom {
+
+    margin-top: 28px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.11);
+
+}
+
+
+/* ==========================================================
+   MAIN
+========================================================== */
+
+.main-content {
+
+    width:
+        calc(100% - 260px);
+
+    min-height: 100vh;
+
+    margin-left: 260px;
+
+    padding:
+        28px 28px 40px;
+
+}
+
+
+.top-header {
+
+    min-height: 145px;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap: 30px;
+
+}
+
+
+.page-label {
+
+    color: var(--gold);
+
+    font-size: .82rem;
+
+    font-weight: 600;
+}
+
+
+.top-header h2 {
+
+    margin: 8px 0 8px;
+
+    font-size: 2.15rem;
+}
+
+
+.top-header h2 span {
+
+    color: var(--gold);
+}
+
+
+.top-header p {
+
+    margin: 0;
+
+    color: #d2dbe6;
+
+    font-size: .9rem;
+}
+
+
+/* ==========================================================
+   UTILIZADOR
+========================================================== */
+
+.investor-user {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.investor-avatar {
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid
+        var(--gold);
+
+    border-radius: 50%;
+
+    color: var(--gold);
+}
+
+
+.investor-user-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.investor-user-info strong {
+
+    font-size: .83rem;
+}
+
+
+.investor-user-info span {
+
+    color: #bdc8d7;
+
+    font-size: .7rem;
+}
+
+
+/* ==========================================================
+   LAYOUT
+========================================================== */
+
+.startup-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(400px, .9fr)
+        minmax(500px, 1.15fr);
+
+    gap: 18px;
+
+}
+
+
+/* ==========================================================
+   PAINÉIS
+========================================================== */
+
+.startup-list-panel,
+.startup-detail-panel {
+
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,36,67,.95),
+            rgba(5,26,52,.95)
+        );
+
+}
+
+
+/* ==========================================================
+   FILTROS
+========================================================== */
+
+.filters {
+
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 1fr;
+
+    gap: 10px;
+}
+
+
+.search-field,
+.area-filter {
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 13px;
+
+    border:
+        1px solid
+        rgba(104,151,199,.34);
+
+    border-radius: 6px;
+
+    background:
+        rgba(5,30,57,.75);
+
+}
+
+
+.search-field svg,
+.area-filter svg {
+
+    width: 19px;
+    height: 19px;
+
+    fill: none;
+
+    stroke: #d7e0ec;
+
+    stroke-width: 1.5;
+}
+
+
+.search-field input,
+.area-filter select {
+
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+}
+
+
+.area-filter select {
+
+    cursor: pointer;
+}
+
+
+.area-filter option {
+
+    color: #07152d;
+}
+
+
+.results-count {
+
+    margin: 15px 0;
+
+    color: #c9d3df;
+
+    font-size: .72rem;
+}
+
+
+/* ==========================================================
+   LISTA
+========================================================== */
+
+.startup-list {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.startup-item {
+
+    min-height: 110px;
+
+    padding: 13px;
+
+    display: grid;
+
+    grid-template-columns:
+        82px 1fr 22px;
+
+    gap: 14px;
+
+    align-items: center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 7px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background:
+        rgba(4,27,52,.65);
+
+}
+
+
+.startup-item.selected {
+
+    border-color:
+        var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(43,49,40,.72),
+            rgba(7,31,53,.72)
+        );
+
+}
+
+
+.startup-mini-image {
+
+    width: 82px;
+    height: 82px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(29,117,78,.20);
+
+    color: #26ca75;
+
+    font-size: 1.7rem;
+
+    font-weight: 700;
+}
+
+
+.startup-mini-image img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.startup-item-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.startup-item-title strong {
+
+    font-size: .88rem;
+}
+
+
+.startup-item-title span,
+.area-badge {
+
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    color: #cbd7e7;
+
+    background:
+        rgba(47,92,139,.35);
+
+    font-size: .63rem;
+}
+
+
+.startup-item-content p {
+
+    margin: 8px 0 0;
+
+    color: #c5d0dd;
+
+    font-size: .7rem;
+
+    line-height: 1.45;
+}
+
+
+.startup-arrow {
+
+    color: white;
+
+    font-size: 1.8rem;
+}
+
+
+.startup-item.selected
+.startup-arrow {
+
+    color: var(--gold);
+}
+
+
+/* ==========================================================
+   DETALHE
+========================================================== */
+
+.startup-detail-header {
+
+    display: grid;
+
+    grid-template-columns:
+        175px 1fr;
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+
+.startup-cover {
+
+    width: 175px;
+    height: 150px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background:
+        rgba(29,117,78,.20);
+
+    color: #26ca75;
+
+    font-size: 3rem;
+}
+
+
+.startup-cover img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.startup-detail-header h3 {
+
+    margin: 8px 0 10px;
+
+    font-size: 1.55rem;
+}
+
+
+.startup-detail-header p {
+
+    margin: 14px 0 0;
+
+    color: #cbd4df;
+
+    font-size: .76rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   META
+========================================================== */
+
+.startup-meta {
+
+    margin-top: 15px;
+
+    padding:
+        14px 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+
+.startup-meta div {
+
+    padding: 0 13px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.07);
+
+}
+
+
+.startup-meta div:last-child {
+
+    border-right: none;
+}
+
+
+.meta-label {
+
+    color: #9eabba;
+
+    font-size: .65rem;
+}
+
+
+.startup-meta strong {
+
+    font-size: .75rem;
+
+    font-weight: 500;
+}
+
+
+/* ==========================================================
+   SOBRE
+========================================================== */
+
+.startup-about {
+
+    padding: 15px 0;
+}
+
+
+.startup-about h4 {
+
+    margin: 0 0 8px;
+
+    font-size: .78rem;
+}
+
+
+.startup-about p {
+
+    margin: 0;
+
+    color: #c5cfdb;
+
+    font-size: .7rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   GRID INFORMAÇÕES
+========================================================== */
+
+.startup-info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 9px;
+}
+
+
+.startup-info-grid article {
+
+    min-height: 150px;
+
+    padding: 13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 7px;
+
+    background:
+        rgba(5,30,57,.60);
+
+}
+
+
+.startup-info-grid h4 {
+
+    margin: 8px 0;
+
+    font-size: .72rem;
+}
+
+
+.startup-info-grid p {
+
+    margin: 0;
+
+    color: #c3cedb;
+
+    font-size: .66rem;
+
+    line-height: 1.45;
+}
+
+
+.info-icon {
+
+    font-size: 1rem;
+}
+
+
+.info-icon.blue {
+
+    color: #2995ff;
+}
+
+
+.info-icon.red {
+
+    color: #ff5e68;
+}
+
+
+.info-icon.yellow {
+
+    color: #ffc000;
+}
+
+
+/* ==========================================================
+   BOTÃO
+========================================================== */
+
+.interest-button {
+
+    min-height: 44px;
+
+    margin-top: 13px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #eaae00,
+            #ffc719
+        );
+
+    color: #07152d;
+
+    text-decoration: none;
+
+    font-size: .78rem;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================
+   VAZIOS
+========================================================== */
+
+.empty-startups,
+.empty-detail {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #9eabba;
+}
+
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media (max-width: 1100px) {
+
+    .startup-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .sidebar {
+
+        display: none;
+
+    }
+
+
+    .main-content {
+
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+
+    .top-header {
+
+        flex-direction: column-reverse;
+    }
+
+
+    .filters {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .startup-detail-header {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .startup-info-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+}

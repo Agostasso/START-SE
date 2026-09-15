@@ -13,6 +13,11 @@
 
 .breadcrumb-startse a {
     color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb-startse a:hover {
+    text-decoration: underline;
 }
 
 .breadcrumb-startse span {
@@ -20,11 +25,13 @@
 }
 
 
-/* TOPO */
+/* ==========================================================
+   TOPO
+========================================================== */
 
 .startup-banner {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
     gap: 30px;
 
     background: linear-gradient(
@@ -43,6 +50,7 @@
     display: flex;
     gap: 28px;
     align-items: center;
+    min-width: 0;
 }
 
 
@@ -61,22 +69,51 @@
     justify-content: center;
 
     flex-shrink: 0;
+
+    padding: 14px;
+    text-align: center;
 }
 
 
 .startup-logo-grande span {
-    font-size: 2.8rem;
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 9px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef8f1;
+
+    font-size: 1.45rem;
+    font-weight: 800;
 }
 
 
 .startup-logo-grande strong {
+    max-width: 100%;
+
     font-size: 1.05rem;
+
+    overflow-wrap: anywhere;
+}
+
+
+.startup-titulo {
+    min-width: 0;
 }
 
 
 .startup-titulo h1 {
+    margin: 0 0 4px;
+
     font-size: 2rem;
-    margin-bottom: 2px;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -99,6 +136,7 @@
     margin: 10px 0;
 
     font-size: 0.82rem;
+    font-weight: 600;
 }
 
 
@@ -107,6 +145,13 @@
     max-width: 560px;
     line-height: 1.6;
     margin-bottom: 0;
+    white-space: pre-line;
+}
+
+
+.startup-capa {
+    width: 100%;
+    min-width: 0;
 }
 
 
@@ -114,18 +159,21 @@
     width: 100%;
     height: 190px;
 
+    display: block;
+
     object-fit: cover;
 
     border-radius: 8px;
 }
 
 
-/* CONTEÚDO */
+/* ==========================================================
+   CONTEÚDO
+========================================================== */
 
 .startup-conteudo-card,
 .info-card,
 .investidor-card {
-
     background: white;
 
     border: 1px solid var(--startse-border);
@@ -155,6 +203,11 @@
 }
 
 
+.startup-secao > div:last-child {
+    min-width: 0;
+}
+
+
 .startup-secao-icon {
     width: 38px;
     height: 38px;
@@ -173,6 +226,7 @@
     justify-content: center;
 
     font-weight: bold;
+    font-size: 0.88rem;
 }
 
 
@@ -200,10 +254,15 @@
 
     margin-bottom:
         0;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
 }
 
 
-/* INFO */
+/* ==========================================================
+   INFORMAÇÕES RÁPIDAS
+========================================================== */
 
 .info-card {
     padding: 24px;
@@ -213,7 +272,6 @@
 
 .info-card h3,
 .investidor-card h3 {
-
     color:
         var(--startse-navy);
 
@@ -229,12 +287,11 @@
 
 
 .info-linha {
-
     display:
         grid;
 
     grid-template-columns:
-        120px 1fr;
+        120px minmax(0, 1fr);
 
     gap:
         15px;
@@ -253,7 +310,6 @@
 
 
 .info-linha span {
-
     color:
         #344054;
 
@@ -267,7 +323,6 @@
 
 .info-linha strong,
 .info-linha a {
-
     color:
         #344054;
 
@@ -276,15 +331,25 @@
 
     font-weight:
         500;
+
+    overflow-wrap: anywhere;
 }
 
 
 .info-linha a {
     color: #2563eb;
+    text-decoration: none;
 }
 
 
-/* INVESTIDOR */
+.info-linha a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================================
+   INTERESSE DO INVESTIDOR
+========================================================== */
 
 .investidor-card {
     padding: 24px;
@@ -292,7 +357,6 @@
 
 
 .investidor-card p {
-
     color:
         #475467;
 
@@ -304,8 +368,20 @@
 }
 
 
-.investidor-login {
+.investidor-card .btn-startse {
+    min-height: 44px;
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 4px;
+
+    font-weight: 700;
+}
+
+
+.investidor-login {
     text-align:
         center;
 
@@ -325,7 +401,56 @@
 }
 
 
-/* RESPONSIVO */
+/* ==========================================================
+   ESTADOS DA CAPTAÇÃO
+========================================================== */
+
+/*
+   O HTML usa a mesma classe .badge-publicado tanto para
+   "Em captação" quanto para "Captação encerrada".
+   Mantemos o visual verde por padrão para a situação ativa.
+*/
+
+.badge-publicado {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+
+/*
+   Caso futuramente queira diferenciar visualmente o estado
+   encerrado no HTML, basta acrescentar:
+   class="badge-publicado badge-captacao-encerrada"
+*/
+
+.badge-captacao-encerrada {
+    background: #6b7280;
+}
+
+
+/* ==========================================================
+   MELHORIAS DE LEITURA
+========================================================== */
+
+.startup-banner,
+.startup-conteudo-card,
+.info-card,
+.investidor-card {
+    box-shadow:
+        0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+
+.startup-conteudo-card,
+.info-card,
+.investidor-card {
+    height: auto;
+}
+
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
 
 @media (max-width: 991px) {
 
@@ -333,10 +458,25 @@
         grid-template-columns: 1fr;
     }
 
+
+    .startup-capa img {
+        height: 240px;
+    }
+
 }
 
 
 @media (max-width: 768px) {
+
+    .startup-detalhe {
+        padding-top: 20px;
+    }
+
+
+    .startup-banner {
+        padding: 20px;
+    }
+
 
     .startup-identidade {
         flex-direction: column;
@@ -350,9 +490,88 @@
     }
 
 
+    .startup-logo-grande span {
+        width: 46px;
+        height: 46px;
+
+        font-size: 1.2rem;
+    }
+
+
+    .startup-titulo h1 {
+        font-size: 1.65rem;
+    }
+
+
+    .startup-capa img {
+        height: 210px;
+    }
+
+
+    .startup-conteudo-card,
+    .info-card,
+    .investidor-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+
+    .startup-secao {
+        gap: 14px;
+        padding: 22px 0;
+    }
+
+
     .info-linha {
         grid-template-columns: 1fr;
         gap: 2px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .startup-banner {
+        gap: 20px;
+        padding: 16px;
+    }
+
+
+    .startup-logo-grande {
+        width: 100px;
+        height: 100px;
+    }
+
+
+    .startup-logo-grande strong {
+        font-size: 0.88rem;
+    }
+
+
+    .startup-titulo h1 {
+        font-size: 1.45rem;
+    }
+
+
+    .startup-area {
+        font-size: 0.95rem;
+    }
+
+
+    .startup-capa img {
+        height: 180px;
+    }
+
+
+    .startup-secao {
+        align-items: flex-start;
+    }
+
+
+    .startup-secao-icon {
+        width: 34px;
+        height: 34px;
     }
 
 }

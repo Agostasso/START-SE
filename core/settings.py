@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'visitante',
     'estudante',
     'mentor',
+    'investidor',
 ]
 
 MIDDLEWARE = [

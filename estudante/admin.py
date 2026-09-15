@@ -66,12 +66,14 @@ class ProjectoAdmin(admin.ModelAdmin):
         'titulo',
         'estudante',
         'estado',
+        'captacao_encerrada',
         'submetido_em',
         'avaliado_em',
     )
 
     list_filter = (
         'estado',
+        'captacao_encerrada',
         'submetido_em',
     )
 
@@ -85,3 +87,43 @@ class ProjectoAdmin(admin.ModelAdmin):
         'submetido_em',
         'atualizado_em',
     )
+
+    actions = (
+        'reabrir_captacao',
+    )
+
+
+    @admin.action(
+    description='Reabrir captação dos projectos seleccionados'
+    )
+    def reabrir_captacao(
+        self,
+        request,
+        queryset
+    ):
+
+        # Apenas projectos PUBLICADOS e com captação
+        # encerrada podem ser reabertos.
+        projectos = queryset.filter(
+            estado=Projecto.EstadoProjecto.PUBLICADO,
+            captacao_encerrada=True,
+        )
+
+        total = projectos.update(
+            captacao_encerrada=False
+        )
+
+
+        if total > 0:
+
+            self.message_user(
+                request,
+                f'{total} projecto(s) tiveram a captação reaberta com sucesso.'
+            )
+
+        else:
+
+            self.message_user(
+                request,
+                'Nenhum dos projectos seleccionados pode ter a captação reaberta.'
+            )

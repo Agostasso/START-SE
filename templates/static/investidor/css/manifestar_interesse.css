@@ -1,0 +1,1138 @@
+:root {
+
+    --navy-dark:
+        #031027;
+
+    --navy:
+        #06182f;
+
+    --navy-card:
+        #082444;
+
+    --gold:
+        #e5ad00;
+
+    --gold-light:
+        #ffc719;
+
+    --white:
+        #ffffff;
+
+    --text:
+        #d4dde8;
+
+    --muted:
+        #9eabba;
+
+    --border:
+        rgba(255,255,255,.09);
+
+}
+
+
+* {
+
+    box-sizing:
+        border-box;
+
+}
+
+
+html,
+body {
+
+    margin:
+        0;
+
+    min-height:
+        100%;
+
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:
+        #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 70% 10%,
+            #0a2d50 0%,
+            #061d39 35%,
+            #03152d 70%,
+            #021024 100%
+        );
+
+}
+
+
+.investor-page {
+
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+========================================================== */
+
+.sidebar {
+
+    position:
+        fixed;
+
+    top:
+        0;
+
+    left:
+        0;
+
+    width:
+        260px;
+
+    height:
+        100vh;
+
+    padding:
+        28px 15px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #04162f,
+            #031127
+        );
+
+    border-right:
+        1px solid
+        rgba(255,255,255,.05);
+
+}
+
+
+.sidebar-header {
+
+    padding:
+        0 18px;
+
+    margin-bottom:
+        35px;
+
+}
+
+
+.sidebar-header h1 {
+
+    margin:
+        0 0 10px;
+
+    color:
+        var(--gold);
+
+    font-size:
+        1.65rem;
+
+}
+
+
+.sidebar-header p {
+
+    margin:
+        0;
+
+    font-size:
+        .88rem;
+
+}
+
+
+.sidebar-menu {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        7px;
+
+}
+
+
+.sidebar-link {
+
+    min-height:
+        52px;
+
+    padding:
+        0 16px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    border-radius:
+        8px;
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .85rem;
+
+}
+
+
+.sidebar-link.active {
+
+    color:
+        var(--gold);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(211,163,0,.30),
+            rgba(151,116,0,.18)
+        );
+
+}
+
+
+.sidebar-icon {
+
+    width:
+        26px;
+
+    height:
+        26px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.sidebar-icon svg {
+
+    width:
+        23px;
+
+    height:
+        23px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.5;
+
+}
+
+
+.sidebar-bottom {
+
+    margin-top:
+        28px;
+
+    padding-top:
+        18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.11);
+
+}
+
+
+/* ==========================================================
+   MAIN
+========================================================== */
+
+.main-content {
+
+    position:
+        relative;
+
+    width:
+        calc(100% - 260px);
+
+    min-height:
+        100vh;
+
+    margin-left:
+        260px;
+
+    padding:
+        55px 40px 45px;
+
+}
+
+
+/* ==========================================================
+   USER
+========================================================== */
+
+.investor-user {
+
+    position:
+        absolute;
+
+    top:
+        22px;
+
+    right:
+        35px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+}
+
+
+.investor-avatar {
+
+    width:
+        52px;
+
+    height:
+        52px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        var(--gold);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--gold);
+
+}
+
+
+.investor-user-info {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+}
+
+
+.investor-user-info strong {
+
+    font-size:
+        .83rem;
+
+}
+
+
+.investor-user-info span {
+
+    color:
+        #bdc8d7;
+
+    font-size:
+        .7rem;
+
+}
+
+
+.user-arrow {
+
+    margin-left:
+        3px;
+
+}
+
+
+/* ==========================================================
+   VOLTAR
+========================================================== */
+
+.back-link {
+
+    display:
+        inline-flex;
+
+    margin-bottom:
+        14px;
+
+    color:
+        #d7e0eb;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .72rem;
+
+}
+
+
+.back-link:hover {
+
+    color:
+        var(--gold);
+
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.page-header h2 {
+
+    margin:
+        0;
+
+    font-size:
+        2.15rem;
+
+}
+
+
+.page-header h2 span {
+
+    color:
+        var(--gold);
+
+}
+
+
+.page-header p {
+
+    margin:
+        8px 0 0;
+
+    color:
+        #d2dbe6;
+
+    font-size:
+        .88rem;
+
+}
+
+
+/* ==========================================================
+   MENSAGENS
+========================================================== */
+
+.messages {
+
+    max-width:
+        875px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.message-alert {
+
+    padding:
+        11px 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:
+        6px;
+
+    font-size:
+        .72rem;
+
+}
+
+
+.message-alert.error {
+
+    color:
+        #ff858d;
+
+    border-color:
+        rgba(255,94,104,.35);
+
+    background:
+        rgba(151,38,47,.18);
+
+}
+
+
+.message-alert.success {
+
+    color:
+        #36d987;
+
+    border-color:
+        rgba(31,194,111,.35);
+
+    background:
+        rgba(11,114,65,.20);
+
+}
+
+
+/* ==========================================================
+   FORM PANEL
+========================================================== */
+
+.form-panel {
+
+    width:
+        min(875px, 100%);
+
+    padding:
+        28px 32px 25px;
+
+    border:
+        1px solid
+        rgba(78,143,198,.25);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8,35,66,.96),
+            rgba(5,27,52,.96)
+        );
+
+}
+
+
+.form-panel-header {
+
+    margin-bottom:
+        27px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        20px;
+
+}
+
+
+.mail-icon {
+
+    width:
+        66px;
+
+    height:
+        66px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        8px;
+
+    color:
+        var(--gold);
+
+    background:
+        rgba(21,65,94,.65);
+
+}
+
+
+.mail-icon svg {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.6;
+
+}
+
+
+.form-panel-header h3 {
+
+    margin:
+        0;
+
+    font-size:
+        1.32rem;
+
+}
+
+
+.form-panel-header p {
+
+    margin:
+        7px 0 0;
+
+    color:
+        #c7d1de;
+
+    font-size:
+        .76rem;
+
+}
+
+
+/* ==========================================================
+   STARTUP
+========================================================== */
+
+.startup-reference {
+
+    margin-bottom:
+        19px;
+
+    padding:
+        12px 14px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        6px;
+
+    background:
+        rgba(3,22,43,.45);
+
+}
+
+
+.startup-reference span {
+
+    color:
+        var(--muted);
+
+    font-size:
+        .67rem;
+
+}
+
+
+.startup-reference strong {
+
+    font-size:
+        .72rem;
+
+}
+
+
+.startup-reference small {
+
+    padding:
+        4px 7px;
+
+    border-radius:
+        5px;
+
+    color:
+        #cbd7e7;
+
+    background:
+        rgba(47,92,139,.35);
+
+    font-size:
+        .59rem;
+
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.interest-form {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        20px;
+
+}
+
+
+.form-group {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        8px;
+
+}
+
+
+.form-group label {
+
+    font-size:
+        .77rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.form-group select,
+.form-group textarea,
+.contact-input {
+
+    width:
+        100%;
+
+    border:
+        1px solid
+        rgba(63,126,183,.55);
+
+    border-radius:
+        6px;
+
+    background:
+        rgba(8,43,78,.70);
+
+    color:
+        #ffffff;
+
+    font-family:
+        inherit;
+
+}
+
+
+.form-group select {
+
+    height:
+        49px;
+
+    padding:
+        0 16px;
+
+    outline:
+        none;
+
+}
+
+
+.form-group select option {
+
+    color:
+        #07152d;
+
+}
+
+
+.form-group textarea {
+
+    min-height:
+        155px;
+
+    padding:
+        15px;
+
+    resize:
+        vertical;
+
+    outline:
+        none;
+
+    line-height:
+        1.5;
+
+}
+
+
+.form-group textarea::placeholder,
+.contact-input input::placeholder {
+
+    color:
+        #8ea1b8;
+
+}
+
+
+.character-counter {
+
+    position:
+        absolute;
+
+    right:
+        4px;
+
+    bottom:
+        -19px;
+
+    color:
+        #9baabe;
+
+    font-size:
+        .62rem;
+
+}
+
+
+/* ==========================================================
+   CONTACT
+========================================================== */
+
+.contact-input {
+
+    height:
+        49px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    padding:
+        0 14px;
+
+}
+
+
+.contact-input svg {
+
+    width:
+        19px;
+
+    height:
+        19px;
+
+    flex-shrink:
+        0;
+
+    fill:
+        none;
+
+    stroke:
+        #9ab1ca;
+
+    stroke-width:
+        1.5;
+
+}
+
+
+.contact-input input {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        #ffffff;
+
+    font-family:
+        inherit;
+
+}
+
+
+/* ==========================================================
+   ACTIONS
+========================================================== */
+
+.form-actions {
+
+    margin-top:
+        8px;
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        14px;
+
+}
+
+
+.cancel-button,
+.submit-button {
+
+    min-width:
+        175px;
+
+    height:
+        50px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        9px;
+
+    border-radius:
+        6px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+}
+
+
+.cancel-button {
+
+    border:
+        1px solid
+        rgba(83,140,192,.35);
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(5,27,52,.35);
+
+    text-decoration:
+        none;
+
+}
+
+
+.submit-button {
+
+    border:
+        none;
+
+    color:
+        #07152d;
+
+    background:
+        linear-gradient(
+            90deg,
+            #eaae00,
+            #ffc719
+        );
+
+}
+
+
+.submit-button svg {
+
+    width:
+        19px;
+
+    height:
+        19px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.6;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media (max-width: 760px) {
+
+    .sidebar {
+
+        display:
+            none;
+
+    }
+
+
+    .main-content {
+
+        width:
+            100%;
+
+        margin-left:
+            0;
+
+        padding:
+            100px 20px 35px;
+
+    }
+
+
+    .investor-user {
+
+        top:
+            18px;
+
+        right:
+            20px;
+
+    }
+
+
+    .form-panel {
+
+        padding:
+            22px 18px;
+
+    }
+
+
+    .form-panel-header {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .form-actions {
+
+        flex-direction:
+            column-reverse;
+
+    }
+
+
+    .cancel-button,
+    .submit-button {
+
+        width:
+            100%;
+
+    }
+
+}

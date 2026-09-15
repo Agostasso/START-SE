@@ -508,6 +508,9 @@
     display:
         grid;
 
+    align-items:
+        start;
+
     grid-template-columns:
         repeat(3, 1fr);
 
@@ -1421,5 +1424,280 @@
             auto;
 
     }
+
+}
+
+/* ==========================================================
+   PROJECTO PUBLICADO - INTERESSES RECEBIDOS
+   Versão compacta
+========================================================== */
+
+.dashboard-card-project-published {
+
+    border-color:
+        rgba(57,112,207,.26);
+
+}
+
+
+/*
+   O grid deixa de esticar os três cards pela altura do card
+   Projecto. Cada card mantém apenas a altura de que precisa.
+*/
+
+.status-cards {
+
+    align-items:
+        start;
+
+}
+
+
+/* ==========================================================
+   BLOCO COMPACTO DE INTERESSES
+========================================================== */
+
+.project-interest-info {
+
+    min-height:
+        38px;
+
+    margin:
+        -2px 0 11px;
+
+    padding:
+        7px 9px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        8px;
+
+    border:
+        1px solid
+        rgba(57,112,207,.22);
+
+    border-radius:
+        6px;
+
+    background:
+        rgba(10,41,76,.32);
+
+}
+
+
+.project-interest-text {
+
+    min-width:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+
+}
+
+
+.project-interest-text strong {
+
+    color:
+        #ffffff;
+
+    font-size:
+        .66rem;
+
+    font-weight:
+        700;
+
+    line-height:
+        1.2;
+
+}
+
+
+.project-interest-text span {
+
+    color:
+        #aeb9c9;
+
+    font-size:
+        .56rem;
+
+    line-height:
+        1.25;
+
+}
+
+
+.new-interest-badge {
+
+    flex-shrink:
+        0;
+
+    padding:
+        4px 7px;
+
+    border-radius:
+        10px;
+
+    color:
+        #06142d;
+
+    background:
+        var(--student-gold);
+
+    white-space:
+        nowrap;
+
+    font-size:
+        .53rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.no-interest-text {
+
+    width:
+        100%;
+
+    color:
+        #9ba6ba;
+
+    text-align:
+        center;
+
+    font-size:
+        .60rem;
+
+}
+
+
+/* ==========================================================
+   BOTÃO DO CARD PROJECTO PUBLICADO
+========================================================== */
+
+.button-interests {
+
+    min-width:
+        132px;
+
+    padding:
+        9px 14px;
+
+    border-color:
+        #3970cf;
+
+    color:
+        #6e9feb;
+
+}
+
+
+.button-interests:hover {
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(57,112,207,.12);
+
+}
+
+
+/* ==========================================================
+   PEQUENO AJUSTE DE ESPAÇAMENTO NO CARD PUBLICADO
+========================================================== */
+
+.dashboard-card-project-published
+.card-content p {
+
+    min-height:
+        45px;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+@media (max-width: 480px) {
+
+    .project-interest-info {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .new-interest-badge {
+
+        align-self:
+            flex-start;
+
+    }
+
+}
+
+
+/* ==========================================================
+   ETAPA 7 - CONEXÃO COM INVESTIDOR
+========================================================== */
+
+/*
+   Mantém o texto da etapa final legível sem aumentar
+   desnecessariamente a altura do percurso.
+*/
+
+.journey-step:last-child strong {
+
+    line-height:
+        1.35;
+
+}
+
+
+/*
+   Quando a conexão é concluída, o mesmo padrão verde das
+   demais etapas concluídas é utilizado automaticamente
+   através da classe .completed já existente.
+*/
+
+.journey-step:last-child.completed > span {
+
+    color:
+        #dff9e9;
+
+}
+
+
+/*
+   Enquanto o projecto estiver publicado, mas ainda não
+   houver uma manifestação de INVESTIMENTO respondida,
+   a etapa permanece disponível/actual em dourado.
+*/
+
+.journey-step:last-child.current > span {
+
+    color:
+        var(--student-gold);
 
 }

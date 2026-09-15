@@ -9,7 +9,7 @@ Dashboard | START.SE
 
 <link
     rel="stylesheet"
-    href="{% static 'estudante/css/dashboard.css' %}"
+    href="{% static 'estudante/css/dashboard.css' %}?v=8"
 >
 
 {% endblock 'head' %}
@@ -449,7 +449,14 @@ Dashboard | START.SE
                  PROJECTO
             ================================================== -->
 
-            <article class="dashboard-card">
+            <article
+                class="
+                    dashboard-card
+                    {% if projeto and projeto.estado == 'PUBLICADO' %}
+                        dashboard-card-project-published
+                    {% endif %}
+                "
+            >
 
 
                 <div class="card-icon card-icon-blue">
@@ -587,7 +594,98 @@ Dashboard | START.SE
 
 
 
-                    {% if projeto or projeto_disponivel %}
+                    <!-- =========================================
+                         INTERESSES RECEBIDOS
+                         Versão compacta para não aumentar
+                         excessivamente a altura do card.
+                    ========================================== -->
+
+                    {% if projeto and projeto.estado == 'PUBLICADO' %}
+
+                        <div class="project-interest-info">
+
+                            {% if total_interesses > 0 %}
+
+                                <div class="project-interest-text">
+
+                                    <strong>
+
+                                        {{ total_interesses }}
+
+                                        {% if total_interesses == 1 %}
+                                            interesse recebido
+                                        {% else %}
+                                            interesses recebidos
+                                        {% endif %}
+
+                                    </strong>
+
+
+                                    <span>
+
+                                        {% if interesses_novos > 0 %}
+
+                                            {{ interesses_novos }}
+
+                                            {% if interesses_novos == 1 %}
+                                                novo contacto
+                                            {% else %}
+                                                novos contactos
+                                            {% endif %}
+
+                                        {% else %}
+
+                                            Todos os contactos foram analisados.
+
+                                        {% endif %}
+
+                                    </span>
+
+                                </div>
+
+
+                                {% if interesses_novos > 0 %}
+
+                                    <span class="new-interest-badge">
+
+                                        {{ interesses_novos }}
+                                        novo{% if interesses_novos != 1 %}s{% endif %}
+
+                                    </span>
+
+                                {% endif %}
+
+
+                            {% else %}
+
+                                <span class="no-interest-text">
+                                    Ainda não recebeu interesses.
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    {% if projeto and projeto.estado == 'PUBLICADO' %}
+
+                        <a
+                            href="{% url 'estudante_projeto' %}?secao=interesses#interesses-recebidos"
+                            class="card-button button-blue button-interests"
+                        >
+
+                            {% if total_interesses > 0 %}
+                                Ver interesses
+                            {% else %}
+                                Ver projecto
+                            {% endif %}
+
+                        </a>
+
+                    {% elif projeto or projeto_disponivel %}
 
                         <a
                             href="{% url 'estudante_projeto' %}"
@@ -809,8 +907,8 @@ Dashboard | START.SE
                 </h3>
 
                 <p>
-                    Acompanhe as etapas necessárias até
-                    à publicação da sua startup.
+                    Acompanhe as etapas desde a validação
+                    até à conexão da sua startup com investidores.
                 </p>
 
             </div>
@@ -1204,14 +1302,14 @@ Dashboard | START.SE
 
 
                 <!-- =================================================
-                     7 - INVESTIMENTO
+                     7 - CONEXÃO COM INVESTIDOR
                 ================================================== -->
 
                 <div
                     class="
                         journey-step
 
-                        {% if investimento_realizado %}
+                        {% if conexao_investidor_concluida %}
                             completed
 
                         {% elif projeto and projeto.estado == 'PUBLICADO' %}
@@ -1223,7 +1321,7 @@ Dashboard | START.SE
 
                     <div class="step-circle">
 
-                        {% if investimento_realizado %}
+                        {% if conexao_investidor_concluida %}
 
                             ✓
 
@@ -1238,14 +1336,15 @@ Dashboard | START.SE
 
 
                     <strong>
-                        Investimento
+                        Conexão com<br>
+                        Investidor
                     </strong>
 
 
 
                     <span>
 
-                        {% if investimento_realizado %}
+                        {% if conexao_investidor_concluida %}
 
                             Concluído
 

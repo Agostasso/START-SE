@@ -1,0 +1,946 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Acompanhar propostas | START.SE
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{% static 'investidor/css/propostas.css' %}?v=2"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="investor-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Investidor
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <a
+                href="{% url 'consultar_startups' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle cx="10" cy="10" r="6"></circle>
+
+                        <path d="M14.5 14.5L21 21"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Consulta startups
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="{% url 'propostas' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M4 20V10"></path>
+
+                        <path d="M10 20V5"></path>
+
+                        <path d="M16 20V8"></path>
+
+                        <path d="M22 20H2"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Acompanha proposta
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             UTILIZADOR
+        ================================================== -->
+
+        <div class="investor-user">
+
+
+            <div class="investor-avatar">
+
+                {% if request.user.first_name %}
+
+                    {{ request.user.first_name|slice:":1"|upper }}
+
+                {% else %}
+
+                    {{ request.user.username|slice:":1"|upper }}
+
+                {% endif %}
+
+            </div>
+
+
+
+            <div class="investor-user-info">
+
+                <strong>
+
+                    {% if request.user.get_full_name %}
+
+                        {{ request.user.get_full_name }}
+
+                    {% else %}
+
+                        {{ request.user.username }}
+
+                    {% endif %}
+
+                </strong>
+
+
+                <span>
+
+                    {% if request.user.email %}
+
+                        {{ request.user.email }}
+
+                    {% else %}
+
+                        Investidor
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <span class="user-arrow">
+                ⌄
+            </span>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CABEÇALHO
+        ================================================== -->
+
+        <header class="page-header">
+
+            <span class="page-label">
+                Propostas
+            </span>
+
+
+            <h2>
+                Acompanhar <span>propostas</span>
+            </h2>
+
+
+            <p>
+                Acompanhe o estado dos contactos que enviou às startups
+                e veja as próximas etapas.
+            </p>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CARDS
+        ================================================== -->
+
+        <section class="summary-cards">
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon blue">
+                    ✈
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ total_enviadas }}
+                    </strong>
+
+                    <h3>
+                        Propostas enviadas
+                    </h3>
+
+                    <p>
+                        Total de contactos realizados.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon yellow">
+                    ◷
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ total_em_analise }}
+                    </strong>
+
+                    <h3>
+                        Em análise
+                    </h3>
+
+                    <p>
+                        Aguardar resposta das startups.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon green">
+                    ●
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ total_respondidas }}
+                    </strong>
+
+                    <h3>
+                        Respondidas
+                    </h3>
+
+                    <p>
+                        Startups que já responderam.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="summary-card">
+
+                <div class="summary-icon purple">
+                    ◉
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ total_parcerias }}
+                    </strong>
+
+                    <h3>
+                        Parcerias
+                    </h3>
+
+                    <p>
+                        Contactos com assunto Parceria.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ÁREA INFERIOR
+        ================================================== -->
+
+        <section class="proposals-layout">
+
+
+            <!-- =================================================
+                 HISTÓRICO
+            ================================================== -->
+
+            <div class="history-panel">
+
+
+                <div class="history-header">
+
+
+                    <h3>
+                        Histórico de propostas
+                    </h3>
+
+
+
+                    <form
+                        method="get"
+                        class="history-filters"
+                    >
+
+
+                        <div class="search-field">
+
+                            <input
+                                type="text"
+                                name="q"
+                                value="{{ pesquisa }}"
+                                placeholder="Pesquisar startups..."
+                            >
+
+                        </div>
+
+
+
+                        <div class="state-filter">
+
+                            <select
+                                name="estado"
+                                onchange="this.form.submit()"
+                            >
+
+                                <option value="">
+                                    Todos os estados
+                                </option>
+
+
+                                {% for valor, nome in estados %}
+
+                                    <option
+                                        value="{{ valor }}"
+                                        {% if estado_seleccionado == valor %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ nome }}
+                                    </option>
+
+                                {% endfor %}
+
+
+                            </select>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+
+                <div class="history-table-wrapper">
+
+
+                    <table class="history-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Startup</th>
+
+                                <th>Assunto</th>
+
+                                <th>Contacto enviado</th>
+
+                                <th>Data</th>
+
+                                <th>Estado</th>
+
+                                <th>Decisão</th>
+
+                                <th>Acções</th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody>
+
+
+                            {% for item in manifestacoes %}
+
+
+                                <tr
+                                    {% if manifestacao_seleccionada.id == item.id %}
+                                        class="selected-row"
+                                    {% endif %}
+                                >
+
+
+                                    <td>
+
+                                        <div class="startup-cell">
+
+
+                                            <div class="startup-thumb">
+
+                                                {% if item.projecto.imagem_capa %}
+
+                                                    <img
+                                                        src="{{ item.projecto.imagem_capa.url }}"
+                                                        alt="{{ item.projecto.titulo }}"
+                                                    >
+
+                                                {% else %}
+
+                                                    {{ item.projecto.titulo|slice:":1"|upper }}
+
+                                                {% endif %}
+
+                                            </div>
+
+
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ item.projecto.titulo }}
+                                                </strong>
+
+                                                <span>
+
+                                                    {% if item.projecto.area_atuacao %}
+
+                                                        {{ item.projecto.get_area_atuacao_display }}
+
+                                                    {% endif %}
+
+                                                </span>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        {{ item.get_assunto_display }}
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        {{ item.tipo_contacto }}
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        {{ item.enviada_em|date:"d M Y" }}
+
+                                    </td>
+
+
+
+                                    <td>
+
+
+                                        {% if item.estado == 'ENVIADA' %}
+
+                                            <span class="status status-sent">
+                                                Enviada
+                                            </span>
+
+
+                                        {% elif item.estado == 'EM_ANALISE' %}
+
+                                            <span class="status status-analysis">
+                                                Em análise
+                                            </span>
+
+
+                                        {% elif item.estado == 'RESPONDIDA' %}
+
+                                            <span class="status status-answered">
+                                                Respondida
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    </td>
+
+
+
+                                    <!-- DECISÃO DA STARTUP -->
+
+                                    <td>
+
+                                        {% if item.assunto == 'INVESTIMENTO' %}
+
+                                            {% if item.decisao == 'ACEITE' %}
+
+                                                <span class="decision decision-accepted">
+                                                    Aceite
+                                                </span>
+
+                                            {% elif item.decisao == 'RECUSADA' %}
+
+                                                <span class="decision decision-rejected">
+                                                    Recusada
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="decision decision-pending">
+                                                    Pendente
+                                                </span>
+
+                                            {% endif %}
+
+                                        {% else %}
+
+                                            <span class="decision decision-not-applicable">
+                                                —
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+
+                                    <td>
+
+                                        <a
+                                            href="{% url 'propostas' %}?manifestacao={{ item.id }}"
+                                            class="view-button"
+                                        >
+
+                                            {% if item.estado == 'RESPONDIDA' and item.assunto == 'INVESTIMENTO' %}
+
+                                                Ver decisão
+
+                                            {% elif item.estado == 'RESPONDIDA' %}
+
+                                                Ver resposta
+
+                                            {% else %}
+
+                                                Ver detalhes
+
+                                            {% endif %}
+
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+
+
+                            {% empty %}
+
+
+                                <tr>
+
+                                    <td
+                                        colspan="7"
+                                        class="empty-row"
+                                    >
+                                        Nenhuma manifestação de interesse encontrada.
+                                    </td>
+
+                                </tr>
+
+
+                            {% endfor %}
+
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PAINEL DIREITO
+            ================================================== -->
+
+            <aside class="update-panel">
+
+
+                {% if manifestacao_seleccionada %}
+
+
+                    <h3>
+                        Última actualização
+                    </h3>
+
+
+
+                    <div class="selected-startup">
+
+
+                        <div class="selected-image">
+
+                            {% if manifestacao_seleccionada.projecto.imagem_capa %}
+
+                                <img
+                                    src="{{ manifestacao_seleccionada.projecto.imagem_capa.url }}"
+                                    alt="{{ manifestacao_seleccionada.projecto.titulo }}"
+                                >
+
+                            {% else %}
+
+                                {{ manifestacao_seleccionada.projecto.titulo|slice:":1"|upper }}
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <div>
+
+                            <strong>
+                                {{ manifestacao_seleccionada.projecto.titulo }}
+                            </strong>
+
+
+                            {% if manifestacao_seleccionada.projecto.area_atuacao %}
+
+                                <span class="area-badge">
+
+                                    {{ manifestacao_seleccionada.projecto.get_area_atuacao_display }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="detail-list">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Assunto
+                            </span>
+
+                            <strong>
+                                {{ manifestacao_seleccionada.get_assunto_display }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Contacto enviado
+                            </span>
+
+                            <strong>
+                                {{ manifestacao_seleccionada.contacto_direto }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Data de envio
+                            </span>
+
+                            <strong>
+                                {{ manifestacao_seleccionada.enviada_em|date:"d M Y - H:i" }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Estado
+                            </span>
+
+                            <strong>
+                                {{ manifestacao_seleccionada.get_estado_display }}
+                            </strong>
+
+                        </div>
+
+
+
+                        {% if manifestacao_seleccionada.assunto == 'INVESTIMENTO' %}
+
+                            <div class="detail-item">
+
+                                <span>
+                                    Decisão da startup
+                                </span>
+
+                                <strong>
+
+                                    {% if manifestacao_seleccionada.decisao == 'ACEITE' %}
+
+                                        <span class="decision decision-accepted">
+                                            Aceite
+                                        </span>
+
+                                    {% elif manifestacao_seleccionada.decisao == 'RECUSADA' %}
+
+                                        <span class="decision decision-rejected">
+                                            Recusada
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="decision decision-pending">
+                                            Pendente
+                                        </span>
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <div class="message-box">
+
+                        <span>
+                            Sua mensagem
+                        </span>
+
+
+                        <p>
+                            {{ manifestacao_seleccionada.mensagem }}
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="message-box response-box">
+
+                        <span>
+                            Resposta da startup
+                        </span>
+
+
+                        {% if manifestacao_seleccionada.resposta %}
+
+                            <p>
+                                {{ manifestacao_seleccionada.resposta }}
+                            </p>
+
+
+                            {% if manifestacao_seleccionada.respondida_em %}
+
+                                <small class="response-date">
+                                    Respondida em
+                                    {{ manifestacao_seleccionada.respondida_em|date:"d M Y - H:i" }}
+                                </small>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            <p class="no-response">
+
+                                {% if manifestacao_seleccionada.assunto == 'INVESTIMENTO' %}
+
+                                    A startup ainda não tomou uma decisão sobre esta proposta.
+
+                                {% else %}
+
+                                    Ainda não existe uma resposta para esta manifestação.
+
+                                {% endif %}
+
+                            </p>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <div class="empty-update">
+
+                        <h3>
+                            Nenhuma proposta
+                        </h3>
+
+                        <p>
+                            Quando manifestar interesse numa startup,
+                            o acompanhamento aparecerá aqui.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </aside>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

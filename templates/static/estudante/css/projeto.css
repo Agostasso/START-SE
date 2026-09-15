@@ -1461,6 +1461,1641 @@ body {
 }
 
 
+/* ==========================================================
+   INTERESSES RECEBIDOS
+========================================================== */
+
+.project-tab-interest {
+
+    gap:
+        8px;
+
+}
+
+
+.tab-notification {
+
+    min-width:
+        21px;
+
+    height:
+        21px;
+
+    padding:
+        0 6px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
+
+    color:
+        #06142d;
+
+    background:
+        var(--student-gold);
+
+    font-size:
+        .66rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.interests-section {
+
+    margin-top:
+        24px;
+
+    scroll-margin-top:
+        20px;
+
+}
+
+
+.interests-summary {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        12px;
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.interest-summary-card {
+
+    min-height:
+        103px;
+
+    padding:
+        17px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    border:
+        1px solid
+        var(--student-border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,34,61,.98),
+            rgba(12,28,52,.98)
+        );
+
+}
+
+
+.interest-summary-number {
+
+    width:
+        47px;
+
+    height:
+        47px;
+
+    flex-shrink:
+        0;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(50,112,191,.52);
+
+    font-size:
+        1.15rem;
+
+    font-weight:
+        800;
+
+}
+
+
+.interest-summary-number.new {
+
+    background:
+        rgba(231,173,0,.55);
+
+}
+
+
+.interest-summary-number.analysis {
+
+    background:
+        rgba(55,121,208,.55);
+
+}
+
+
+.interest-summary-number.answered {
+
+    background:
+        rgba(30,137,81,.60);
+
+}
+
+
+.interest-summary-card strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .82rem;
+
+}
+
+
+.interest-summary-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .67rem;
+
+    line-height:
+        1.45;
+
+}
+
+
+/* ==========================================================
+   LAYOUT DE INTERESSES
+========================================================== */
+
+.interests-layout {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(420px, .95fr)
+        minmax(480px, 1.05fr);
+
+    gap:
+        18px;
+
+}
+
+
+.interests-list-card,
+.interest-detail-card {
+
+    min-width:
+        0;
+
+    border:
+        1px solid
+        var(--student-border);
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18,34,61,.98),
+            rgba(12,28,52,.98)
+        );
+
+}
+
+
+.interests-list-card {
+
+    padding:
+        22px;
+
+}
+
+
+.interest-detail-card {
+
+    padding:
+        22px;
+
+}
+
+
+.interests-card-header {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding-bottom:
+        17px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.section-kicker {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--student-gold);
+
+    font-size:
+        .65rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.interests-card-header h3,
+.interest-detail-header h3 {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1rem;
+
+}
+
+
+.interests-card-header p {
+
+    max-width:
+        420px;
+
+    margin:
+        6px 0 0;
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .69rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+.published-badge {
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        6px;
+
+    color:
+        #59dc94;
+
+    background:
+        rgba(30,137,81,.22);
+
+    font-size:
+        .63rem;
+
+    font-weight:
+        700;
+
+}
+
+
+/* ==========================================================
+   LISTA DE INTERESSES
+========================================================== */
+
+.interest-list {
+
+    margin-top:
+        14px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        9px;
+
+}
+
+
+.interest-list-item {
+
+    min-height:
+        86px;
+
+    padding:
+        12px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        47px 1fr 20px;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        7px;
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(5,24,48,.42);
+
+    text-decoration:
+        none;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+
+}
+
+
+.interest-list-item:hover,
+.interest-list-item.selected {
+
+    border-color:
+        rgba(231,173,0,.65);
+
+    background:
+        rgba(17,39,68,.82);
+
+}
+
+
+.interest-investor-avatar,
+.detail-avatar {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(231,173,0,.58);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--student-gold);
+
+    background:
+        rgba(231,173,0,.07);
+
+    font-weight:
+        700;
+
+}
+
+
+.interest-investor-avatar {
+
+    width:
+        47px;
+
+    height:
+        47px;
+
+    font-size:
+        .85rem;
+
+}
+
+
+.interest-list-content {
+
+    min-width:
+        0;
+
+}
+
+
+.interest-list-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+}
+
+
+.interest-list-title strong {
+
+    overflow:
+        hidden;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .77rem;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.interest-list-content p {
+
+    margin:
+        6px 0 3px;
+
+    color:
+        #d0d7e1;
+
+    font-size:
+        .68rem;
+
+}
+
+
+.interest-list-content small {
+
+    color:
+        #8896aa;
+
+    font-size:
+        .60rem;
+
+}
+
+
+.interest-arrow {
+
+    color:
+        #a8b4c5;
+
+    font-size:
+        1.35rem;
+
+}
+
+
+.interest-list-item.selected
+.interest-arrow {
+
+    color:
+        var(--student-gold);
+
+}
+
+
+/* ==========================================================
+   ESTADOS
+========================================================== */
+
+.interest-status {
+
+    padding:
+        5px 8px;
+
+    border-radius:
+        12px;
+
+    white-space:
+        nowrap;
+
+    font-size:
+        .58rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.status-enviada {
+
+    color:
+        #9fd1ff;
+
+    background:
+        rgba(50,112,191,.24);
+
+}
+
+
+.status-analise {
+
+    color:
+        #ffd95b;
+
+    background:
+        rgba(180,132,0,.20);
+
+}
+
+
+.status-respondida {
+
+    color:
+        #63e19e;
+
+    background:
+        rgba(30,137,81,.22);
+
+}
+
+
+/* ==========================================================
+   VAZIO
+========================================================== */
+
+.interests-empty {
+
+    min-height:
+        320px;
+
+    padding:
+        35px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+}
+
+
+.interests-empty-icon {
+
+    width:
+        55px;
+
+    height:
+        55px;
+
+    margin-bottom:
+        17px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    color:
+        var(--student-gold);
+
+    background:
+        rgba(231,173,0,.10);
+
+    font-size:
+        1.35rem;
+
+}
+
+
+.interests-empty h4 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .84rem;
+
+}
+
+
+.interests-empty p {
+
+    max-width:
+        330px;
+
+    margin:
+        0;
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .69rem;
+
+    line-height:
+        1.55;
+
+}
+
+
+/* ==========================================================
+   DETALHE
+========================================================== */
+
+.interest-detail-header {
+
+    min-height:
+        53px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding-bottom:
+        15px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.interest-investor-box {
+
+    margin-top:
+        15px;
+
+    padding:
+        12px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        7px;
+
+    background:
+        rgba(5,24,48,.40);
+
+}
+
+
+.detail-avatar {
+
+    width:
+        43px;
+
+    height:
+        43px;
+
+    flex-shrink:
+        0;
+
+    font-size:
+        .8rem;
+
+}
+
+
+.interest-investor-box > div:last-child {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+
+}
+
+
+.interest-investor-box span {
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .59rem;
+
+}
+
+
+.interest-investor-box strong {
+
+    color:
+        #ffffff;
+
+    font-size:
+        .72rem;
+
+}
+
+
+.interest-meta-grid {
+
+    margin-top:
+        12px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+}
+
+
+.interest-meta-grid div {
+
+    min-width:
+        0;
+
+    padding:
+        11px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        6px;
+
+}
+
+
+.interest-meta-grid span {
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .59rem;
+
+}
+
+
+.interest-meta-grid strong {
+
+    overflow-wrap:
+        anywhere;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .66rem;
+
+    font-weight:
+        500;
+
+}
+
+
+/* ==========================================================
+   MENSAGEM RECEBIDA
+========================================================== */
+
+.received-message {
+
+    margin-top:
+        14px;
+
+}
+
+
+.received-message > span,
+.sent-response > span {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .66rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.received-message p,
+.sent-response p {
+
+    margin:
+        0;
+
+    padding:
+        13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        6px;
+
+    color:
+        #d0d8e3;
+
+    background:
+        rgba(5,24,48,.45);
+
+    font-size:
+        .68rem;
+
+    line-height:
+        1.55;
+
+    white-space:
+        pre-line;
+
+}
+
+
+/* ==========================================================
+   ACÇÕES
+========================================================== */
+
+.interest-action-box {
+
+    margin-top:
+        15px;
+
+    padding-top:
+        15px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.interest-action-box h4 {
+
+    margin:
+        0 0 5px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        .76rem;
+
+}
+
+
+.interest-action-box > p {
+
+    margin:
+        0 0 12px;
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .64rem;
+
+    line-height:
+        1.45;
+
+}
+
+
+.analyse-interest-button,
+.send-response-button {
+
+    min-height:
+        40px;
+
+    padding:
+        0 16px;
+
+    border:
+        1px solid
+        var(--student-gold);
+
+    border-radius:
+        5px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .68rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.analyse-interest-button {
+
+    color:
+        var(--student-gold);
+
+    background:
+        transparent;
+
+}
+
+
+.analyse-interest-button:hover {
+
+    color:
+        #06142d;
+
+    background:
+        var(--student-gold);
+
+}
+
+
+.response-form {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+
+}
+
+
+.response-form textarea {
+
+    width:
+        100%;
+
+    min-height:
+        125px;
+
+    padding:
+        12px;
+
+    resize:
+        vertical;
+
+    outline:
+        none;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    border-radius:
+        6px;
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(5,24,48,.58);
+
+    font-family:
+        inherit;
+
+    font-size:
+        .7rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+.response-form textarea:focus {
+
+    border-color:
+        rgba(231,173,0,.70);
+
+}
+
+
+.response-form textarea::placeholder {
+
+    color:
+        #8190a5;
+
+}
+
+
+.send-response-button {
+
+    align-self:
+        flex-end;
+
+    min-width:
+        150px;
+
+    border:
+        none;
+
+    color:
+        #06142d;
+
+    background:
+        linear-gradient(
+            90deg,
+            #dfa800,
+            #f6c11b
+        );
+
+}
+
+
+/* ==========================================================
+   RESPOSTA ENVIADA
+========================================================== */
+
+.sent-response {
+
+    margin-top:
+        15px;
+
+    padding-top:
+        15px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.sent-response p {
+
+    border-color:
+        rgba(30,137,81,.24);
+
+}
+
+
+.sent-response small {
+
+    display:
+        block;
+
+    margin-top:
+        7px;
+
+    color:
+        #8391a4;
+
+    font-size:
+        .59rem;
+
+}
+
+
+.interest-detail-empty {
+
+    min-height:
+        420px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+}
+
+
+.interest-detail-empty h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        .86rem;
+
+}
+
+
+.interest-detail-empty p {
+
+    max-width:
+        290px;
+
+    margin:
+        0;
+
+    color:
+        var(--student-muted);
+
+    font-size:
+        .68rem;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVIDADE DOS INTERESSES
+========================================================== */
+
+@media (max-width: 1200px) {
+
+    .interests-summary {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .interests-layout {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .interests-summary {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .interest-meta-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .interests-card-header,
+    .interest-detail-header {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .send-response-button {
+
+        width:
+            100%;
+
+    }
+
+}
 
 
 
+/* ==========================================================
+   START.SE
+   COMPLEMENTO - CAPTAÇÃO E DECISÃO DE INVESTIMENTO
+   Acrescentar ao final de estudante/css/projeto.css
+========================================================== */
+
+.capture-panel {
+    margin: 0 0 18px;
+    padding: 20px 22px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(18,34,61,.98), rgba(12,28,52,.98));
+}
+
+.capture-panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.capture-panel-header h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.capture-panel-header p {
+    max-width: 650px;
+    margin: 6px 0 0;
+    color: #98a4b7;
+    font-size: .69rem;
+    line-height: 1.5;
+}
+
+.capture-status {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+    font-size: .62rem;
+    font-weight: 700;
+}
+
+.capture-status-open {
+    color: #9fd1ff;
+    background: rgba(50,112,191,.22);
+}
+
+.capture-status-active {
+    color: #ffd95b;
+    background: rgba(180,132,0,.20);
+}
+
+.capture-status-closed {
+    color: #63e19e;
+    background: rgba(30,137,81,.22);
+}
+
+.capture-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.capture-stat {
+    min-height: 72px;
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 7px;
+    background: rgba(5,24,48,.38);
+}
+
+.capture-stat-value {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: .8rem;
+    font-weight: 800;
+}
+
+.capture-stat-accepted {
+    background: rgba(30,137,81,.58);
+}
+
+.capture-stat-analysis {
+    background: rgba(180,132,0,.48);
+}
+
+.capture-stat-rejected {
+    background: rgba(153,58,70,.58);
+}
+
+.capture-stat strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #ffffff;
+    font-size: .68rem;
+}
+
+.capture-stat small {
+    display: block;
+    color: #8f9caf;
+    font-size: .57rem;
+    line-height: 1.35;
+}
+
+.capture-footer {
+    margin-top: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.capture-message strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #ffffff;
+    font-size: .68rem;
+}
+
+.capture-message p {
+    max-width: 650px;
+    margin: 0;
+    color: #98a4b7;
+    font-size: .61rem;
+    line-height: 1.45;
+}
+
+.capture-message-success strong {
+    color: #63e19e;
+}
+
+.close-capture-button {
+    min-width: 145px;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--student-gold);
+    border-radius: 5px;
+    color: var(--student-gold);
+    background: transparent;
+    font-family: inherit;
+    font-size: .65rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.close-capture-button:hover {
+    color: #06142d;
+    background: var(--student-gold);
+}
+
+.list-decision {
+    display: inline-block;
+    margin: 0 0 4px;
+    padding: 3px 6px;
+    border-radius: 9px;
+    font-size: .52rem;
+    font-weight: 700;
+}
+
+.list-decision-accepted {
+    color: #63e19e;
+    background: rgba(30,137,81,.18);
+}
+
+.list-decision-rejected {
+    color: #ff9aa5;
+    background: rgba(153,58,70,.18);
+}
+
+.proposal-decision-box {
+    margin-top: 12px;
+    padding: 10px 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 6px;
+    background: rgba(5,24,48,.40);
+}
+
+.proposal-decision-box > span {
+    color: #98a4b7;
+    font-size: .60rem;
+}
+
+.proposal-decision {
+    padding: 5px 9px;
+    border-radius: 12px;
+    font-size: .60rem;
+    font-weight: 700;
+}
+
+.proposal-decision.accepted {
+    color: #63e19e;
+    background: rgba(30,137,81,.20);
+}
+
+.proposal-decision.rejected {
+    color: #ff9aa5;
+    background: rgba(153,58,70,.20);
+}
+
+.proposal-decision.pending {
+    color: #ffd95b;
+    background: rgba(180,132,0,.20);
+}
+
+.decision-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+}
+
+.accept-proposal-button,
+.reject-proposal-button {
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: .67rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.accept-proposal-button {
+    border: 1px solid #28934e;
+    color: #ffffff;
+    background: #207a40;
+}
+
+.accept-proposal-button:hover {
+    background: #28934e;
+}
+
+.reject-proposal-button {
+    border: 1px solid #9a3a46;
+    color: #ffb4bd;
+    background: rgba(122,38,48,.20);
+}
+
+.reject-proposal-button:hover {
+    color: #ffffff;
+    background: #7c2630;
+}
+
+@media (max-width: 900px) {
+    .capture-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .capture-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .close-capture-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .capture-panel-header {
+        flex-direction: column;
+    }
+
+    .decision-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .accept-proposal-button,
+    .reject-proposal-button {
+        width: 100%;
+    }
+}

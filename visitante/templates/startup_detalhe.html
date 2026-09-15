@@ -2,23 +2,33 @@
 {% load static %}
 
 {% block 'title' %}
-Detalhe da Startup | START.SE
+{{ startup.titulo }} | START.SE
 {% endblock 'title' %}
 
+
 {% block 'head' %}
+
 <link
     rel="stylesheet"
-    href="{% static 'visitante/css/startup_detalhe.css' %}"
+    href="{% static 'visitante/css/startup_detalhe.css' %}?v=2"
 >
+
 {% endblock 'head' %}
 
+
+
 {% block 'body' %}
+
 
 <section class="startup-detalhe">
 
     <div class="container">
 
-        <!-- Breadcrumb -->
+
+        <!-- =================================================
+             BREADCRUMB
+        ================================================== -->
+
         <div class="breadcrumb-startse">
 
             <a href="{% url 'marketplace' %}">
@@ -28,72 +38,125 @@ Detalhe da Startup | START.SE
             <span>/</span>
 
             <span>
-                AgroLuanda
+                {{ startup.titulo }}
             </span>
 
         </div>
 
 
-        <!-- TOPO -->
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
         <div class="startup-banner">
+
 
             <div class="startup-identidade">
 
+
                 <div class="startup-logo-grande">
-                    <span>🌱</span>
-                    <strong>AgroLuanda</strong>
+
+                    <span>
+                        {{ startup.titulo|slice:":1"|upper }}
+                    </span>
+
+                    <strong>
+                        {{ startup.titulo }}
+                    </strong>
+
                 </div>
+
 
 
                 <div class="startup-titulo">
 
+
                     <h1>
-                        AgroLuanda
+                        {{ startup.titulo }}
                     </h1>
 
-                    <span class="startup-area">
-                        Agrotech
-                    </span>
+
+
+                    {% if startup.area_atuacao %}
+
+                        <span class="startup-area">
+                            {{ startup.get_area_atuacao_display }}
+                        </span>
+
+                    {% endif %}
+
+
 
                     <div>
-                        <span class="badge-publicado">
-                            ✓ Publicado
-                        </span>
+
+                        {% if startup.captacao_encerrada %}
+
+                            <span class="badge-publicado">
+                                Captação encerrada
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge-publicado">
+                                ✓ Em captação
+                            </span>
+
+                        {% endif %}
+
                     </div>
 
+
+
                     <p>
-                        Plataforma que conecta pequenos agricultores
-                        a mercados e serviços de apoio, promovendo
-                        produtividade e inclusão.
+                        {{ startup.resumo_executivo }}
                     </p>
+
 
                 </div>
 
-            </div>
-
-
-            <div class="startup-capa">
-
-                <img
-                    src="{% static 'visitante/img/startups/agroluanda-capa.jpeg' %}"
-                    alt="AgroLuanda"
-                >
 
             </div>
+
+
+
+            {% if startup.imagem_capa %}
+
+                <div class="startup-capa">
+
+                    <img
+                        src="{{ startup.imagem_capa.url }}"
+                        alt="{{ startup.titulo }}"
+                    >
+
+                </div>
+
+            {% endif %}
+
 
         </div>
 
 
 
-        <!-- CONTEÚDO -->
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+
         <div class="row g-4 mt-1">
 
-            <!-- COLUNA PRINCIPAL -->
+
+            <!-- =============================================
+                 COLUNA PRINCIPAL
+            ============================================== -->
+
             <div class="col-lg-8">
+
 
                 <div class="startup-conteudo-card">
 
+
                     <!-- SOBRE -->
+
                     <div class="startup-secao">
 
                         <div class="startup-secao-icon">
@@ -107,12 +170,7 @@ Detalhe da Startup | START.SE
                             </h3>
 
                             <p>
-                                A AgroLuanda é uma plataforma digital
-                                que liga pequenos agricultores a compradores,
-                                insumos, serviços financeiros e conhecimento
-                                técnico. Utiliza tecnologia para apoiar
-                                o aumento da produtividade e melhorar
-                                o rendimento das famílias rurais.
+                                {{ startup.resumo_executivo }}
                             </p>
 
                         </div>
@@ -120,7 +178,9 @@ Detalhe da Startup | START.SE
                     </div>
 
 
+
                     <!-- PROBLEMA -->
+
                     <div class="startup-secao">
 
                         <div class="startup-secao-icon">
@@ -134,11 +194,7 @@ Detalhe da Startup | START.SE
                             </h3>
 
                             <p>
-                                Os pequenos agricultores enfrentam
-                                dificuldades de acesso a mercados,
-                                insumos de qualidade, informação técnica
-                                e financiamento, limitando a produtividade
-                                e os seus rendimentos.
+                                {{ startup.problema }}
                             </p>
 
                         </div>
@@ -146,7 +202,9 @@ Detalhe da Startup | START.SE
                     </div>
 
 
+
                     <!-- SOLUÇÃO -->
+
                     <div class="startup-secao">
 
                         <div class="startup-secao-icon">
@@ -160,116 +218,290 @@ Detalhe da Startup | START.SE
                             </h3>
 
                             <p>
-                                A plataforma conecta agricultores a mercados,
-                                fornecedores e serviços de apoio, oferecendo
-                                recomendações personalizadas, logística
-                                e ferramentas digitais para facilitar
-                                as actividades do negócio.
+                                {{ startup.solucao }}
                             </p>
 
                         </div>
 
                     </div>
 
+
+
+                    <!-- MODELO DE NEGÓCIO -->
+
+                    <div class="startup-secao">
+
+                        <div class="startup-secao-icon">
+                            $
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Modelo de negócio
+                            </h3>
+
+                            <p>
+                                {{ startup.modelo_negocio }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EQUIPA -->
+
+                    <div class="startup-secao">
+
+                        <div class="startup-secao-icon">
+                            👥
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Equipa
+                            </h3>
+
+                            <p>
+                                {{ startup.equipa }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
                 </div>
+
 
             </div>
 
 
 
-            <!-- COLUNA LATERAL -->
+            <!-- =============================================
+                 COLUNA LATERAL
+            ============================================== -->
+
             <div class="col-lg-4">
 
+
                 <!-- INFORMAÇÕES -->
+
                 <div class="info-card">
+
 
                     <h3>
                         Informações Rápidas
                     </h3>
 
-                    <div class="info-linha">
-                        <span>Estágio</span>
-                        <strong>Série A</strong>
-                    </div>
+
 
                     <div class="info-linha">
-                        <span>Área</span>
-                        <strong>Agrotech</strong>
-                    </div>
 
-                    <div class="info-linha">
-                        <span>Mercado-alvo</span>
+                        <span>
+                            Situação
+                        </span>
+
                         <strong>
-                            Pequenos agricultores em Angola
+
+                            {% if startup.captacao_encerrada %}
+
+                                Captação encerrada
+
+                            {% else %}
+
+                                Em captação
+
+                            {% endif %}
+
                         </strong>
+
                     </div>
 
+
+
                     <div class="info-linha">
-                        <span>Localização</span>
+
+                        <span>
+                            Área
+                        </span>
+
                         <strong>
-                            Luanda, Angola
+
+                            {% if startup.area_atuacao %}
+
+                                {{ startup.get_area_atuacao_display }}
+
+                            {% else %}
+
+                                Não informada
+
+                            {% endif %}
+
                         </strong>
+
                     </div>
 
+
+
+                    {% if startup.estudante.curso %}
+
+                        <div class="info-linha">
+
+                            <span>
+                                Curso
+                            </span>
+
+                            <strong>
+                                {{ startup.estudante.curso }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    {% if startup.estudante.curso.faculdade %}
+
+                        <div class="info-linha">
+
+                            <span>
+                                Faculdade
+                            </span>
+
+                            <strong>
+                                {{ startup.estudante.curso.faculdade }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+
                     <div class="info-linha">
-                        <span>Ano de fundação</span>
+
+                        <span>
+                            Submetido em
+                        </span>
+
                         <strong>
-                            2021
+                            {{ startup.submetido_em|date:"d/m/Y" }}
                         </strong>
+
                     </div>
 
-                    <div class="info-linha">
-                        <span>Website</span>
 
-                        <a href="#">
-                            www.agroluanda.ao
-                        </a>
-                    </div>
+
+                    {% if startup.anexo %}
+
+                        <div class="info-linha">
+
+                            <span>
+                                Documento
+                            </span>
+
+                            <a
+                                href="{{ startup.anexo.url }}"
+                                target="_blank"
+                            >
+                                Ver anexo
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
 
                 </div>
 
 
 
-                <!-- INVESTIDOR -->
+                <!-- =========================================
+                     INTERESSE DO INVESTIDOR
+                ========================================== -->
+
                 <div class="investidor-card">
+
 
                     <h3>
                         Interesse do Investidor
                     </h3>
 
-                    <p>
-                        Crie uma conta ou inicie sessão para
-                        manifestar interesse, contactar a startup
-                        e aceder às funcionalidades destinadas
-                        aos investidores.
-                    </p>
 
-                    <a
-                        href="#"
-                        class="btn btn-startse w-100"
-                    >
-                        Criar conta para contactar
-                    </a>
 
-                    <div class="investidor-login">
+                    {% if startup.captacao_encerrada %}
 
-                        Já tem conta?
 
-                        <a href="#">
-                            Entrar
+                        <p>
+                            Esta startup encerrou a captação
+                            de investimento e não está a receber
+                            novas propostas neste momento.
+                        </p>
+
+
+
+                    {% elif pode_manifestar_interesse %}
+
+
+                        <p>
+                            Esta startup está aberta a novas
+                            propostas de investimento.
+                            Pode manifestar o seu interesse
+                            directamente pela plataforma.
+                        </p>
+
+
+                        <a
+                            href="{% url 'investidor:manifestar_interesse' startup.id %}"
+                            class="btn btn-startse w-100"
+                        >
+                            Manifestar interesse
                         </a>
 
-                    </div>
+
+
+                    {% elif request.user.is_authenticated %}
+
+
+                        <p>
+                            A manifestação de interesse está
+                            disponível para utilizadores com
+                            perfil de Investidor.
+                        </p>
+
+
+
+                    {% else %}
+
+
+                        <p>
+                            Inicie sessão ou crie uma conta
+                            de Investidor para manifestar interesse,
+                            contactar a startup e acompanhar
+                            as suas propostas.
+                        </p>
+
+
+                    {% endif %}
+
 
                 </div>
 
+
             </div>
 
+
         </div>
+
 
     </div>
 
 </section>
 
-{% endblock 'body' %}
 
+{% endblock 'body' %}

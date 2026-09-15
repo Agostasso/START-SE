@@ -1,6 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="pt">
 
 <head>
@@ -8,18 +9,25 @@
     <meta charset="UTF-8">
 
     <meta
+
         name="viewport"
+
         content="width=device-width, initial-scale=1.0"
+
     >
 
     <title>Projecto | START.SE</title>
 
     <link
+
         rel="stylesheet"
-        href="{% static 'estudante/css/projeto.css' %}"
+
+        href="{% static 'estudante/css/projeto.css' %}?v=9"
+
     >
 
 </head>
+
 
 
 <body>
@@ -27,35 +35,49 @@
 <div class="student-page">
 
 
+
     <!-- =====================================================
+
          SIDEBAR
+
     ====================================================== -->
 
     <aside class="student-sidebar">
 
 
+
         <div class="sidebar-header">
 
             <h1>
+
                 START.SE
+
             </h1>
 
             <p>
+
                 Área do Estudante
+
             </p>
 
         </div>
 
 
 
+
+
         <nav class="sidebar-menu">
+
 
 
             <!-- DASHBOARD -->
 
             <a
+
                 href="{% url 'estudante_dashboard' %}"
+
                 class="sidebar-link"
+
             >
 
                 <span class="sidebar-icon">
@@ -73,18 +95,25 @@
                 </span>
 
                 <span>
+
                     Dashboard
+
                 </span>
 
             </a>
 
 
 
+
+
             <!-- PERFIL ACADÉMICO -->
 
             <a
+
                 href="{% url 'perfil_academico' %}"
+
                 class="sidebar-link"
+
             >
 
                 <span class="sidebar-icon">
@@ -92,13 +121,19 @@
                     <svg viewBox="0 0 24 24">
 
                         <circle
+
                             cx="12"
+
                             cy="7"
+
                             r="4"
+
                         ></circle>
 
                         <path
+
                             d="M4.5 21c.4-5 3-7 7.5-7s7.1 2 7.5 7"
+
                         ></path>
 
                     </svg>
@@ -106,18 +141,25 @@
                 </span>
 
                 <span>
+
                     Perfil Académico
+
                 </span>
 
             </a>
 
 
 
+
+
             <!-- PROJECTO -->
 
             <a
+
                 href="{% url 'estudante_projeto' %}"
+
                 class="sidebar-link active"
+
             >
 
                 <span class="sidebar-icon">
@@ -137,18 +179,25 @@
                 </span>
 
                 <span>
+
                     Projecto
+
                 </span>
 
             </a>
 
 
 
+
+
             <!-- ACOMPANHAMENTO -->
 
             <a
+
                 href="{% url 'estudante_acompanhamento' %}"
+
                 class="sidebar-link"
+
             >
 
                 <span class="sidebar-icon">
@@ -156,11 +205,17 @@
                     <svg viewBox="0 0 24 24">
 
                         <rect
+
                             x="4"
+
                             y="5"
+
                             width="16"
+
                             height="15"
+
                             rx="2"
+
                         ></rect>
 
                         <path d="M8 3v4"></path>
@@ -174,7 +229,9 @@
                 </span>
 
                 <span>
+
                     Acompanhamento
+
                 </span>
 
             </a>
@@ -183,13 +240,18 @@
 
 
 
+
+
         <!-- SAIR -->
 
         <div class="sidebar-logout">
 
             <a
+
                 href="{% url 'estudante_sair' %}"
+
                 class="sidebar-link"
+
             >
 
                 <span class="sidebar-icon">
@@ -207,7 +269,9 @@
                 </span>
 
                 <span>
+
                     Sair
+
                 </span>
 
             </a>
@@ -218,38 +282,54 @@
 
 
 
+
+
     <!-- =====================================================
+
          CONTEÚDO
+
     ====================================================== -->
 
     <main class="student-content">
 
 
+
         <!-- =================================================
+
              CABEÇALHO
+
         ================================================== -->
 
         <header class="page-header">
 
 
+
             <div class="header-text">
 
                 <h2>
+
                     Projecto
+
                 </h2>
 
                 <p>
+
                     Submeta e acompanhe o seu projecto
+
                     na plataforma START.SE.
+
                 </p>
 
             </div>
 
 
 
+
+
             <!-- UTILIZADOR -->
 
             <div class="student-user">
+
 
 
                 <div class="user-avatar">
@@ -265,6 +345,8 @@
                     {% endif %}
 
                 </div>
+
+
 
 
 
@@ -285,6 +367,7 @@
                     </strong>
 
 
+
                     <span>
 
                         {% if perfil and perfil.email_institucional %}
@@ -302,8 +385,11 @@
                 </div>
 
 
+
                 <span class="user-arrow">
+
                     ⌄
+
                 </span>
 
             </div>
@@ -312,8 +398,12 @@
 
 
 
+
+
         <!-- =================================================
+
              MENSAGENS
+
         ================================================== -->
 
         {% if messages %}
@@ -323,7 +413,9 @@
                 {% for message in messages %}
 
                     <div class="message {{ message.tags }}">
+
                         {{ message }}
+
                     </div>
 
                 {% endfor %}
@@ -334,50 +426,126 @@
 
 
 
+
+
         <!-- =================================================
+
              ABAS
+
         ================================================== -->
 
         <nav class="project-tabs">
 
             <a
-                href="#"
-                class="project-tab active"
+
+                href="{% url 'estudante_projeto' %}"
+
+                class="
+
+                    project-tab
+
+                    {% if secao_ativa == 'projecto' %}
+
+                        active
+
+                    {% endif %}
+
+                "
+
             >
+
                 O meu projecto
+
             </a>
+
+
+
+            {% if projecto and projecto.estado == 'PUBLICADO' %}
+
+                <a
+
+                    href="{% url 'estudante_projeto' %}?secao=interesses#interesses-recebidos"
+
+                    class="
+
+                        project-tab
+
+                        project-tab-interest
+
+                        {% if secao_ativa == 'interesses' %}
+
+                            active
+
+                        {% endif %}
+
+                    "
+
+                >
+
+                    Interesses recebidos
+
+                    {% if interesses_novos > 0 %}
+
+                        <span class="tab-notification">
+
+                            {{ interesses_novos }}
+
+                        </span>
+
+                    {% endif %}
+
+                </a>
+
+            {% endif %}
 
         </nav>
 
 
 
+
+
         <!-- =================================================
+
              GRID PRINCIPAL
+
         ================================================== -->
+
+        {% if secao_ativa == 'projecto' %}
 
         <div class="project-grid">
 
 
+
             <!-- =================================================
+
                  SOBRE A SUBMISSÃO
+
             ================================================== -->
 
             <section class="submission-card">
 
                 <h3>
+
                     Sobre a submissão
+
                 </h3>
 
 
 
+
+
                 <!-- =============================================
+
                      PROJECTO JÁ EXISTE
+
                 ============================================== -->
 
                 {% if projecto %}
 
 
+
                     <div class="project-submitted">
+
 
 
                         <div class="document-icon">
@@ -398,39 +566,57 @@
 
 
 
+
+
                         <p class="empty-title">
+
                             {{ projecto.titulo }}
+
                         </p>
+
+
 
 
 
                         <!-- ESTADO -->
 
                         <span
+
                             class="
+
                                 project-status
 
                                 {% if projecto.estado == 'PENDENTE' %}
+
                                     status-pendente
 
                                 {% elif projecto.estado == 'APROVADO' %}
+
                                     status-aprovado
 
                                 {% elif projecto.estado == 'REJEITADO' %}
+
                                     status-rejeitado
 
                                 {% elif projecto.estado == 'EM_INCUBACAO' %}
+
                                     status-incubacao
 
                                 {% elif projecto.estado == 'PUBLICADO' %}
+
                                     status-publicado
+
                                 {% endif %}
+
                             "
+
                         >
 
                             {{ projecto.get_estado_display }}
 
                         </span>
+
+
 
 
 
@@ -444,6 +630,8 @@
 
 
 
+
+
                         <!-- PENDENTE -->
 
                         {% if projecto.estado == 'PENDENTE' %}
@@ -451,12 +639,16 @@
                             <p class="empty-description">
 
                                 O seu projecto foi submetido
+
                                 e encontra-se a aguardar avaliação
+
                                 da equipa administrativa.
 
                             </p>
 
                         {% endif %}
+
+
 
 
 
@@ -467,12 +659,16 @@
                             <p class="empty-description">
 
                                 O seu projecto foi aprovado.
+
                                 Aguarde os próximos passos para
+
                                 o processo de incubação e mentoria.
 
                             </p>
 
                         {% endif %}
+
+
 
 
 
@@ -487,16 +683,21 @@
                             </p>
 
 
+
                             {% if projecto.parecer_avaliacao %}
 
                                 <div class="evaluation-observation">
 
                                     <strong>
+
                                         Parecer da avaliação
+
                                     </strong>
 
                                     <p>
+
                                         {{ projecto.parecer_avaliacao }}
+
                                     </p>
 
                                 </div>
@@ -507,6 +708,8 @@
 
 
 
+
+
                         <!-- EM INCUBAÇÃO -->
 
                         {% if projecto.estado == 'EM_INCUBACAO' %}
@@ -514,11 +717,14 @@
                             <p class="empty-description">
 
                                 O seu projecto encontra-se
+
                                 actualmente em incubação.
 
                             </p>
 
                         {% endif %}
+
+
 
 
 
@@ -529,6 +735,7 @@
                             <p class="empty-description">
 
                                 O seu projecto foi publicado
+
                                 no Marketplace da START.SE.
 
                             </p>
@@ -537,33 +744,48 @@
 
 
 
+
+
                         <!-- ANEXO -->
 
                         {% if projecto.anexo %}
 
                             <a
+
                                 href="{{ projecto.anexo.url }}"
+
                                 target="_blank"
+
                                 class="submit-project-button"
+
                             >
+
                                 Abrir anexo
+
                             </a>
 
                         {% endif %}
+
 
 
                     </div>
 
 
 
+
+
                 <!-- =============================================
+
                      PERFIL VALIDADO E SEM PROJECTO
+
                 ============================================== -->
 
                 {% elif perfil and perfil.estado_validacao == 'VALIDADO' %}
 
 
+
                     <div class="submission-empty">
+
 
 
                         <div class="document-icon">
@@ -584,6 +806,8 @@
 
 
 
+
+
                         <p class="empty-title">
 
                             Ainda não submeteu nenhum projecto.
@@ -592,36 +816,54 @@
 
 
 
+
+
                         <p class="empty-description">
 
                             O seu perfil académico já foi validado.
+
                             Pode agora preencher e submeter
+
                             o seu projecto para avaliação.
 
                         </p>
 
 
 
+
+
                         <a
+
                             href="{% url 'submeter_projecto' %}"
+
                             class="submit-project-button"
+
                         >
+
                             Submeter projecto
+
                         </a>
+
 
 
                     </div>
 
 
 
+
+
                 <!-- =============================================
+
                      PERFIL PENDENTE
+
                 ============================================== -->
 
                 {% elif perfil and perfil.estado_validacao == 'PENDENTE' %}
 
 
+
                     <div class="submission-empty">
+
 
 
                         <div class="document-icon">
@@ -637,44 +879,65 @@
                         </div>
 
 
+
                         <p class="empty-title">
+
                             Submissão indisponível
+
                         </p>
+
 
 
                         <p class="empty-description">
 
                             O seu perfil académico ainda
+
                             está em processo de validação.
 
                             Aguarde a aprovação antes de
+
                             submeter o projecto.
 
                         </p>
 
 
+
                         <span
+
                             class="
+
                                 submit-project-button
+
                                 submit-disabled
+
                             "
+
                         >
+
                             Aguardando validação
+
                         </span>
+
 
 
                     </div>
 
 
 
+
+
                 <!-- =============================================
+
                      PERFIL REJEITADO
+
                 ============================================== -->
 
                 {% elif perfil and perfil.estado_validacao == 'REJEITADO' %}
 
 
+
                     <div class="submission-empty">
+
 
 
                         <div class="document-icon">
@@ -688,6 +951,7 @@
                             </svg>
 
                         </div>
+
 
 
                         <p class="empty-title">
@@ -697,35 +961,51 @@
                         </p>
 
 
+
                         <p class="empty-description">
 
                             O seu perfil académico precisa
+
                             ser regularizado antes de poder
+
                             submeter um projecto.
 
                         </p>
 
 
+
                         <a
+
                             href="{% url 'perfil_academico' %}"
+
                             class="submit-project-button"
+
                         >
+
                             Ver perfil académico
+
                         </a>
+
 
 
                     </div>
 
 
 
+
+
                 <!-- =============================================
+
                      SEM PERFIL
+
                 ============================================== -->
 
                 {% else %}
 
 
+
                     <div class="submission-empty">
+
 
 
                         <div class="document-icon">
@@ -741,6 +1021,7 @@
                         </div>
 
 
+
                         <p class="empty-title">
 
                             Complete primeiro o seu perfil académico.
@@ -748,49 +1029,71 @@
                         </p>
 
 
+
                         <p class="empty-description">
 
                             A validação académica é obrigatória
+
                             antes da submissão de um projecto.
 
                         </p>
 
 
+
                         <a
+
                             href="{% url 'perfil_academico' %}"
+
                             class="submit-project-button"
+
                         >
+
                             Completar perfil
+
                         </a>
+
 
 
                     </div>
 
 
+
                 {% endif %}
+
 
 
             </section>
 
 
 
+
+
             <!-- =================================================
+
                  REQUISITOS
+
             ================================================== -->
 
             <section class="requirements-card">
 
 
+
                 <h3>
+
                     Requisitos do projecto
+
                 </h3>
+
+
 
 
 
                 <div class="requirements-content">
 
 
+
                     <div class="requirements-list">
+
 
 
                         <!-- TÍTULO -->
@@ -798,22 +1101,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Título do projecto
+
                                 </strong>
 
                                 <p>
+
                                     Descreva o nome do seu projecto.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -822,22 +1133,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Resumo executivo
+
                                 </strong>
 
                                 <p>
+
                                     Apresente uma visão geral da ideia.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -846,22 +1165,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Descrição do problema
+
                                 </strong>
 
                                 <p>
+
                                     Explique o problema que o projecto resolve.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -870,22 +1197,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Solução proposta
+
                                 </strong>
 
                                 <p>
+
                                     Descreva a solução e como funciona.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -894,22 +1229,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Modelo de negócio
+
                                 </strong>
 
                                 <p>
+
                                     Explique como o projecto gera valor.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -918,22 +1261,30 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Equipa
+
                                 </strong>
 
                                 <p>
+
                                     Apresente os membros da equipa.
+
                                 </p>
 
                             </div>
 
                         </div>
+
+
 
 
 
@@ -942,17 +1293,23 @@
                         <div class="requirement">
 
                             <span class="check-icon">
+
                                 ✓
+
                             </span>
 
                             <div>
 
                                 <strong>
+
                                     Anexos (opcional)
+
                                 </strong>
 
                                 <p>
+
                                     Pode anexar documentos de apoio.
+
                                 </p>
 
                             </div>
@@ -960,13 +1317,17 @@
                         </div>
 
 
+
                     </div>
+
+
 
 
 
                     <!-- ILUSTRAÇÃO -->
 
                     <div class="requirements-side">
+
 
 
                         <div class="checklist-illustration">
@@ -976,10 +1337,13 @@
                                 <span class="clipboard-top"></span>
 
 
+
                                 <div class="clipboard-row">
 
                                     <span class="box checked">
+
                                         ✓
+
                                     </span>
 
                                     <span class="fake-line long"></span>
@@ -987,15 +1351,19 @@
                                 </div>
 
 
+
                                 <div class="clipboard-row">
 
                                     <span class="box checked">
+
                                         ✓
+
                                     </span>
 
                                     <span class="fake-line medium"></span>
 
                                 </div>
+
 
 
                                 <div class="clipboard-row">
@@ -1009,33 +1377,45 @@
                             </div>
 
 
+
                             <div class="upload-circle">
+
                                 ↑
+
                             </div>
 
                         </div>
 
 
 
+
+
                         <div class="tip-card">
+
 
 
                             <div class="tip-header">
 
                                 <span class="star-icon">
+
                                     ☆
+
                                 </span>
 
                                 <strong>
+
                                     Dica
+
                                 </strong>
 
                             </div>
 
 
+
                             <p>
 
                                 Projectos completos e bem estruturados
+
                                 têm maiores chances de aprovação.
 
                             </p>
@@ -1043,16 +1423,722 @@
                         </div>
 
 
+
                     </div>
+
 
 
                 </div>
 
 
+
             </section>
 
 
+
         </div>
+
+        {% endif %}
+
+
+
+
+
+        <!-- =================================================
+             INTERESSES RECEBIDOS
+        ================================================== -->
+
+        {% if secao_ativa == 'interesses' and projecto and projecto.estado == 'PUBLICADO' %}
+
+            <section
+                class="interests-section"
+                id="interesses-recebidos"
+            >
+
+                <div class="interests-summary">
+
+                    <article class="interest-summary-card">
+                        <span class="interest-summary-number">
+                            {{ total_interesses }}
+                        </span>
+                        <div>
+                            <strong>Interesses recebidos</strong>
+                            <p>Total de contactos enviados ao seu projecto.</p>
+                        </div>
+                    </article>
+
+                    <article class="interest-summary-card">
+                        <span class="interest-summary-number new">
+                            {{ interesses_novos }}
+                        </span>
+                        <div>
+                            <strong>Novos</strong>
+                            <p>Aguardam a sua análise.</p>
+                        </div>
+                    </article>
+
+                    <article class="interest-summary-card">
+                        <span class="interest-summary-number analysis">
+                            {{ interesses_em_analise }}
+                        </span>
+                        <div>
+                            <strong>Em análise</strong>
+                            <p>Contactos que está a avaliar.</p>
+                        </div>
+                    </article>
+
+                    <article class="interest-summary-card">
+                        <span class="interest-summary-number answered">
+                            {{ interesses_respondidos }}
+                        </span>
+                        <div>
+                            <strong>Respondidos</strong>
+                            <p>Respostas já enviadas aos investidores.</p>
+                        </div>
+                    </article>
+
+                </div>
+
+
+                <!-- CAPTAÇÃO DE INVESTIMENTO -->
+
+                <section class="capture-panel">
+
+                    <div class="capture-panel-header">
+
+                        <div>
+                            <span class="section-kicker">
+                                Conexão com Investidores
+                            </span>
+
+                            <h3>
+                                Captação de investimento
+                            </h3>
+
+                            <p>
+                                Pode aceitar mais de uma proposta e encerrar
+                                a captação apenas quando considerar que já
+                                possui conexões suficientes.
+                            </p>
+                        </div>
+
+                        {% if captacao_encerrada %}
+
+                            <span class="capture-status capture-status-closed">
+                                Captação encerrada
+                            </span>
+
+                        {% elif propostas_aceites > 0 %}
+
+                            <span class="capture-status capture-status-active">
+                                Em captação
+                            </span>
+
+                        {% else %}
+
+                            <span class="capture-status capture-status-open">
+                                Disponível
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="capture-stats">
+
+                        <div class="capture-stat">
+                            <span class="capture-stat-value capture-stat-accepted">
+                                {{ propostas_aceites }}
+                            </span>
+                            <div>
+                                <strong>Aceites</strong>
+                                <small>Propostas de investimento aceites.</small>
+                            </div>
+                        </div>
+
+                        <div class="capture-stat">
+                            <span class="capture-stat-value capture-stat-analysis">
+                                {{ propostas_investimento_em_analise }}
+                            </span>
+                            <div>
+                                <strong>Em análise</strong>
+                                <small>Propostas que ainda está a avaliar.</small>
+                            </div>
+                        </div>
+
+                        <div class="capture-stat">
+                            <span class="capture-stat-value capture-stat-rejected">
+                                {{ propostas_recusadas }}
+                            </span>
+                            <div>
+                                <strong>Recusadas</strong>
+                                <small>Propostas que decidiu não aceitar.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="capture-footer">
+
+                        {% if captacao_encerrada %}
+
+                            <div class="capture-message capture-message-success">
+                                <strong>Captação concluída</strong>
+                                <p>
+                                    A procura por novas propostas de investimento
+                                    foi encerrada para este projecto.
+                                </p>
+                            </div>
+
+                        {% elif propostas_aceites > 0 %}
+
+                            <div class="capture-message">
+                                <strong>
+                                    A sua startup continua aberta a propostas
+                                </strong>
+                                <p>
+                                    Já possui {{ propostas_aceites }}
+                                    proposta{% if propostas_aceites != 1 %}s{% endif %}
+                                    aceite{% if propostas_aceites != 1 %}s{% endif %}.
+                                    Pode continuar a receber novos investimentos
+                                    ou encerrar a captação quando considerar suficiente.
+                                </p>
+                            </div>
+
+                            <form method="post">
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    name="acao"
+                                    value="encerrar_captacao"
+                                    class="close-capture-button"
+                                >
+                                    Encerrar captação
+                                </button>
+                            </form>
+
+                        {% else %}
+
+                            <div class="capture-message">
+                                <strong>Captação disponível</strong>
+                                <p>
+                                    Ainda não possui nenhuma proposta de investimento
+                                    aceite. Depois de aceitar pelo menos uma proposta,
+                                    poderá decidir quando encerrar a captação.
+                                </p>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+
+                <div class="interests-layout">
+
+
+                    <!-- LISTA -->
+
+                    <section class="interests-list-card">
+
+                        <div class="interests-card-header">
+
+                            <div>
+                                <span class="section-kicker">
+                                    {{ projecto.titulo }}
+                                </span>
+
+                                <h3>
+                                    Interesses recebidos
+                                </h3>
+
+                                <p>
+                                    Consulte os contactos feitos por investidores
+                                    interessados no seu projecto.
+                                </p>
+                            </div>
+
+                            <span class="published-badge">
+                                Publicado
+                            </span>
+
+                        </div>
+
+
+                        {% if manifestacoes %}
+
+                            <div class="interest-list">
+
+                                {% for item in manifestacoes %}
+
+                                    <a
+                                        href="{% url 'estudante_projeto' %}?secao=interesses&manifestacao={{ item.id }}#interesses-recebidos"
+                                        class="
+                                            interest-list-item
+                                            {% if manifestacao_seleccionada.id == item.id %}
+                                                selected
+                                            {% endif %}
+                                        "
+                                    >
+
+                                        <div class="interest-investor-avatar">
+
+                                            {% if item.investidor.usuario.first_name %}
+                                                {{ item.investidor.usuario.first_name|slice:":1"|upper }}
+                                            {% else %}
+                                                {{ item.investidor.usuario.username|slice:":1"|upper }}
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="interest-list-content">
+
+                                            <div class="interest-list-title">
+
+                                                <strong>
+                                                    {% if item.investidor.usuario.get_full_name %}
+                                                        {{ item.investidor.usuario.get_full_name }}
+                                                    {% else %}
+                                                        {{ item.investidor.usuario.username }}
+                                                    {% endif %}
+                                                </strong>
+
+                                                {% if item.estado == 'ENVIADA' %}
+                                                    <span class="interest-status status-enviada">
+                                                        Enviada
+                                                    </span>
+                                                {% elif item.estado == 'EM_ANALISE' %}
+                                                    <span class="interest-status status-analise">
+                                                        Em análise
+                                                    </span>
+                                                {% elif item.estado == 'RESPONDIDA' %}
+                                                    <span class="interest-status status-respondida">
+                                                        Respondida
+                                                    </span>
+                                                {% endif %}
+
+                                            </div>
+
+
+                                            <p>
+                                                {{ item.get_assunto_display }}
+                                            </p>
+
+
+                                            {% if item.assunto == 'INVESTIMENTO' and item.estado == 'RESPONDIDA' %}
+
+                                                {% if item.decisao == 'ACEITE' %}
+                                                    <span class="list-decision list-decision-accepted">
+                                                        Proposta aceite
+                                                    </span>
+                                                {% elif item.decisao == 'RECUSADA' %}
+                                                    <span class="list-decision list-decision-rejected">
+                                                        Proposta recusada
+                                                    </span>
+                                                {% endif %}
+
+                                            {% endif %}
+
+
+                                            <small>
+                                                {{ item.enviada_em|date:"d/m/Y H:i" }}
+                                            </small>
+
+                                        </div>
+
+
+                                        <span class="interest-arrow">
+                                            ›
+                                        </span>
+
+                                    </a>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="interests-empty">
+
+                                <div class="interests-empty-icon">
+                                    ✉
+                                </div>
+
+                                <h4>
+                                    Ainda não recebeu manifestações de interesse
+                                </h4>
+
+                                <p>
+                                    O seu projecto já está publicado.
+                                    Quando um investidor manifestar interesse,
+                                    o contacto aparecerá nesta área.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </section>
+
+
+                    <!-- DETALHE -->
+
+                    <aside class="interest-detail-card">
+
+                        {% if manifestacao_seleccionada %}
+
+                            <div class="interest-detail-header">
+
+                                <div>
+                                    <span class="section-kicker">
+                                        Manifestação de interesse
+                                    </span>
+
+                                    <h3>
+                                        {{ manifestacao_seleccionada.get_assunto_display }}
+                                    </h3>
+                                </div>
+
+
+                                {% if manifestacao_seleccionada.estado == 'ENVIADA' %}
+                                    <span class="interest-status status-enviada">
+                                        Enviada
+                                    </span>
+                                {% elif manifestacao_seleccionada.estado == 'EM_ANALISE' %}
+                                    <span class="interest-status status-analise">
+                                        Em análise
+                                    </span>
+                                {% elif manifestacao_seleccionada.estado == 'RESPONDIDA' %}
+                                    <span class="interest-status status-respondida">
+                                        Respondida
+                                    </span>
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="interest-investor-box">
+
+                                <div class="detail-avatar">
+
+                                    {% if manifestacao_seleccionada.investidor.usuario.first_name %}
+                                        {{ manifestacao_seleccionada.investidor.usuario.first_name|slice:":1"|upper }}
+                                    {% else %}
+                                        {{ manifestacao_seleccionada.investidor.usuario.username|slice:":1"|upper }}
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div>
+                                    <span>
+                                        Investidor
+                                    </span>
+
+                                    <strong>
+                                        {% if manifestacao_seleccionada.investidor.usuario.get_full_name %}
+                                            {{ manifestacao_seleccionada.investidor.usuario.get_full_name }}
+                                        {% else %}
+                                            {{ manifestacao_seleccionada.investidor.usuario.username }}
+                                        {% endif %}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            <div class="interest-meta-grid">
+
+                                <div>
+                                    <span>Contacto directo</span>
+                                    <strong>
+                                        {{ manifestacao_seleccionada.contacto_direto }}
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <span>Data de envio</span>
+                                    <strong>
+                                        {{ manifestacao_seleccionada.enviada_em|date:"d/m/Y H:i" }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            {% if manifestacao_seleccionada.assunto == 'INVESTIMENTO' and manifestacao_seleccionada.estado == 'RESPONDIDA' %}
+
+                                <div class="proposal-decision-box">
+
+                                    <span>
+                                        Decisão sobre a proposta
+                                    </span>
+
+                                    {% if manifestacao_seleccionada.decisao == 'ACEITE' %}
+                                        <strong class="proposal-decision accepted">
+                                            Aceite
+                                        </strong>
+                                    {% elif manifestacao_seleccionada.decisao == 'RECUSADA' %}
+                                        <strong class="proposal-decision rejected">
+                                            Recusada
+                                        </strong>
+                                    {% else %}
+                                        <strong class="proposal-decision pending">
+                                            Pendente
+                                        </strong>
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="received-message">
+
+                                <span>
+                                    Mensagem do investidor
+                                </span>
+
+                                <p>
+                                    {{ manifestacao_seleccionada.mensagem }}
+                                </p>
+
+                            </div>
+
+
+                            <!-- ENVIADA -->
+
+                            {% if manifestacao_seleccionada.estado == 'ENVIADA' %}
+
+                                <div class="interest-action-box">
+
+                                    <h4>
+                                        Analisar manifestação
+                                    </h4>
+
+                                    <p>
+                                        Ao iniciar a análise, o Investidor verá
+                                        que o contacto está a ser avaliado.
+                                    </p>
+
+                                    <form method="post">
+
+                                        {% csrf_token %}
+
+                                        <input
+                                            type="hidden"
+                                            name="manifestacao_id"
+                                            value="{{ manifestacao_seleccionada.id }}"
+                                        >
+
+                                        <button
+                                            type="submit"
+                                            name="acao"
+                                            value="analisar"
+                                            class="analyse-interest-button"
+                                        >
+                                            Marcar como Em análise
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- EM ANÁLISE -->
+
+                            {% if manifestacao_seleccionada.estado == 'EM_ANALISE' %}
+
+                                <div class="interest-action-box">
+
+
+                                    {% if manifestacao_seleccionada.assunto == 'INVESTIMENTO' %}
+
+                                        <h4>
+                                            Decidir proposta de investimento
+                                        </h4>
+
+
+                                        {% if captacao_encerrada %}
+
+                                            <p>
+                                                A captação deste projecto já foi encerrada.
+                                                Pode responder ao Investidor recusando esta
+                                                proposta, mas não é possível aceitar novos
+                                                investimentos.
+                                            </p>
+
+                                        {% else %}
+
+                                            <p>
+                                                Escreva uma resposta e escolha se pretende
+                                                aceitar ou recusar esta proposta.
+                                                Aceitar uma proposta não encerra a captação.
+                                            </p>
+
+                                        {% endif %}
+
+
+                                        <form
+                                            method="post"
+                                            class="response-form"
+                                        >
+
+                                            {% csrf_token %}
+
+                                            <input
+                                                type="hidden"
+                                                name="manifestacao_id"
+                                                value="{{ manifestacao_seleccionada.id }}"
+                                            >
+
+                                            <textarea
+                                                name="resposta"
+                                                maxlength="1500"
+                                                placeholder="Escreva a sua resposta ao Investidor..."
+                                                required
+                                            ></textarea>
+
+
+                                            <div class="decision-actions">
+
+                                                {% if not captacao_encerrada %}
+
+                                                    <button
+                                                        type="submit"
+                                                        name="acao"
+                                                        value="aceitar"
+                                                        class="accept-proposal-button"
+                                                    >
+                                                        Aceitar proposta
+                                                    </button>
+
+                                                {% endif %}
+
+
+                                                <button
+                                                    type="submit"
+                                                    name="acao"
+                                                    value="recusar"
+                                                    class="reject-proposal-button"
+                                                >
+                                                    Recusar proposta
+                                                </button>
+
+                                            </div>
+
+                                        </form>
+
+
+                                    {% else %}
+
+                                        <h4>
+                                            Responder ao Investidor
+                                        </h4>
+
+                                        <p>
+                                            Escreva uma resposta sobre o interesse
+                                            apresentado.
+                                        </p>
+
+                                        <form
+                                            method="post"
+                                            class="response-form"
+                                        >
+
+                                            {% csrf_token %}
+
+                                            <input
+                                                type="hidden"
+                                                name="manifestacao_id"
+                                                value="{{ manifestacao_seleccionada.id }}"
+                                            >
+
+                                            <textarea
+                                                name="resposta"
+                                                maxlength="1500"
+                                                placeholder="Escreva a sua resposta..."
+                                                required
+                                            ></textarea>
+
+                                            <button
+                                                type="submit"
+                                                name="acao"
+                                                value="responder"
+                                                class="send-response-button"
+                                            >
+                                                Enviar resposta
+                                            </button>
+
+                                        </form>
+
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- RESPONDIDA -->
+
+                            {% if manifestacao_seleccionada.estado == 'RESPONDIDA' %}
+
+                                <div class="sent-response">
+
+                                    <span>
+                                        Resposta enviada
+                                    </span>
+
+                                    <p>
+                                        {{ manifestacao_seleccionada.resposta }}
+                                    </p>
+
+                                    {% if manifestacao_seleccionada.respondida_em %}
+
+                                        <small>
+                                            Enviada em
+                                            {{ manifestacao_seleccionada.respondida_em|date:"d/m/Y H:i" }}
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+
+                        {% else %}
+
+                            <div class="interest-detail-empty">
+
+                                <h3>
+                                    Nenhum interesse seleccionado
+                                </h3>
+
+                                <p>
+                                    Seleccione um contacto à esquerda
+                                    para visualizar os detalhes.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </aside>
+
+                </div>
+
+            </section>
+
+        {% endif %}
 
 
     </main>

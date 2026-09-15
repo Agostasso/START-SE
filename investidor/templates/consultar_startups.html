@@ -1,0 +1,762 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Consulta startups | START.SE
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="{% static 'investidor/css/startups.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="investor-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-header">
+
+            <h1>
+                START.SE
+            </h1>
+
+            <p>
+                Área do Investidor
+            </p>
+
+        </div>
+
+
+
+        <nav class="sidebar-menu">
+
+
+            <!-- CONSULTA STARTUPS -->
+
+            <a
+                href="{% url 'consultar_startups' %}"
+                class="sidebar-link active"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10"
+                            cy="10"
+                            r="6"
+                        ></circle>
+
+                        <path d="M14.5 14.5L21 21"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Consulta startups
+                </span>
+
+            </a>
+
+
+
+            <!-- ACOMPANHA PROPOSTA -->
+
+            <a
+             href="{% url 'propostas' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M4 20V10"></path>
+
+                        <path d="M10 20V5"></path>
+
+                        <path d="M16 20V8"></path>
+
+                        <path d="M22 20H2"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Acompanha proposta
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="{% url 'estudante_sair' %}"
+                class="sidebar-link"
+            >
+
+                <span class="sidebar-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 5H5v14h5"></path>
+
+                        <path d="M14 8l4 4-4 4"></path>
+
+                        <path d="M8 12h10"></path>
+
+                    </svg>
+
+                </span>
+
+
+                <span>
+                    Sair
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
+        <header class="top-header">
+
+
+            <div>
+
+                <span class="page-label">
+                    Startups
+                </span>
+
+
+                <h2>
+                    Consulta <span>startups</span>
+                </h2>
+
+
+                <p>
+                    Explore a mostra de startups da UniLuanda
+                    e descubra oportunidades de investimento.
+                </p>
+
+            </div>
+
+
+
+            <div class="investor-user">
+
+
+                <div class="investor-avatar">
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name|slice:":1"|upper }}
+
+                    {% else %}
+
+                        {{ request.user.username|slice:":1"|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+
+                <div class="investor-user-info">
+
+                    <strong>
+
+                        {% if request.user.get_full_name %}
+
+                            {{ request.user.get_full_name }}
+
+                        {% else %}
+
+                            {{ request.user.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span>
+
+                        {% if request.user.email %}
+
+                            {{ request.user.email }}
+
+                        {% else %}
+
+                            Investidor
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="user-arrow">
+                    ⌄
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             ÁREA PRINCIPAL
+        ================================================== -->
+
+        <section class="startup-layout">
+
+
+            <!-- =================================================
+                 LISTA
+            ================================================== -->
+
+            <div class="startup-list-panel">
+
+
+                <!-- PESQUISA -->
+
+                <form
+                    method="get"
+                    class="filters"
+                >
+
+
+                    <div class="search-field">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="10"
+                                cy="10"
+                                r="6"
+                            ></circle>
+
+                            <path d="M14.5 14.5L21 21"></path>
+
+                        </svg>
+
+
+                        <input
+                            type="text"
+                            name="q"
+                            value="{{ pesquisa }}"
+                            placeholder="Pesquisar startups..."
+                        >
+
+                    </div>
+
+
+
+                    <div class="area-filter">
+
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 5h16l-6 7v6l-4 2v-8z"></path>
+
+                        </svg>
+
+
+                        <select
+                            name="area"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option value="">
+                                Área de actuação
+                            </option>
+
+
+                            {% for valor, nome in areas %}
+
+                                <option
+                                    value="{{ valor }}"
+                                    {% if area_seleccionada == valor %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ nome }}
+                                </option>
+
+                            {% endfor %}
+
+
+                        </select>
+
+
+                    </div>
+
+
+                </form>
+
+
+
+                <p class="results-count">
+
+                    {{ total_startups }}
+
+                    {% if total_startups == 1 %}
+
+                        startup encontrada
+
+                    {% else %}
+
+                        startups encontradas
+
+                    {% endif %}
+
+                </p>
+
+
+
+                <!-- =================================================
+                     STARTUPS
+                ================================================== -->
+
+                <div class="startup-list">
+
+
+                    {% for projecto in projectos %}
+
+
+                        <a
+                            href="{% url 'investidor_manifestar_interesse' projecto.id %}"
+                            class="
+                                startup-item
+                                {% if startup_seleccionada.id == projecto.id %}
+                                    selected
+                                {% endif %}
+                            "
+                        >
+
+
+                            <div class="startup-mini-image">
+
+
+                                {% if projecto.imagem_capa %}
+
+                                    <img
+                                        src="{{ projecto.imagem_capa.url }}"
+                                        alt="{{ projecto.titulo }}"
+                                    >
+
+                                {% else %}
+
+                                    <span>
+                                        {{ projecto.titulo|slice:":1"|upper }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+
+                            <div class="startup-item-content">
+
+
+                                <div class="startup-item-title">
+
+                                    <strong>
+                                        {{ projecto.titulo }}
+                                    </strong>
+
+
+                                    {% if projecto.area_atuacao %}
+
+                                        <span>
+
+                                            {{ projecto.get_area_atuacao_display }}
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+
+                                <p>
+
+                                    {{ projecto.resumo_executivo|truncatechars:100 }}
+
+                                </p>
+
+
+                            </div>
+
+
+
+                            <span class="startup-arrow">
+                                ›
+                            </span>
+
+
+                        </a>
+
+
+                    {% empty %}
+
+
+                        <div class="empty-startups">
+
+                            <h3>
+                                Nenhuma startup encontrada
+                            </h3>
+
+                            <p>
+                                Não existem projectos publicados
+                                correspondentes à pesquisa.
+                            </p>
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FICHA DA STARTUP
+            ================================================== -->
+
+            <div class="startup-detail-panel">
+
+
+                {% if startup_seleccionada %}
+
+
+                    <!-- TOPO -->
+
+                    <div class="startup-detail-header">
+
+
+                        <div class="startup-cover">
+
+
+                            {% if startup_seleccionada.imagem_capa %}
+
+                                <img
+                                    src="{{ startup_seleccionada.imagem_capa.url }}"
+                                    alt="{{ startup_seleccionada.titulo }}"
+                                >
+
+                            {% else %}
+
+                                <span>
+
+                                    {{ startup_seleccionada.titulo|slice:":1"|upper }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <div>
+
+
+                            <h3>
+                                {{ startup_seleccionada.titulo }}
+                            </h3>
+
+
+                            {% if startup_seleccionada.area_atuacao %}
+
+                                <span class="area-badge">
+
+                                    {{ startup_seleccionada.get_area_atuacao_display }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                            <p>
+
+                                {{ startup_seleccionada.resumo_executivo|truncatechars:150 }}
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- META -->
+
+                    <div class="startup-meta">
+
+
+                        <div>
+
+                            <span class="meta-label">
+                                Fundador(a)
+                            </span>
+
+                            <strong>
+
+                                {{ startup_seleccionada.estudante.nome_completo }}
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <span class="meta-label">
+                                Fase actual
+                            </span>
+
+                            <strong>
+
+                                {{ startup_seleccionada.get_estado_display }}
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <div>
+
+                            <span class="meta-label">
+                                Ano
+                            </span>
+
+                            <strong>
+
+                                {{ startup_seleccionada.submetido_em|date:"Y" }}
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- SOBRE -->
+
+                    <div class="startup-about">
+
+
+                        <h4>
+                            Sobre a startup
+                        </h4>
+
+
+                        <p>
+
+                            {{ startup_seleccionada.resumo_executivo }}
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- INFORMAÇÕES -->
+
+                    <div class="startup-info-grid">
+
+
+                        <article>
+
+
+                            <span class="info-icon blue">
+                                ◉
+                            </span>
+
+
+                            <h4>
+                                Modelo de negócio
+                            </h4>
+
+
+                            <p>
+
+                                {{ startup_seleccionada.modelo_negocio|truncatechars:170 }}
+
+                            </p>
+
+
+                        </article>
+
+
+
+                        <article>
+
+
+                            <span class="info-icon red">
+                                △
+                            </span>
+
+
+                            <h4>
+                                Problema
+                            </h4>
+
+
+                            <p>
+
+                                {{ startup_seleccionada.problema|truncatechars:170 }}
+
+                            </p>
+
+
+                        </article>
+
+
+
+                        <article>
+
+
+                            <span class="info-icon yellow">
+                                ◉
+                            </span>
+
+
+                            <h4>
+                                Solução
+                            </h4>
+
+
+                            <p>
+
+                                {{ startup_seleccionada.solucao|truncatechars:170 }}
+
+                            </p>
+
+
+                        </article>
+
+
+                    </div>
+
+
+
+                    <!-- MANIFESTAR -->
+
+                    <a
+                        href="{% url 'investidor_manifestar_interesse' startup_seleccionada.id %}"
+                        class="interest-button"
+                    >
+
+                        Manifestar Interesse
+
+                    </a>
+
+
+                {% else %}
+
+
+                    <div class="empty-detail">
+
+                        <h3>
+                            Nenhuma startup seleccionada
+                        </h3>
+
+                        <p>
+                            Seleccione uma startup para consultar
+                            a sua ficha.
+                        </p>
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>
